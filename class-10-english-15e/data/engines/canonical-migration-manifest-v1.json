@@ -1,0 +1,22 @@
+{
+  "schema_version":"1.0",
+  "name":"15-E Canonical Migration Manifest",
+  "status":"MIGRATION_READY",
+  "target_schema":"canonical-question-schema-v1",
+  "policy":"Preserve source content and IDs; migrate only fields that are explicitly present or safely structurally equivalent; unresolved metadata remains flagged.",
+  "batches":[
+    {"source":"grammar-practice-batch-01.json","target":"grammar-canonical-batch-01.json","defaults":{"section":"grammar","source_type":"original_english_hub"}},
+    {"source":"grammar-practice-batch-02.json","target":"grammar-canonical-batch-02.json","defaults":{"section":"grammar","source_type":"original_english_hub"}},
+    {"source":"grammar-practice-batch-03.json","target":"grammar-canonical-batch-03.json","defaults":{"section":"grammar","source_type":"original_english_hub"}},
+    {"source":"grammar-practice-batch-04.json","target":"grammar-canonical-batch-04.json","defaults":{"section":"grammar","source_type":"original_english_hub"}},
+    {"source":"first-flight-practice-batch-01.json","target":"first-flight-canonical-batch-01.json","defaults":{"section":"first_flight"}},
+    {"source":"first-flight-practice-batch-02.json","target":"first-flight-canonical-batch-02.json","defaults":{"section":"first_flight"}},
+    {"source":"footprints-practice-batch-01.json","target":"footprints-canonical-batch-01.json","defaults":{"section":"footprints"}},
+    {"source":"footprints-practice-batch-02.json","target":"footprints-canonical-batch-02.json","defaults":{"section":"footprints"}},
+    {"source":"rtc-quote-memory-batch-01.json","target":"rtc-canonical-batch-01.json","defaults":{"section":"rtc"}},
+    {"source":"composition-batch-01.json","target":"composition-canonical-batch-01.json","defaults":{"section":"composition"}},
+    {"source":"comprehension-batch-01.json","target":"comprehension-canonical-batch-01.json","defaults":{"section":"comprehension"}}
+  ],
+  "migration_gates":["No invented marks","No invented syllabus units","No invented historical provenance","No duplicate IDs in target batch","Every migrated record receives validation status"],
+  "release_status":{"canonical_practice_pool":"not yet activated","full_mock_pool":"blocked until validation PASS"}
+}
