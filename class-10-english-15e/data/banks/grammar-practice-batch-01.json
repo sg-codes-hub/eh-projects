@@ -1,0 +1,29 @@
+{
+  "course":"Class 10 First Language English (NCERT)",
+  "code":"15-E",
+  "target":"2026-27",
+  "status":"original_practice",
+  "purpose":"Original KSEAB-style grammar practice; not copied PYQs.",
+  "questions":[
+    {"id":"GR-P01-001","area":"noun_form","type":"1M","question":"Complete the sentence with the correct noun form of 'decide': The committee made a final _____.","answer":"decision","difficulty":"easy"},
+    {"id":"GR-P01-002","area":"article","type":"1M","question":"Fill in the blank with a suitable article: She is _____ honest student.","answer":"an","difficulty":"easy"},
+    {"id":"GR-P01-003","area":"preposition","type":"1M","question":"Fill in the blank with a suitable preposition: The train arrived _____ the station on time.","answer":"at","difficulty":"easy"},
+    {"id":"GR-P01-004","area":"verb_form","type":"1M","question":"Use the correct form of the verb in brackets: The students _____ (prepare) for the examination now.","answer":"are preparing","difficulty":"easy"},
+    {"id":"GR-P01-005","area":"question_tag","type":"1M","question":"Add a suitable question tag: You have completed the assignment, _____.","answer":"haven't you?","difficulty":"easy"},
+    {"id":"GR-P01-006","area":"verbal_phrase","type":"1M","question":"Identify the infinitive in the sentence: Rohan went to the library to borrow a book.","answer":"to borrow","difficulty":"easy"},
+    {"id":"GR-P01-007","area":"parts_of_speech","type":"1M","question":"Identify the part of speech of the underlined word: She spoke softly to the child. ('softly')","answer":"adverb","difficulty":"easy"},
+    {"id":"GR-P01-008","area":"figure_of_speech","type":"1M","question":"Identify the figure of speech: The moon smiled at us.","answer":"personification","difficulty":"medium"},
+    {"id":"GR-P01-009","area":"prefix_suffix","type":"1M","question":"Add a suitable prefix to form the opposite of 'possible'.","answer":"impossible","difficulty":"easy"},
+    {"id":"GR-P01-010","area":"voice","type":"2M","question":"Change into passive voice: The teacher praised the students for their work.","answer":"The students were praised by the teacher for their work.","difficulty":"medium"},
+    {"id":"GR-P01-011","area":"reported_speech","type":"2M","question":"Change into reported speech: Meena said, 'I am preparing for my examination.'","answer":"Meena said that she was preparing for her examination.","difficulty":"medium"},
+    {"id":"GR-P01-012","area":"question_formation","type":"2M","question":"Frame a question so that the underlined phrase is the answer: Ravi travelled to Mysuru by bus. ('to Mysuru')","answer":"Where did Ravi travel by bus?","difficulty":"medium"},
+    {"id":"GR-P01-013","area":"degree_comparison","type":"2M","question":"Rewrite using the comparative degree: Very few cities in Karnataka are as large as Bengaluru.","answer":"Bengaluru is larger than most other cities in Karnataka.","difficulty":"medium"},
+    {"id":"GR-P01-014","area":"sentence_transformation","type":"2M","question":"Rewrite using 'unless': If you do not revise regularly, you may forget the concepts.","answer":"Unless you revise regularly, you may forget the concepts.","difficulty":"medium"},
+    {"id":"GR-P01-015","area":"linker","type":"2M","question":"Combine the sentences using a suitable linker: He was tired. He completed the work.","answer":"Although he was tired, he completed the work.","difficulty":"medium"},
+    {"id":"GR-P01-016","area":"if_clause","type":"2M","question":"Complete the sentence using the correct conditional form: If I had known about the meeting, I _____ (attend) it.","answer":"would have attended","difficulty":"hard"},
+    {"id":"GR-P01-017","area":"tense_transformation","type":"2M","question":"Rewrite in the present continuous tense: She writes a letter to her friend.","answer":"She is writing a letter to her friend.","difficulty":"easy"},
+    {"id":"GR-P01-018","area":"editing","type":"2M","question":"Correct the error: Each of the students have submitted their project.","answer":"Each of the students has submitted their project.","difficulty":"medium"},
+    {"id":"GR-P01-019","area":"preposition","type":"1M","question":"Fill in the blank: He has been living here _____ 2018.","answer":"since","difficulty":"easy"},
+    {"id":"GR-P01-020","area":"article","type":"1M","question":"Fill in the blank: We waited for _____ hour before the bus arrived.","answer":"an","difficulty":"easy"}
+  ]
+}
