@@ -1,0 +1,9 @@
+{
+  "schema_version":"1.0",
+  "engine":"Comprehension Evaluation Engine v1",
+  "purpose":"Evaluate student responses to unseen-passage practice in the Class 10 First Language English (NCERT) 15-E system.",
+  "checks":["answer relevance","key-point coverage","textual evidence or inference","vocabulary-in-context accuracy","clarity and completeness","grammar for constructed responses"],
+  "scoring_rules":{"objective":"exact answer-key match where applicable","short_answer":"award credit for supported key points; accept valid paraphrases","inference":"require an inference reasonably supported by the supplied passage","long_answer":"evaluate relevance, development, textual support and language","vocabulary":"accept contextually equivalent meanings where appropriate"},
+  "feedback":{"strengths":"identify correct ideas and evidence","missing_points":"identify required ideas not addressed","corrections":"flag clear language errors in constructed responses","next_step":"give one focused improvement suggestion"},
+  "accuracy_guardrails":["Do not require students to reproduce the passage verbatim.","Do not accept information contradicted by the passage as a supported answer.","Do not invent evidence that is absent from the passage.","Do not treat a practice score as an official KSEAB score."]
+}
