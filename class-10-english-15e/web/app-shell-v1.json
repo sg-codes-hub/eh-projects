@@ -1,0 +1,25 @@
+{
+  "schema_version":"1.0",
+  "app":"English Hub — Class 10 First Language English (NCERT) 15-E",
+  "version":"0.1.0",
+  "audience":"school students; no account required",
+  "deployment_model":"static web application; content served from GitHub-compatible static hosting and embedded/linked from English Hub",
+  "routes":[
+    {"path":"/class-10-english-15e/","title":"15-E English Hub","purpose":"dashboard"},
+    {"path":"/class-10-english-15e/first-flight/","title":"First Flight","purpose":"chapter practice"},
+    {"path":"/class-10-english-15e/footprints/","title":"Footprints Without Feet","purpose":"supplementary practice"},
+    {"path":"/class-10-english-15e/grammar/","title":"Grammar","purpose":"grammar practice"},
+    {"path":"/class-10-english-15e/composition/","title":"Composition","purpose":"essay and letter practice"},
+    {"path":"/class-10-english-15e/comprehension/","title":"Comprehension","purpose":"unseen-passage practice"},
+    {"path":"/class-10-english-15e/rtc/","title":"RTC & Quote from Memory","purpose":"special literature practice"},
+    {"path":"/class-10-english-15e/mock-tests/","title":"Mock Tests","purpose":"full and section tests"},
+    {"path":"/class-10-english-15e/results/","title":"My Results","purpose":"local progress and revision"}
+  ],
+  "dashboard":{"primary_actions":["Start Full Mock Test","Practice First Flight","Practice Footprints","Practice Grammar","Practice Composition","Practice Comprehension"],"secondary_actions":["RTC & Quote from Memory","Weak Areas","Revision Mode"]},
+  "student_flow":["select practice mode","receive questions from validated 15-E bank","answer","optional mark for review","submit","score and explanation","identify weak areas","retry incorrect questions"],
+  "no_account_policy":{"login_required":false,"student_data_persistence":"local device only unless a future backend is explicitly added","personal_information_collected":false},
+  "accessibility":["mobile-first","keyboard navigable","semantic controls","visible focus state","sufficient text contrast","screen-reader labels","reduced-motion friendly"],
+  "privacy":{"analytics":"none by default","cookies":"none required for core practice","server_submission":"not required for standard MCQ/practice modes"},
+  "content_rules":["Only validated 15-E content may be loaded.","2026-27 blueprint controls mock-test assembly.","Historical provenance is displayed where useful but does not imply prediction of the board paper.","Student answers remain on-device for the account-free experience."],
+  "integration":{"host_site":"English Hub (englishhub.co.in)","recommended_embedding":"link or iframe from Blogger/host page to static app","future_options":["PWA installation","offline question cache","optional school-only analytics without student accounts"]}
+}
