@@ -1,0 +1,12 @@
+{
+  "schema_version":"1.0",
+  "report":"Grammar Canonical Migration Audit v1",
+  "status":"STRUCTURE_READY_CONTENT_MIGRATION_PENDING",
+  "source_family":["grammar-practice-batch-01.json","grammar-practice-batch-02.json","grammar-practice-batch-03.json","grammar-practice-batch-04.json"],
+  "checks":{"canonical_target_exists":true,"legacy_shapes_supported":true,"type_mapping_defined":true,"answer_mapping_defined":true,"unsafe_metadata_defaults_blocked":true,"row_level_source_audit_required":true},
+  "canonical_requirements":["id","section","syllabus_unit","type","marks","difficulty","question","source_type","historical_tag","answer_or_rubric"],
+  "automatic_mappings":{"section":"grammar","source_type":"original_english_hub","question":"question/question_text/prompt/text","syllabus_unit":"explicit area/chapter only","answer_or_rubric":"answer_points/model_answer/answer when explicitly present","type":"legacy type labels mapped through grammar-metadata-map-v1"},
+  "manual_review_required":["marks when not explicitly defined by source","difficulty when absent","historical_tag when source provenance is not supplied","exact syllabus unit when area/chapter is ambiguous","answer correctness where legacy answer data is incomplete"],
+  "release_decision":"Do not publish an empty canonical placeholder as a validated bank. Populate canonical records only from the corresponding source files and run validation on every record.",
+  "next_gate":"Complete row-level migration for Grammar 01-04, then produce counts of valid/invalid records and a remediation queue."
+}
