@@ -1,0 +1,12 @@
+{
+  "schema_version":"1.0",
+  "name":"English Hub 15-E Canonical Question Schema",
+  "purpose":"One stable data contract for every question consumed by practice, evaluation and mock-test engines.",
+  "required_fields":{"id":"string","section":"first_flight|footprints|grammar|rtc|composition|comprehension","syllabus_unit":"string","type":"mcq|short_answer|long_answer|writing|comprehension","marks":"positive number","difficulty":"easy|medium|hard","question":"string","source_type":"original_english_hub|pyq_exact|pyq_near_repeat|recurring_concept|recurring_format","historical_tag":"string","answer_or_rubric":"object or string"},
+  "optional_fields":{"options":"array of strings for mcq","answer":"string|number|array","explanation":"string","answer_points":"array of strings","passage":"string for comprehension","subquestions":"array for comprehension","year":"number","paper_type":"final|mid_term|supplementary|model|original","chapter":"string","skill_tags":"array of strings"},
+  "normalization_rules":["Map legacy question/question_text/prompt/text into question.","Map question_type into canonical type without changing meaning.","Preserve original IDs whenever available.","Map legacy answer_points/model_answer into answer_or_rubric.","Do not invent missing marks, section, syllabus unit or provenance; flag them for validation.","Preserve historical year and paper type when supplied."],
+  "mcq_contract":{"required":["options","answer"],"answer":"zero-based option index or canonical option value"},
+  "writing_contract":{"required":["answer_or_rubric"],"minimum_rubric_fields":["key_points","language_expectations"]},
+  "comprehension_contract":{"required":["passage","subquestions"]},
+  "migration_policy":{"source_preservation":true,"lossless_preferred":true,"publish_only_after_validation":true}
+}
