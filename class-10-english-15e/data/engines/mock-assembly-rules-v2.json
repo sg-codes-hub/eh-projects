@@ -1,0 +1,18 @@
+{
+  "schema_version":"2.0",
+  "engine":"15-E Mock Assembly Rules v2",
+  "status":"BLUEPRINT_CONTROLLED",
+  "blueprint_source":"blueprint sslc.pdf",
+  "paper":{"total_questions":47,"total_marks":100},
+  "mark_totals":{"1":20,"2":10,"3":10,"4":5,"5":2},
+  "choice_note_from_source":["Two and Three Mark has each one choice question.","Four marks has Four choice questions.","Five marks has Two choice questions."],
+  "assembly_principles":["The uploaded chapter-wise weightage controls chapter allocation.","Question numbering/order is a separate assembly concern and must be based on an approved paper template/model-paper structure, not inferred from chapter row order.","Each selected item must match the exact chapter and mark requirement of its blueprint row.","A zero-allocation chapter is not selected for the final mock.","RTC, quote-from-memory, extract/context and similar formats are internal question-format tags; they do not create extra blueprint rows.","Historical questions must retain provenance and may be selected only when the assembled paper's use policy permits them; otherwise use them for recurrence/calibration and select original practice items.","Do not reuse the same canonical question in both a primary item and its choice.","Choices must be equivalent in mark value and appropriate to the same blueprint slot.","Final release requires exact totals of 47 questions and 100 marks."],
+  "required_rows":[
+    ["A Letter to God",0,1,0,0,0],["Nelson Mandela: Long Walk to Freedom",0,0,0,1,0],["His First Flight (Two Stories about Flying)",0,0,1,0,0],["Black Aeroplane (Two Stories about Flying)",0,0,1,0,0],["From the Diary of Anne Frank",0,0,1,0,0],["A Baker from Goa (Glimpses of India)",0,0,0,1,0],["Tea from Assam (Glimpses of India)",1,0,0,0,0],["Mijbil the Otter",0,0,1,0,0],["The Sermon at Benares",0,0,1,0,0],["The Proposal",0,1,0,0,0],
+    ["Dust of Snow",0,0,1,0,0],["Fire and Ice",0,0,0,1,0],["A Tiger in the Zoo",0,0,0,1,0],["How to Tell Wild Animals",1,1,0,0,0],["The Ball Poem",0,0,1,0,0],["The Trees",0,0,1,0,0],["Fog",1,0,0,0,0],["For Anne Gregory",0,0,1,0,0],
+    ["A Triumph of Surgery",0,1,0,0,0],["The Thief's Story",1,0,0,0,0],["The Midnight Visitor",0,1,0,0,0],["A Question of Trust",1,0,0,0,0],["Footprints without Feet",1,0,0,0,0],["The Making of a Scientist",0,1,0,0,0],["The Necklace",0,0,1,0,0],["Bholi",0,1,0,0,0],["The Book That Saved the Earth",1,0,0,0,0],
+    ["Grammar and Vocabulary",9,3,0,0,0],["Analogy",4,0,0,0,0],["Comprehension and Passage",0,0,0,1,0],["Composition (Essay and Letter Writing)",0,0,0,0,2]
+  ],
+  "zero_allocation_chapters":["Coorg (Glimpses of India)","Madam Rides the Bus","Amanda","The Tale of Custard the Dragon"],
+  "release_gate":{"must_pass":["all required rows satisfied","no zero-allocation chapter selected","47 questions","100 marks","mark-band totals 20/10/10/5/2","no duplicate canonical IDs","all selected questions have answers/rubrics","provenance retained","all choices are mark-equivalent"]}
+}
