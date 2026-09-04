@@ -1,0 +1,41 @@
+{
+  "course": "Class 10 First Language English (15-E) — NCERT",
+  "academic_year": "2026-27",
+  "source_policy": {
+    "controlling_source": "KSEAB 2026-27 15E blueprint supplied/linked for this project",
+    "format_reference": "KSEAB First Language English (NCERT) 15-E model paper supplied for this project",
+    "rule": "Do not infer 2026-27 chapter allocation from the older model paper when the blueprint specifies otherwise."
+  },
+  "paper_framework": {
+    "questions": 47,
+    "maximum_marks": 100,
+    "duration_minutes": 195,
+    "reading_time_minutes": 15
+  },
+  "question_slots": [
+    {"slot":"Q1-Q6","count":6,"marks_each":1,"total":6,"domain":"language","formats":["noun form","figure of speech","preposition","verb form","question tag","verbal phrase"]},
+    {"slot":"Q7-Q10","count":4,"marks_each":1,"total":4,"domain":"analogy"},
+    {"slot":"Q11-Q13","count":3,"marks_each":1,"total":3,"domain":"directed_language","formats":["voice transformation","question formation","specified part of speech"]},
+    {"slot":"Q14-Q20","count":7,"marks_each":1,"total":7,"domain":"literature"},
+    {"slot":"Q21-Q27","count":7,"marks_each":2,"total":14,"domain":"literature"},
+    {"slot":"Q28-Q30","count":3,"marks_each":2,"total":6,"domain":"directed_language","formats":["reported speech","simple/compound/complex","degrees of comparison"]},
+    {"slot":"Q31-Q36","count":6,"marks_each":3,"total":18,"domain":"literature"},
+    {"slot":"Q37-Q40","count":4,"marks_each":3,"total":12,"domain":"reference_to_context"},
+    {"slot":"Q41","count":1,"marks_each":4,"total":4,"domain":"quote_from_memory"},
+    {"slot":"Q42-Q44","count":3,"marks_each":4,"total":12,"domain":"literature"},
+    {"slot":"Q45","count":1,"marks_each":4,"total":4,"domain":"unseen_comprehension"},
+    {"slot":"Q46","count":1,"marks_each":5,"total":5,"domain":"essay"},
+    {"slot":"Q47","count":1,"marks_each":5,"total":5,"domain":"letter"}
+  ],
+  "content_scope": {
+    "literature": ["First Flight — Prose","First Flight — Poetry","Footprints Without Feet"],
+    "language": ["noun forms","figures of speech","prepositions","verb forms","question tags","verbal phrases","voice transformation","question formation","parts of speech","reported speech","simple/compound/complex sentences","degrees of comparison"],
+    "other": ["analogy","unseen comprehension","essay writing","letter writing"]
+  },
+  "bank_design": {
+    "required_tags": ["id","book","chapter","domain","question_type","marks","difficulty","skill","blueprint_slot","question","answer"],
+    "written_answer_fields": ["model_answer","answer_points"],
+    "choice_rule": "For OR-capable slots, store multiple equivalent alternatives but count only the answered option toward the student score.",
+    "mock_rule": "A full mock must contain exactly 47 numbered questions and total exactly 100 marks before publication."
+  }
+}
