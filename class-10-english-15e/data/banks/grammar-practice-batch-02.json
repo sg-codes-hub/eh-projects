@@ -1,0 +1,29 @@
+{
+  "course":"Class 10 First Language English (NCERT)",
+  "code":"15-E",
+  "target":"2026-27",
+  "status":"original_practice",
+  "purpose":"Original KSEAB-style grammar practice focused on transformation and usage patterns.",
+  "questions":[
+    {"id":"GR-P02-001","type":"rewrite","area":"reported_speech","difficulty":"medium","question":"Change into reported speech: Riya said, \"I have completed my project.\"","answer":"Riya said that she had completed her project."},
+    {"id":"GR-P02-002","type":"rewrite","area":"reported_speech","difficulty":"medium","question":"Change into reported speech: The teacher said to Arun, \"Do not waste your time.\"","answer":"The teacher advised Arun not to waste his time."},
+    {"id":"GR-P02-003","type":"rewrite","area":"passive_voice","difficulty":"medium","question":"Change into passive voice: The committee will announce the results tomorrow.","answer":"The results will be announced by the committee tomorrow."},
+    {"id":"GR-P02-004","type":"rewrite","area":"passive_voice","difficulty":"medium","question":"Change into passive voice: Someone has stolen my bicycle.","answer":"My bicycle has been stolen."},
+    {"id":"GR-P02-005","type":"rewrite","area":"degrees_of_comparison","difficulty":"medium","question":"Rewrite using the comparative degree: No other metal is as useful as iron.","answer":"Iron is more useful than any other metal."},
+    {"id":"GR-P02-006","type":"rewrite","area":"degrees_of_comparison","difficulty":"easy","question":"Rewrite using the positive degree: Mumbai is one of the largest cities in India.","answer":"Very few cities in India are as large as Mumbai."},
+    {"id":"GR-P02-007","type":"rewrite","area":"question_formation","difficulty":"medium","question":"Frame a question so that the underlined answer is elicited: The students visited Mysuru during the vacation.","answer":"Where did the students visit during the vacation?"},
+    {"id":"GR-P02-008","type":"rewrite","area":"question_formation","difficulty":"medium","question":"Frame a question for the answer: She has lived here for five years.","answer":"How long has she lived here?"},
+    {"id":"GR-P02-009","type":"rewrite","area":"if_clause","difficulty":"medium","question":"Complete meaningfully: If I had known about the meeting, __________.","answer":"I would have attended it."},
+    {"id":"GR-P02-010","type":"rewrite","area":"if_clause","difficulty":"easy","question":"Complete meaningfully: If you work hard, __________.","answer":"you will succeed."},
+    {"id":"GR-P02-011","type":"rewrite","area":"sentence_transformation","difficulty":"medium","question":"Combine using 'although': He was tired. He continued working.","answer":"Although he was tired, he continued working."},
+    {"id":"GR-P02-012","type":"rewrite","area":"sentence_transformation","difficulty":"medium","question":"Combine using 'because': The match was postponed. It was raining heavily.","answer":"The match was postponed because it was raining heavily."},
+    {"id":"GR-P02-013","type":"rewrite","area":"linkers","difficulty":"medium","question":"Join using 'unless': You must hurry. You will miss the bus.","answer":"Unless you hurry, you will miss the bus."},
+    {"id":"GR-P02-014","type":"rewrite","area":"linkers","difficulty":"medium","question":"Join using 'so...that': The box was very heavy. I could not lift it.","answer":"The box was so heavy that I could not lift it."},
+    {"id":"GR-P02-015","type":"rewrite","area":"tense_transformation","difficulty":"medium","question":"Rewrite in the simple past: She writes a letter to her friend.","answer":"She wrote a letter to her friend."},
+    {"id":"GR-P02-016","type":"rewrite","area":"tense_transformation","difficulty":"medium","question":"Rewrite in the present perfect: They finished the work.","answer":"They have finished the work."},
+    {"id":"GR-P02-017","type":"rewrite","area":"prefix_suffix","difficulty":"easy","question":"Add a suitable prefix to form the opposite of 'possible'.","answer":"impossible"},
+    {"id":"GR-P02-018","type":"rewrite","area":"prefix_suffix","difficulty":"easy","question":"Add a suitable suffix to 'kind' to form a noun.","answer":"kindness"},
+    {"id":"GR-P02-019","type":"error_correction","area":"subject_verb_agreement","difficulty":"medium","question":"Correct the error: Neither of the boys have completed the assignment.","answer":"Neither of the boys has completed the assignment."},
+    {"id":"GR-P02-020","type":"error_correction","area":"article_preposition","difficulty":"medium","question":"Correct the sentence: He is good in mathematics and lives in an village near Mysuru.","answer":"He is good at mathematics and lives in a village near Mysuru."}
+  ]
+}
