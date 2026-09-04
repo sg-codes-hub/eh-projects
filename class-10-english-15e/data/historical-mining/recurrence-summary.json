@@ -1,0 +1,31 @@
+{
+  "schema_version":"1.0",
+  "course":"Class 10 First Language English (NCERT)",
+  "code":"15-E",
+  "target":"2026-27",
+  "status":"framework-ready",
+  "note":"This file stores verified recurrence findings only. No frequency is treated as official blueprint weightage.",
+  "categories":{
+    "literature":{
+      "track":["chapter","theme","character/event","mark_level","RTC","quote_from_memory"],
+      "labels":["exact_repeat","near_repeat","recurring_concept","recurring_format"]
+    },
+    "grammar":{
+      "track":["noun_form","articles","prepositions","verb_forms","question_tags","phrasal_verbs","parts_of_speech","figures_of_speech","voice","question_formation","reported_speech","sentence_transformation","degrees_of_comparison","prefix/suffix","other_board_verified_forms"],
+      "labels":["exact_repeat","near_repeat","recurring_concept","recurring_format"]
+    },
+    "composition":{
+      "track":["essay","letter","task_context","purpose"],
+      "labels":["recurring_theme","recurring_task_type","single_occurrence"]
+    },
+    "comprehension":{
+      "track":["retrieval","inference","vocabulary","analysis","evidence_use"]
+    }
+  },
+  "priority_rules":{
+    "high":"verified recurrence across multiple 15-E years or paper types and compatible with the current blueprint",
+    "medium":"verified recurrence or strong representative KSEAB construction",
+    "low":"limited recurrence but retained for balanced syllabus coverage"
+  },
+  "next_population_step":"Populate records only from verified 15-E source papers; retain year, paper type, paper identifier and original question number for every historical record."
+}
