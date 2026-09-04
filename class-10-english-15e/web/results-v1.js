@@ -1,0 +1,6 @@
+const RESULTS_KEY='eh15e.results.v1';
+function loadResults(){try{return JSON.parse(localStorage.getItem(RESULTS_KEY)||'[]')}catch{return[]}}
+function saveResult(result){const all=loadResults();all.push({...result,id:Date.now().toString(36),savedAt:new Date().toISOString()});localStorage.setItem(RESULTS_KEY,JSON.stringify(all.slice(-100)));return result}
+function summarise(items,answers){const total=items.length;let correct=0,attempted=0;items.forEach((x,i)=>{const a=answers[i];if(a!==undefined&&a!==null&&a!==''&&(!Array.isArray(a)||a.some(Boolean)))attempted++;if(Array.isArray(x.options)&&Number(a)===Number(x.answer))correct++});return{total,attempted,correct,accuracy:attempted?Math.round(correct/attempted*100):0,score:correct}}
+function weakAreas(items,answers){const map={};items.forEach((x,i)=>{const key=x.chapter||x.topic||x.type||'General';map[key]??={attempted:0,correct:0};const a=answers[i];if(a!==undefined&&a!==null&&a!==''){map[key].attempted++;if(Array.isArray(x.options)&&Number(a)===Number(x.answer))map[key].correct++}});return Object.entries(map).map(([area,v])=>({...v,area,accuracy:v.attempted?Math.round(v.correct/v.attempted*100):0})).sort((a,b)=>a.accuracy-b.accuracy)}
+window.ResultsV1={loadResults,saveResult,summarise,weakAreas};
