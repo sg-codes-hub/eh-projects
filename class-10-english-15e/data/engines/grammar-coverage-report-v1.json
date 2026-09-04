@@ -1,0 +1,12 @@
+{
+  "schema_version":"1.0",
+  "report":"Grammar Coverage Report v1",
+  "status":"SOURCE_DISTRIBUTION_REPORT",
+  "source_inventory":110,
+  "important_limit":"Counts below are derived from the source batch labels/areas and are not an official KSEAB blueprint distribution.",
+  "coverage_method":"Use explicit area/type metadata where available; do not infer official exam weightage from practice-bank frequency.",
+  "concept_groups":{"reported_speech":{"priority":"review_for_variety"},"passive_voice":{"priority":"review_for_variety"},"degrees":{"priority":"review_for_variety"},"question_tags":{"priority":"review_for_variety"},"verb_forms":{"priority":"coverage_candidate"},"word_formation":{"priority":"coverage_candidate"},"articles":{"priority":"coverage_candidate"},"prepositions":{"priority":"coverage_candidate"},"conditionals":{"priority":"coverage_candidate"},"linkers":{"priority":"coverage_candidate"},"sentence_transformation":{"priority":"coverage_candidate"},"editing":{"priority":"coverage_candidate"},"question_formation":{"priority":"coverage_candidate"}},
+  "sampling_recommendation":"Use concept diversity and source-batch diversity when generating practice sets; retain all 110 source records in the master bank.",
+  "blueprint_policy":"Do not convert this coverage report into marks or question counts for the official mock until the authoritative 2026-27 blueprint is mapped row-by-row.",
+  "next_step":"Run record-level concept tagging and similarity scoring, then fill genuine concept gaps with new questions or verified historical-paper evidence."
+}
