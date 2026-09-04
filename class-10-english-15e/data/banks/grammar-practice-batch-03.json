@@ -1,0 +1,29 @@
+{
+  "course": "Class 10 First Language English (NCERT) – 15-E",
+  "academic_year": "2026-27",
+  "batch": "grammar-practice-03",
+  "status": "original_practice",
+  "note": "Fresh practice items modelled on the documented 15-E style. Historical papers inform patterns; they are not reproduced verbatim.",
+  "questions": [
+    {"id":"G03-001","type":"noun_form","marks":1,"prompt":"Choose the correct noun form: The teacher appreciated her ________. (honest)","answer":"honesty","difficulty":"easy"},
+    {"id":"G03-002","type":"article","marks":1,"prompt":"Fill in the blank with a suitable article: He is ___ honest student.","answer":"an","difficulty":"easy"},
+    {"id":"G03-003","type":"preposition","marks":1,"prompt":"Fill in the blank with a suitable preposition: The students were waiting ___ the bus stop.","answer":"at","difficulty":"easy"},
+    {"id":"G03-004","type":"verb_form","marks":1,"prompt":"Use the correct form of the verb: If she ________ hard, she will succeed. (work)","answer":"works","difficulty":"easy"},
+    {"id":"G03-005","type":"question_tag","marks":1,"prompt":"Add a suitable question tag: You have completed the assignment, ________?","answer":"haven't you?","difficulty":"easy"},
+    {"id":"G03-006","type":"verbal_phrase","marks":1,"prompt":"Fill in the blank with a suitable infinitive: We went to the library ________ some reference books. (find)","answer":"to find","difficulty":"easy"},
+    {"id":"G03-007","type":"reported_speech","marks":1,"prompt":"Change into reported speech: Ravi said, \"I am preparing for the examination.\"","answer":"Ravi said that he was preparing for the examination.","difficulty":"medium"},
+    {"id":"G03-008","type":"passive_voice","marks":1,"prompt":"Change into passive voice: The students planted many trees.","answer":"Many trees were planted by the students.","difficulty":"medium"},
+    {"id":"G03-009","type":"degree_transformation","marks":1,"prompt":"Rewrite using the comparative degree: No other metal is as useful as iron.","answer":"Iron is more useful than any other metal.","difficulty":"medium"},
+    {"id":"G03-010","type":"question_formation","marks":1,"prompt":"Frame a question to get the underlined answer: Meena visited Mysuru during the holidays.","answer":"When did Meena visit Mysuru during the holidays?","difficulty":"medium"},
+    {"id":"G03-011","type":"if_clause","marks":1,"prompt":"Complete the sentence: If I had known about the meeting, I ________ attended it.","answer":"would have","difficulty":"medium"},
+    {"id":"G03-012","type":"linker","marks":1,"prompt":"Combine using a suitable linker: He was tired. He continued working.","answer":"Although he was tired, he continued working.","difficulty":"medium"},
+    {"id":"G03-013","type":"sentence_transformation","marks":1,"prompt":"Rewrite using ‘unless’: If you do not hurry, you will miss the train.","answer":"Unless you hurry, you will miss the train.","difficulty":"medium"},
+    {"id":"G03-014","type":"tense_transformation","marks":1,"prompt":"Rewrite in the past perfect tense: The bell rings before the students enter the classroom.","answer":"The bell had rung before the students entered the classroom.","difficulty":"medium"},
+    {"id":"G03-015","type":"subject_verb_agreement","marks":1,"prompt":"Choose the correct verb: Neither the teacher nor the students ________ ready. (was/were)","answer":"were","difficulty":"medium"},
+    {"id":"G03-016","type":"prefix_suffix","marks":1,"prompt":"Add a suitable prefix to form the opposite of ‘possible’.","answer":"impossible","difficulty":"easy"},
+    {"id":"G03-017","type":"parts_of_speech","marks":1,"prompt":"Identify the part of speech of the underlined word: She spoke **softly** to the child.","answer":"adverb","difficulty":"easy"},
+    {"id":"G03-018","type":"figure_of_speech","marks":1,"prompt":"Identify the figure of speech: The moon smiled at the sleeping village.","answer":"personification","difficulty":"medium"},
+    {"id":"G03-019","type":"editing","marks":1,"prompt":"Correct the error: Each of the players have received a certificate.","answer":"Each of the players has received a certificate.","difficulty":"medium"},
+    {"id":"G03-020","type":"preposition","marks":1,"prompt":"Fill in the blank with a suitable preposition: She has been absent ___ Monday.","answer":"since","difficulty":"easy"}
+  ]
+}
