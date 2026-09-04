@@ -1,0 +1,48 @@
+{
+  "course": "Class 10 First Language English (15-E) — NCERT",
+  "academic_year": "2026-27",
+  "status": "design specification",
+  "rule": "The generator must use the official 2026-27 15E blueprint for allocation. The observed 47-question structure is the implementation baseline from the supplied 15E paper and must be validated against the current blueprint before publication.",
+  "paper": {
+    "questions": 47,
+    "marks": 100,
+    "duration_minutes": 195,
+    "reading_time_minutes": 15
+  },
+  "slot_rules": [
+    {"slot":"Q1-Q6","count":6,"marks_each":1,"domain":"language","selection":"one item from each required language format"},
+    {"slot":"Q7-Q10","count":4,"marks_each":1,"domain":"analogy","selection":"four analogy items with varied relationship types"},
+    {"slot":"Q11-Q13","count":3,"marks_each":1,"domain":"directed_language","selection":"voice, question formation and specified word-use formats"},
+    {"slot":"Q14-Q20","count":7,"marks_each":1,"domain":"literature","selection":"balanced textbook coverage; avoid over-repeating one chapter"},
+    {"slot":"Q21-Q27","count":7,"marks_each":2,"domain":"literature","selection":"mix First Flight and Footprints according to blueprint"},
+    {"slot":"Q28-Q30","count":3,"marks_each":2,"domain":"directed_language","selection":"reported speech, sentence transformation and degrees of comparison"},
+    {"slot":"Q31-Q36","count":6,"marks_each":3,"domain":"literature","selection":"interpretive/application-oriented written questions"},
+    {"slot":"Q37-Q40","count":4,"marks_each":3,"domain":"reference_to_context","selection":"context-based extracts from prescribed literature"},
+    {"slot":"Q41","count":1,"marks_each":4,"domain":"quote_from_memory","selection":"one prescribed poem/stanza with an OR alternative where required"},
+    {"slot":"Q42-Q44","count":3,"marks_each":4,"domain":"literature","selection":"long-answer literature questions with OR alternatives where prescribed"},
+    {"slot":"Q45","count":1,"marks_each":4,"domain":"unseen_comprehension","selection":"new passage; test retrieval, inference and vocabulary"},
+    {"slot":"Q46","count":1,"marks_each":5,"domain":"essay","selection":"board-style composition task"},
+    {"slot":"Q47","count":1,"marks_each":5,"domain":"letter","selection":"board-style letter-writing task"}
+  ],
+  "selection_constraints": [
+    "Never select content outside the 15E NCERT prescribed scope.",
+    "Never mix 14E or 31E question formats/content into a 15E paper without explicit evidence that the same format is required for 15E.",
+    "Prefer unseen combinations of already-learned content over repeated wording.",
+    "Keep difficulty balanced across easy, medium and challenging items.",
+    "Do not duplicate the same question in a single paper.",
+    "Validate marks before publishing: total must equal 100.",
+    "Validate numbering before publishing: exactly 47 numbered questions.",
+    "Treat OR alternatives as alternatives, not additional scored questions."
+  ],
+  "practice_modes": [
+    "chapter_practice",
+    "grammar_drill",
+    "analogy_drill",
+    "reference_to_context",
+    "quote_from_memory",
+    "comprehension",
+    "composition",
+    "mixed_revision",
+    "full_mock"
+  ]
+}
