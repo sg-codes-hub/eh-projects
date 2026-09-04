@@ -1,0 +1,11 @@
+{
+  "schema_version":"1.0",
+  "engine":"Grammar Concept Deduplication & Coverage v1",
+  "purpose":"Group the 110 original grammar practice records by concept so sampling can avoid excessive near-repeats and expose coverage gaps.",
+  "source_batches":["grammar-practice-batch-01.json","grammar-practice-batch-02.json","grammar-practice-batch-03.json","grammar-practice-batch-04.json"],
+  "concept_rules":{"article":["article"],"preposition":["preposition"],"verb_forms":["verb_form","tense_transformation"],"question_tags":["question_tag"],"reported_speech":["reported_speech"],"passive_voice":["passive_voice"],"degrees":["degree","degree_transformation"],"question_formation":["question_formation"],"conditionals":["if_clause"],"linkers":["linker"],"sentence_transformation":["sentence_transformation"],"verbal_phrases":["verbal_phrase"],"subject_verb_agreement":["subject_verb_agreement"],"word_formation":["noun_form","prefix","suffix","prefix_suffix"],"parts_of_speech":["parts_of_speech"],"figures_of_speech":["figure_of_speech"],"editing":["editing"],"mixed_objective":["mixed_mcq"]},
+  "similarity_policy":{"same_concept":true,"same_prompt_pattern":true,"same_answer_pattern":true,"exact_duplicate_text":true,"cross_batch_review":true},
+  "sampling_policy":["Do not treat unique IDs as proof of unique learning value.","Prefer concept diversity within a practice set.","Limit near-identical prompt patterns when enough alternatives exist.","Retain repeated concepts in the master bank because repeated practice is useful.","Do not delete or rewrite source questions during deduplication; apply selection metadata instead."],
+  "coverage_report_schema":{"concept":"string","record_count":"number","batch_distribution":"object","priority":"underrepresented|balanced|overrepresented","selection_note":"string"},
+  "release_gate":"Concept metadata is advisory until record-level canonical migration is complete; it must not alter source answers or official blueprint allocation."
+}
