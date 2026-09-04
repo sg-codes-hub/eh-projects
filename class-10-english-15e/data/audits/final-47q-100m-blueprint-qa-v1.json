@@ -1,0 +1,16 @@
+{
+  "schema_version":"1.0",
+  "status":"BLUEPRINT_QA_COMPLETE_WITH_SOURCE_FLAG",
+  "source":"user-supplied 2026-27 15E chapter-wise content weightage",
+  "source_file":"blueprint sslc.pdf",
+  "hard_totals":{"questions":47,"marks":100,"1m":20,"2m":10,"3m":10,"4m":5,"5m":2},
+  "checks":{"question_total":true,"mark_total":true,"mark_band_totals":true},
+  "zero_allocation_chapters":["Coorg","Madam Rides the Bus","Amanda","The Tale of Custard the Dragon"],
+  "selection_rule":"A production question is eligible only if its chapter, mark value, syllabus status, answer key and provenance are validated. Chapter presence alone is insufficient.",
+  "choice_rule":"Respect the supplied blueprint note: one choice each in 2M and 3M; four choice questions in 4M; two choice questions in 5M. Exact paper numbering/order is not specified by this source.",
+  "rtc_quote_policy":"RTC and Quote-from-Memory are not independent blueprint categories. They may be used only as formats mapped to an allocated chapter/mark slot.",
+  "source_flag":{"chapter":"For Anne Gregory","issue":"q_4m=1 while total_marks=3 in the transcribed source data","action":"REQUIRES_RECHECK_AGAINST_ORIGINAL_UPLOADED_IMAGE_BEFORE FINAL PRODUCTION MOCK"},
+  "pyq_policy":"Final, Mid-term and Supplementary/Exam-2/Exam-3 papers are evidence for recurrence and style, not automatic replacements for blueprint allocation. Preserve provenance.",
+  "final_gate":"Do not label a generated paper production-ready until every selected question passes chapter+mark+answer+provenance+duplicate checks and the complete paper recomputes to 47 questions/100 marks.",
+  "next_build":"PYQ recurrence mining and final candidate selection; no additional architecture required."
+}
