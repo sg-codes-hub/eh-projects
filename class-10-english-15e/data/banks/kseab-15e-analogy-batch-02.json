@@ -1,0 +1,12 @@
+[
+{"id":"15E-AN-011","category":"Analogy","marks":1,"type":"mcq","question":"honest : dishonest :: regular : ___","options":["irregular","regularity","regularly","regulate"],"answer":0,"explanation":"The relationship is adjective to its negative form."},
+{"id":"15E-AN-012","category":"Analogy","marks":1,"type":"mcq","question":"victory : defeat :: success : ___","options":["failure","progress","effort","reward"],"answer":0,"explanation":"Both pairs express opposites."},
+{"id":"15E-AN-013","category":"Analogy","marks":1,"type":"mcq","question":"teach : school :: treat : ___","options":["hospital","library","court","market"],"answer":0,"explanation":"A teacher works at a school; a doctor treats patients at a hospital."},
+{"id":"15E-AN-014","category":"Analogy","marks":1,"type":"mcq","question":"poem : poet :: novel : ___","options":["author","reader","publisher","library"],"answer":0,"explanation":"A poet writes a poem; an author writes a novel."},
+{"id":"15E-AN-015","category":"Analogy","marks":1,"type":"mcq","question":"seed : plant :: egg : ___","options":["bird","nest","shell","tree"],"answer":0,"explanation":"A seed develops into a plant; an egg can develop into a bird."},
+{"id":"15E-AN-016","category":"Analogy","marks":1,"type":"mcq","question":"eye : vision :: ear : ___","options":["hearing","speech","touch","smell"],"answer":0,"explanation":"Vision is the function associated with the eye; hearing with the ear."},
+{"id":"15E-AN-017","category":"Analogy","marks":1,"type":"mcq","question":"kind : cruel :: brave : ___","options":["cowardly","bold","strong","calm"],"answer":0,"explanation":"Both pairs express contrasting qualities."},
+{"id":"15E-AN-018","category":"Analogy","marks":1,"type":"mcq","question":"book : pages :: tree : ___","options":["leaves","fruit","forest","shade"],"answer":0,"explanation":"Pages are parts of a book; leaves are parts of a tree."},
+{"id":"15E-AN-019","category":"Analogy","marks":1,"type":"mcq","question":"child : childhood :: adult : ___","options":["adulthood","age","parent","maturity"],"answer":0,"explanation":"Child corresponds to childhood; adult corresponds to adulthood."},
+{"id":"15E-AN-020","category":"Analogy","marks":1,"type":"mcq","question":"speak : speech :: decide : ___","options":["decision","decisive","deciding","decided"],"answer":0,"explanation":"The noun formed from speak is speech; from decide it is decision."}
+]
