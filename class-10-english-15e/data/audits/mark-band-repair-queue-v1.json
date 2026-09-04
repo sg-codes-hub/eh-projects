@@ -1,0 +1,21 @@
+{
+  "schema_version":"1.0",
+  "audit":"15-E Mark-Band Repair Queue v1",
+  "basis":"Authoritative user-supplied 2026-27 chapter-wise content-weightage blueprint plus current repository question bank",
+  "rule":"A chapter is covered only by validated questions whose marks match the blueprint allocation. A different-mark question is not counted as coverage.",
+  "repairs":[
+    {"chapter":"A Letter to God","required":"1x2M","observed_issue":"current visible bank includes 1M and 3M/5M material, not a validated 2M candidate","action":"CREATE_OR_REWRITE_2M","priority":"HIGH"},
+    {"chapter":"From the Diary of Anne Frank","required":"1x3M","observed_issue":"visible bank has 1M/2M material; 3M candidate requires validation","action":"CREATE_OR_REWRITE_3M","priority":"HIGH"},
+    {"chapter":"A Baker from Goa (Glimpses of India)","required":"1x4M","observed_issue":"visible bank has 1M/2M material; 4M candidate requires validation","action":"CREATE_OR_REWRITE_4M","priority":"HIGH"},
+    {"chapter":"Tea from Assam (Glimpses of India)","required":"1x1M","observed_issue":"visible bank has 1M candidate; validate and retain if quality passes","action":"VALIDATE_1M","priority":"MEDIUM"},
+    {"chapter":"The Proposal","required":"1x2M","observed_issue":"visible bank has 1M/2M material; 2M candidate must pass quality validation","action":"VALIDATE_2M","priority":"MEDIUM"},
+    {"chapter":"Grammar and Vocabulary","required":"9x1M + 3x2M","observed_issue":"bank contains objective items but mark-band/type normalization is required","action":"NORMALIZE_AND_VALIDATE","priority":"HIGH"},
+    {"chapter":"Analogy","required":"4x1M","observed_issue":"bank contains four 1M items; one previously flagged relationship requires correction","action":"REWRITE_FLAGGED_ITEM_AND_VALIDATE","priority":"HIGH"},
+    {"chapter":"Comprehension and Passage","required":"1x4M","observed_issue":"passage/question set exists; normalize scoring and answer key","action":"NORMALIZE_AND_VALIDATE","priority":"HIGH"},
+    {"chapter":"Composition (Essay and Letter Writing)","required":"2x5M","observed_issue":"essay and letter prompts exist; validate rubric and exact 5M mapping","action":"NORMALIZE_AND_VALIDATE","priority":"HIGH"}
+  ],
+  "zero_allocation_exclusions":["Coorg (Glimpses of India)","Madam Rides the Bus","Amanda","The Tale of Custard the Dragon"],
+  "pyq_policy":"Final, mid-term and supplementary/exam-2/exam-3 questions may be used for recurrence and provenance analysis. Historical provenance must remain explicit.",
+  "assembly_gate":"Do not assemble the final 47Q/100M paper until every non-zero blueprint row has sufficient validated candidates at the exact required mark band and all global section constraints pass.",
+  "status":"REPAIR_QUEUE_READY"
+}
