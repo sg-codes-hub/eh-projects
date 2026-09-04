@@ -1,0 +1,3 @@
+const MODES={firstFlight:{title:'First Flight',count:10},footprints:{title:'Footprints Without Feet',count:10},grammar:{title:'Grammar',count:15},rtc:{title:'RTC & Quote from Memory',count:10},composition:{title:'Composition',count:5},comprehension:{title:'Comprehension',count:5}};
+async function startPractice(type){if(!window.QuestionBankLoader)throw new Error('QuestionBankLoader is not loaded');const mode=MODES[type];if(!mode)throw new Error('Unknown practice mode');const items=await QuestionBankLoader.loadPractice(type,mode.count);sessionStorage.setItem('eh15e.practice',JSON.stringify({type,title:mode.title,items,startedAt:new Date().toISOString()}));window.location.href='practice.html?mode='+encodeURIComponent(type)}
+window.PracticeModes={MODES,startPractice};
