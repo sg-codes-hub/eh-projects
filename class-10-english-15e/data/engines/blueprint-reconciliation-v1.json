@@ -1,0 +1,12 @@
+{
+  "schema_version":"1.0",
+  "engine":"15-E Blueprint Reconciliation v1",
+  "status":"RECONCILIATION_REGISTER",
+  "authoritative_rule":"The repository's explicit 2026-27 blueprint is the controlling allocation source; practice-bank frequency and historical-paper frequency cannot override it.",
+  "exam_shell":{"questions":47,"marks":100,"duration_minutes":195,"reading_time_minutes":15},
+  "registered_slots":[{"range":"Q1-Q6","area":"language","status":"mapped"},{"range":"Q7-Q10","area":"analogy","status":"mapped"},{"range":"Q11-Q13","area":"directed_language","status":"mapped"},{"range":"Q14-Q20","area":"literature","status":"mapped"},{"range":"Q21-Q27","area":"literature_2m","status":"mapped"},{"range":"Q28-Q30","area":"directed_language","status":"mapped"},{"range":"Q31-Q36","area":"literature_3m","status":"mapped"},{"range":"Q37-Q40","area":"rtc","status":"mapped"},{"range":"Q41","area":"quote_from_memory","status":"mapped"},{"range":"Q42-Q44","area":"literature_4m","status":"mapped"},{"range":"Q45","area":"unseen_comprehension","status":"mapped"},{"range":"Q46","area":"essay","status":"mapped"},{"range":"Q47","area":"letter","status":"mapped"}],
+  "reconciliation_flags":[{"item":"quote_from_memory_marks","status":"OPEN","reason":"Existing quote-memory bank records 2 marks, while the blueprint register currently used by the mock assembler specifies Q41 as 4 marks. Do not alter source questions until authoritative source reconciliation is completed."},{"item":"rtc_marks","status":"OPEN","reason":"RTC source bank must be checked against the exact current blueprint mark value before publication."},{"item":"directed_language","status":"OPEN","reason":"Exact subtypes and mark allocation must be validated against the authoritative blueprint rather than inferred from practice banks."}],
+  "pyq_policy":{"final":true,"mid_term":true,"supplementary":true,"use":"recurrence/concept evidence only unless an item is explicitly verified as a historical question"},
+  "release_rule":"No 47-question test manifest may be marked PASS while any OPEN reconciliation flag affects question count or marks.",
+  "next_action":"Resolve each OPEN flag from the authoritative blueprint/source documents, then run slot-level bank availability validation."
+}
