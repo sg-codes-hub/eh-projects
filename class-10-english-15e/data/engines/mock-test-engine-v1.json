@@ -1,0 +1,15 @@
+{
+  "schema_version":"1.0",
+  "engine":"KSEAB 15-E Mock Test Engine v1",
+  "purpose":"Assemble interactive full-length Class 10 First Language English (NCERT) 15-E practice tests from approved question banks.",
+  "controlling_source":"2026-27 official 15-E blueprint supplied for this project",
+  "exam_shell":{"question_count":47,"maximum_marks":100,"duration_minutes":195},
+  "assembly_rules":["The current 2026-27 blueprint controls section/question/mark allocation.","Use only questions tagged for 15-E and mapped to an approved syllabus unit.","Balance First Flight, Footprints Without Feet, grammar, composition and comprehension according to the blueprint.","Avoid duplicate questions within one test.","Prefer historically recurring concepts for priority practice, but do not infer official weightage from frequency alone.","Mix difficulty levels while preserving the intended board pattern.","Every generated test must have a deterministic answer key and question metadata."],
+  "modes":["full_mock","section_test","chapter_test","grammar_test","weak_area_test","historical_pattern_test"],
+  "difficulty_profile":{"standard":{"easy":0.30,"medium":0.50,"hard":0.20},"challenge":{"easy":0.15,"medium":0.50,"hard":0.35},"revision":{"easy":0.45,"medium":0.45,"hard":0.10}},
+  "question_selection":{"weights":{"blueprint_match":50,"historical_recurrence":20,"coverage_balance":15,"skill_balance":10,"novelty":5},"hard_constraints":["15-E-only","syllabus-valid","blueprint-valid","answer-key-present","no duplicate question IDs"]},
+  "student_features":["timer","progress_indicator","mark-for-review","next/previous navigation","autosave local progress","submit-and-score","section-wise score","question-wise explanations","retry incorrect questions"],
+  "results":{"show_total_score":true,"show_section_scores":true,"show_accuracy":true,"show_time_used":true,"show_incorrect_questions":true,"show_explanations":true,"show_priority_revision_topics":true},
+  "provenance":{"required_fields":["source_type","year","paper_type","chapter_or_skill","historical_tag"],"source_types":["original_english_hub","pyq_exact","pyq_near_repeat","recurring_concept","recurring_format"]},
+  "validation":{"before_publish":["47 questions","100 marks","195 minutes","all required blueprint components present","no unsupported question type","all answers present","all content marked 15-E","composition and comprehension rules satisfied"],"fail_closed":true}
+}
