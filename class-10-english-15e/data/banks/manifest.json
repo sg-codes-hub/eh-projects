@@ -1,0 +1,9 @@
+{
+  "version": "1.0.0",
+  "banks": [
+    "first-flight-prose-batch-01.json",
+    "first-flight-poetry-complete.json",
+    "footprints-complete.json",
+    "grammar-composition-complete.json"
+  ]
+}
