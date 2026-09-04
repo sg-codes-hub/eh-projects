@@ -1,0 +1,32 @@
+{
+  "schema_version":"1.0",
+  "audit":"15-E Question Quality + Provenance Audit v1",
+  "scope":"Audited repository content currently retrievable in the project; this report does not claim to audit files that were not retrievable in this pass.",
+  "blueprint_source":"kseab-15e-2026-27-chapter-wise-content-weightage-authoritative.json",
+  "status":"PASS_WITH_REPAIRS",
+  "findings":[
+    {"id":"QPA-001","severity":"HIGH","file":"data/banks/first-flight-prose-batch-02.json","question_id":"FFPR2-012","issue":"Chapter has zero allocation in the supplied blueprint (Coorg).","action":"Keep for general practice but exclude from blueprint-controlled mock assembly."},
+    {"id":"QPA-002","severity":"HIGH","file":"data/banks/first-flight-prose-batch-02.json","question_id":"FFPR2-015","issue":"Chapter has zero allocation in the supplied blueprint (Madam Rides the Bus).","action":"Keep for general practice but exclude from blueprint-controlled mock assembly."},
+    {"id":"QPA-003","severity":"HIGH","file":"data/banks/first-flight-prose-batch-02.json","question_id":"FFPR2-020","issue":"A Letter to God is blueprint-weighted at 2 marks, while this candidate is 5 marks.","action":"Do not count FFPR2-020 as the required A Letter to God blueprint slot; retain only as non-blueprint practice or rework if a valid 2M form is created."},
+    {"id":"QPA-004","severity":"MEDIUM","file":"data/banks/grammar-composition-complete.json","question_id":"AN-02","issue":"Analogy relation is not cleanly parallel: kind:kindness is adjective→noun, while laugh:laughter is verb→noun.","action":"Rewrite the analogy so both sides use the same relationship type."},
+    {"id":"QPA-005","severity":"MEDIUM","file":"data/banks/grammar-composition-complete.json","question_id":"RC-01","issue":"Comprehension is stored as one 4-mark passage item, but final-paper generation should preserve sub-question structure and marking granularity.","action":"Normalize into passage + subquestions + per-subquestion marks/answer points before assembly."},
+    {"id":"QPA-006","severity":"MEDIUM","file":"data/banks/grammar-composition-complete.json","question_id":"CO-ESSAY-01","issue":"Essay prompt is valid as a 5-mark composition candidate but model answer is rubric guidance rather than a full model essay.","action":"Retain rubric answer for evaluation; add a full model response only where the product requirement calls for one."},
+    {"id":"QPA-007","severity":"MEDIUM","file":"data/banks/grammar-composition-complete.json","question_id":"CO-LETTER-01","issue":"Letter prompt is valid as a 5-mark composition candidate but stored answer is a checklist rather than a full model letter.","action":"Retain checklist for automated evaluation; add a full model letter for student-facing solution mode."},
+    {"id":"QPA-008","severity":"LOW","file":"data/banks/first-flight-prose-batch-02.json","question_id":"FFPR2-001","issue":"Provenance field is absent from the record.","action":"Assign provenance=original_practice unless historical source evidence is later supplied; do not label as PYQ."}
+  ],
+  "validated_examples":[
+    "FFPR2-002: 3M A Letter to God candidate exists but is not the blueprint-required 2M slot.",
+    "FFPR2-004: 4M Nelson Mandela candidate matches blueprint mark band.",
+    "FFPR2-006: 3M His First Flight candidate matches blueprint mark band.",
+    "FFPR2-008: 3M Black Aeroplane candidate matches blueprint mark band.",
+    "FFPR2-009: 2M Anne Frank candidate exists but blueprint requires 3M; do not count as exact slot.",
+    "FFPR2-010: 4M Anne Frank candidate exists but blueprint requires 3M; do not count as exact slot.",
+    "FFPR2-011: 1M A Baker from Goa candidate exists but blueprint requires 4M; do not count as exact slot.",
+    "FFPR2-013: 2M Tea from Assam candidate exists but blueprint requires 1M; do not count as exact slot.",
+    "FFPR2-018: 1M The Proposal candidate exists but blueprint requires 2M; do not count as exact slot.",
+    "Grammar bank contains 1M and 2M records across multiple topics; exact blueprint selection must be applied at assembly time.",
+    "Analogy bank contains four 1M candidates, matching the supplied blueprint's four 1M analogy questions."
+  ],
+  "important_conclusion":"Having a question from the correct chapter is not sufficient. The candidate must also match the blueprint's required mark band. This audit therefore replaces simple chapter-presence coverage with exact chapter+mark eligibility.",
+  "next_gate":"Create a shortage matrix using exact chapter+mark matching across every retrievable bank; then repair flagged questions and integrate verified Final/Mid-term/Supplementary provenance records."
+}
