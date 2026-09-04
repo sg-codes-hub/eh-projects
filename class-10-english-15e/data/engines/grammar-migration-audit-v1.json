@@ -1,0 +1,13 @@
+{
+  "schema_version":"1.0",
+  "audit":"Grammar Batch 01 source migration audit",
+  "source":"data/banks/grammar-practice-batch-01.json",
+  "target":"data/banks/grammar-canonical-batch-01.json",
+  "source_metadata":{"course":"Class 10 First Language English (NCERT)","code":"15-E","target":"2026-27","status":"original_practice","purpose":"Original KSEAB-style grammar practice; not copied PYQs."},
+  "inventory":{"source_records":20,"explicit_difficulty":20,"explicit_answers":20,"explicit_ids":20,"explicit_areas":20,"explicit_types":20,"explicit_marks":0,"explicit_provenance_per_record":0},
+  "safe_mappings":{"section":"grammar","source_type":"original_english_hub","syllabus_unit":"from explicit area field only","question":"question","answer_or_rubric":"answer","difficulty":"difficulty","id":"id"},
+  "type_observations":{"1M":"legacy label; not converted to official marks by this audit","2M":"legacy label; not converted to official marks by this audit"},
+  "validation":{"ready_for_practice":true,"ready_for_blueprint_pool":false,"blocking_fields":["marks","record-level historical_tag/provenance metadata"],"reason":"The source is explicitly original practice, but it does not provide row-level marks or historical-paper provenance. Those values must not be invented."},
+  "migration_result":"REVIEW_REQUIRED",
+  "next_action":"Canonicalize all 20 records while preserving IDs and answers, then add only source-supported metadata; separately assign official blueprint marks when an authoritative blueprint/source establishes them."
+}
