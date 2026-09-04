@@ -1,0 +1,6 @@
+const BANK_MANIFEST={firstFlight:['../data/banks/first-flight-practice-batch-01.json','../data/banks/first-flight-practice-batch-02.json'],footprints:['../data/banks/footprints-practice-batch-01.json','../data/banks/footprints-practice-batch-02.json'],grammar:['../data/banks/grammar-practice-batch-01.json','../data/banks/grammar-practice-batch-02.json','../data/banks/grammar-practice-batch-03.json','../data/banks/grammar-practice-batch-04.json'],rtc:['../data/banks/rtc-quote-memory-batch-01.json'],composition:['../data/banks/composition-batch-01.json'],comprehension:['../data/banks/comprehension-batch-01.json']};
+async function loadJson(url){const r=await fetch(url);if(!r.ok)throw new Error(`Unable to load ${url}`);return r.json()}
+async function loadBank(type){const urls=BANK_MANIFEST[type]||[];const docs=await Promise.all(urls.map(loadJson));return docs.flatMap(d=>d.items||[])}
+async function loadPractice(type='grammar',count=10){const items=await loadBank(type);return shuffle(items).slice(0,Math.min(count,items.length))}
+function shuffle(items){const a=[...items];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+window.QuestionBankLoader={loadBank,loadPractice,BANK_MANIFEST};
