@@ -1,0 +1,77 @@
+{
+  "schema_version": "1.0",
+  "course": "Class 10 First Language English (NCERT)",
+  "code": "15-E",
+  "academic_target": "2026-27",
+  "purpose": "Use historical KSEAB 15-E papers as evidence for question-bank design without treating historical distributions as the current official blueprint.",
+  "source_priority": [
+    "2026-27 official KSEAB blueprint",
+    "2026-27 official/model material when available",
+    "15-E final/annual examination papers",
+    "15-E supplementary/Exam-2/Exam-3 papers",
+    "15-E preparatory/model papers",
+    "15-E school mid-term/term papers supplied to the project"
+  ],
+  "historical_corpus": [
+    {
+      "period": "2021-22",
+      "paper_types": ["model"],
+      "status": "confirmed",
+      "notes": "15E NCERT model paper; 47-question, 100-mark, 3-hour-15-minute structure."
+    },
+    {
+      "period": "2022-23",
+      "paper_types": ["preparatory/model"],
+      "status": "confirmed",
+      "notes": "15E preparatory/model material is included as pattern evidence."
+    },
+    {
+      "period": "2023",
+      "paper_types": ["final", "supplementary"],
+      "status": "confirmed",
+      "notes": "15E final and supplementary variants should be mined separately because supplementary papers provide alternative formulations."
+    },
+    {
+      "period": "2024",
+      "paper_types": ["final", "Exam-2", "Exam-3", "supplementary"],
+      "status": "confirmed",
+      "notes": "15E Exam-2, Exam-3 and supplementary variants are part of the historical evidence set."
+    },
+    {
+      "period": "2025-26",
+      "paper_types": ["model"],
+      "status": "confirmed",
+      "notes": "KSEAB 15-E Model Question Paper-1; use for current-format validation, not as a substitute for the 2026-27 blueprint."
+    },
+    {
+      "period": "2026-27",
+      "paper_types": ["official blueprint"],
+      "status": "controlling",
+      "notes": "The official 15E blueprint controls current allocation and paper-generation rules."
+    }
+  ],
+  "mid_term_policy": {
+    "include": true,
+    "priority": "supporting",
+    "use_for": ["chapter-level practice", "alternate wording", "concept coverage", "diagnostic practice"],
+    "do_not_use_for": ["claiming official SSLC final weightage", "overriding the KSEAB blueprint"]
+  },
+  "question_provenance": {
+    "required_fields": ["source_type", "year_or_period", "paper_identifier", "original_question_number"],
+    "labels": {
+      "historical": "Historical KSEAB/approved-paper question",
+      "adapted": "New question adapted from a historical pattern",
+      "original": "New question created for English Hub"
+    }
+  },
+  "analysis_rules": [
+    "Count recurring concepts separately from exact repeated questions.",
+    "Track grammar form and construction, not only topic names.",
+    "Track chapter recurrence across final and supplementary papers.",
+    "Use supplementary and Exam-2/Exam-3 papers to expand alternate formulations.",
+    "Use mid-term papers for chapter and skill coverage, not official final-exam weightage.",
+    "Never mix 14-E, 31-E or other English codes into the 15-E bank.",
+    "Never copy a historical question into a generated mock without preserving provenance.",
+    "Prefer fresh questions that reproduce KSEAB style and competency while avoiding unnecessary verbatim duplication."
+  ]
+}
