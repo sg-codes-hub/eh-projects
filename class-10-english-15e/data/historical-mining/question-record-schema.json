@@ -1,0 +1,59 @@
+{
+  "schema_version": "1.0",
+  "record_type": "15e_question",
+  "required_fields": [
+    "id",
+    "year_or_period",
+    "source_type",
+    "paper_identifier",
+    "original_question_number",
+    "section",
+    "marks",
+    "book",
+    "chapter",
+    "question_type",
+    "skill",
+    "provenance_status"
+  ],
+  "provenance_status_values": [
+    "historical_verified",
+    "adapted_from_historical",
+    "original_english_hub"
+  ],
+  "source_type_values": [
+    "final",
+    "supplementary",
+    "exam_2",
+    "exam_3",
+    "preparatory",
+    "model",
+    "mid_term",
+    "term"
+  ],
+  "question_type_examples": [
+    "objective_language",
+    "analogy",
+    "voice",
+    "question_formation",
+    "part_of_speech",
+    "reported_speech",
+    "sentence_transformation",
+    "degrees_of_comparison",
+    "literature_1m",
+    "literature_2m",
+    "literature_3m",
+    "rtc",
+    "quote_from_memory",
+    "literature_4m",
+    "comprehension",
+    "essay",
+    "letter"
+  ],
+  "rules": [
+    "A historical record is not created until the actual paper is verified.",
+    "Exact repeats and concept repeats receive separate analytical flags.",
+    "Mid-term and school papers are supporting evidence only.",
+    "The 2026-27 blueprint controls mock-paper allocation.",
+    "Do not import 14-E or 31-E material into the 15-E corpus."
+  ]
+}
