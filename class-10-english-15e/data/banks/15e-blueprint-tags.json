@@ -1,0 +1,21 @@
+{
+  "course": "KSEAB First Language English (NCERT) 15-E",
+  "academic_year": "2026-27",
+  "purpose": "Machine-readable tagging framework for the supplied 15-E blueprint and board question papers.",
+  "rule": "Use only question forms and mark allocations verified against the board blueprint/question papers supplied for this project. Do not substitute CBSE 184 or Karnataka 31E patterns.",
+  "sections": [
+    {"id":"literature","label":"Literature","sources":["First Flight","Footprints Without Feet"]},
+    {"id":"grammar","label":"Grammar and Language","sources":["15-E blueprint/question papers"]},
+    {"id":"analogy","label":"Analogy","sources":["15-E blueprint/question papers"]},
+    {"id":"comprehension","label":"Comprehension","sources":["15-E blueprint/question papers"]},
+    {"id":"composition","label":"Composition","sources":["15-E blueprint/question papers"]}
+  ],
+  "question_metadata_required": ["id","section","book","chapter","marks","question_type","skill","difficulty","question","source_batch"],
+  "validation": {
+    "paper_total_questions": 47,
+    "paper_total_marks": 100,
+    "use_blueprint_for_distribution": true,
+    "reject_unverified_question_type": true,
+    "reject_other_english_code_content": true
+  }
+}
