@@ -1,0 +1,17 @@
+{
+  "schema_version":"1.0",
+  "course":"Class 10 First Language English (NCERT)",
+  "code":"15-E",
+  "target":"2026-27",
+  "purpose":"Analyse verified historical 15-E papers to identify recurring concepts, constructions and chapter/question-type patterns without treating historical frequency as current blueprint weightage.",
+  "source_scope":["final/annual","supplementary","Exam-2","Exam-3","preparatory/model","mid-term/term"],
+  "analysis_dimensions":{
+    "literature":["chapter_frequency","question_type_frequency","mark_level_frequency","recurring_themes","character_or_event_focus","rtc_frequency","quote_from_memory_usage"],
+    "language":["grammar_area_frequency","construction_pattern","transformation_pattern","question_stem_pattern","difficulty","recurrence"],
+    "composition":["essay_theme","letter_purpose","task_type","recurring_contexts"],
+    "comprehension":["question_skill","retrieval","inference","vocabulary","analysis","evidence_use"]
+  },
+  "recurrence_labels":["exact_repeat","near_repeat","recurring_concept","recurring_format","single_occurrence"],
+  "priority_model":{"high":"recurs across multiple years/paper types and remains compatible with 2026-27 blueprint","medium":"recurs or represents a useful KSEAB construction","low":"limited historical evidence but useful for coverage"},
+  "guardrails":["15-E only","historical frequency never overrides official 2026-27 blueprint","mid-term papers are supporting evidence only","preserve source provenance","avoid unnecessary verbatim duplication in original practice questions"]
+}
