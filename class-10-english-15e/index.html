@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="English Hub — Class 10 First Language English 15-E interactive practice engine.">
+  <title>English Hub | Class 10 English 15-E</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark">EH</span><div><strong>English Hub</strong><small>Interactive Learning</small></div></div>
+    <button id="homeBtn" class="ghost-btn" type="button">Dashboard</button>
+  </header>
+
+  <main class="container">
+    <section id="dashboard" class="view active">
+      <div class="hero">
+        <div>
+          <p class="eyebrow">CLASS 10 • FIRST LANGUAGE ENGLISH • 15-E</p>
+          <h1>Exam Preparation Hub</h1>
+          <p>Practice the syllabus, build exam skills and take blueprint-based tests. No account or sign-in required.</p>
+        </div>
+        <div class="hero-badge"><b>2026–27</b><span>Exam Preparation</span></div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat"><b>47</b><span>Questions in full mock</span></div>
+        <div class="stat"><b>100</b><span>Marks</span></div>
+        <div class="stat"><b>5</b><span>Mark levels</span></div>
+        <div class="stat"><b>0</b><span>Accounts required</span></div>
+      </div>
+
+      <div class="section-title"><h2>Choose a practice area</h2><p>Phase 1 engine • sample content only</p></div>
+      <div id="moduleGrid" class="module-grid"></div>
+
+      <div class="section-title"><h2>Quick exam practice</h2><p>Use these modes once the complete question bank is loaded.</p></div>
+      <div class="quick-grid">
+        <button class="quick-card" data-mode="marks" data-marks="1"><span>1M</span><b>One-mark practice</b><small>Fast recall & language skills</small></button>
+        <button class="quick-card" data-mode="marks" data-marks="2"><span>2M</span><b>Two-mark practice</b><small>Short-answer writing</small></button>
+        <button class="quick-card" data-mode="marks" data-marks="3"><span>3M</span><b>Three-mark practice</b><small>Developed answers</small></button>
+        <button class="quick-card" data-mode="marks" data-marks="4"><span>4M</span><b>Four-mark practice</b><small>Long answers & RTC</small></button>
+        <button class="quick-card" data-mode="marks" data-marks="5"><span>5M</span><b>Five-mark practice</b><small>Composition</small></button>
+        <button class="quick-card featured" data-mode="mock"><span>47Q</span><b>Full mock test</b><small>100 marks • timed</small></button>
+      </div>
+    </section>
+
+    <section id="practice" class="view">
+      <div class="practice-head">
+        <button id="backBtn" class="ghost-btn" type="button">← Back</button>
+        <div><p class="eyebrow" id="practiceEyebrow"></p><h2 id="practiceTitle"></h2></div>
+        <div id="progressText" class="progress-text"></div>
+      </div>
+      <div class="progress-bar"><span id="progressBar"></span></div>
+      <div id="quizArea"></div>
+    </section>
+
+    <section id="result" class="view">
+      <div class="result-card">
+        <p class="eyebrow">TEST COMPLETE</p>
+        <h2 id="resultTitle">Your result</h2>
+        <div class="score-ring"><strong id="scoreValue">0</strong><span id="scoreTotal">/ 0</span></div>
+        <div id="resultStats" class="result-stats"></div>
+        <div id="resultMessage" class="result-message"></div>
+        <div class="result-actions"><button id="retryBtn" class="primary-btn">Try Again</button><button id="resultHomeBtn" class="secondary-btn">Dashboard</button></div>
+      </div>
+    </section>
+  </main>
+
+  <footer><span>English Hub</span><span>•</span><span>Class 10 English 15-E</span><span>•</span><span>Phase 1</span></footer>
+  <script src="assets/js/app.js" defer></script>
+</body>
+</html>
