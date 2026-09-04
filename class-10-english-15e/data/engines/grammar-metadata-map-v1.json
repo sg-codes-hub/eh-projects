@@ -1,0 +1,12 @@
+{
+  "schema_version":"1.0",
+  "engine":"Grammar Metadata Mapping & Validation v1",
+  "purpose":"Safely map legacy grammar records into the canonical 15-E schema without inventing exam metadata.",
+  "canonical_type_map":{"1M":"mcq","mcq":"mcq","objective":"mcq","2M":"short_answer","short":"short_answer","short_answer":"short_answer","long":"long_answer","long_answer":"long_answer"},
+  "safe_field_map":{"id":["id","question_id"],"question":["question","question_text","prompt","text"],"syllabus_unit":["syllabus_unit","chapter","area"],"answer_or_rubric":["answer_or_rubric","answer_points","model_answer","answer"],"difficulty":["difficulty"],"explanation":["explanation"],"year":["year"],"paper_type":["paper_type"]},
+  "grammar_area_normalisation":{"tenses":"Tenses","articles":"Articles","prepositions":"Prepositions","modals":"Modals","subject_verb_agreement":"Subject-Verb Agreement","reported_speech":"Reported Speech","voice":"Active and Passive Voice","question_tags":"Question Tags","conjunctions":"Conjunctions","clauses":"Clauses","transformation":"Sentence Transformation"},
+  "defaults_allowed":{"section":"grammar","source_type":"original_english_hub"},
+  "defaults_forbidden":["marks","difficulty","syllabus_unit_when_no_area_or_chapter","historical_tag","year","paper_type"],
+  "validation_rules":["A 1M/2M legacy label may identify a type but must not be treated as official marks unless the source explicitly defines it as marks.","Area/chapter can populate syllabus_unit only when the source explicitly supplies that field.","Missing provenance remains invalid for the blueprint pool.","MCQs require options and an answer.","Every migrated record receives valid=true or valid=false with explicit errors."],
+  "release_gate":"Only records passing canonical schema validation may enter the blueprint-exact mock pool."
+}
