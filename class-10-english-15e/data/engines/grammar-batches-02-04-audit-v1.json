@@ -1,0 +1,15 @@
+{
+  "schema_version":"1.0",
+  "audit":"Grammar Batches 02-04 source audit",
+  "sources":[
+    {"batch":"02","records":20,"explicit_ids":20,"explicit_questions":20,"explicit_answers":20,"explicit_difficulty":20,"explicit_marks":0,"status":"REVIEW_REQUIRED"},
+    {"batch":"03","records":20,"explicit_ids":20,"explicit_questions":20,"explicit_answers":20,"explicit_difficulty":20,"explicit_marks":20,"status":"REVIEW_REQUIRED"},
+    {"batch":"04","records":50,"explicit_ids":50,"explicit_questions":50,"explicit_answers":50,"explicit_difficulty":0,"explicit_marks":0,"status":"REVIEW_REQUIRED"}
+  ],
+  "inventory_total":90,
+  "combined_with_batch_01":110,
+  "safe_defaults":{"section":"grammar","source_type":"original_english_hub"},
+  "blocking_metadata":["row-level official marks where absent","difficulty where absent","record-level historical_tag/provenance"],
+  "content_quality_flags":["Some batches contain overlapping constructions/answers; duplicate-concept review is required even where IDs are unique.","Batch 02 uses rewrite/error_correction labels rather than the canonical renderer types.","Batch 04 contains a mixed_mcq record whose answer is expressed as option text rather than a zero-based option index."],
+  "release_status":{"practice_pool":"usable after runtime normalisation","blueprint_exact_pool":"blocked pending canonical migration and validation"}
+}
