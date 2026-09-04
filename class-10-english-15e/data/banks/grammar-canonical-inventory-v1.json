@@ -1,0 +1,13 @@
+{
+  "schema_version":"1.0",
+  "inventory":"Grammar canonical migration inventory v1",
+  "source_batches":["grammar-practice-batch-01.json","grammar-practice-batch-02.json","grammar-practice-batch-03.json","grammar-practice-batch-04.json"],
+  "source_record_count":110,
+  "canonical_status":"MIGRATION_SPEC_COMPLETE_CONTENT_NOT_YET_PUBLISHED",
+  "normalization":{"batch_01":20,"batch_02":20,"batch_03":20,"batch_04":50},
+  "safe_metadata":{"section":"grammar","source_type":"original_english_hub","question_ids":"preserve","answers":"preserve","difficulty":"preserve_when_present"},
+  "blocked_metadata":{"official_marks":"do not infer from absence or legacy labels","historical_tag":"not applicable to original-practice records unless separately sourced","difficulty":"missing in batch 04"},
+  "type_normalization":{"rewrite":"short_answer","error_correction":"short_answer","noun_form":"short_answer","article":"short_answer","preposition":"short_answer","verb_form":"short_answer","question_tag":"short_answer","verbal_phrase":"short_answer","reported_speech":"short_answer","passive_voice":"short_answer","degree":"short_answer","degree_transformation":"short_answer","question_formation":"short_answer","if_clause":"short_answer","linker":"short_answer","sentence_transformation":"short_answer","tense_transformation":"short_answer","prefix":"short_answer","suffix":"short_answer","prefix_suffix":"short_answer","parts_of_speech":"short_answer","figure_of_speech":"short_answer","editing":"short_answer","mixed_mcq":"mcq"},
+  "quality_flags":["Batch 02 and Batch 03 contain overlapping concepts and near-repeat constructions; retain both for practice but tag concept similarity before blueprint sampling.","Batch 04 has no explicit difficulty on its 50 records.","Batch 04 mixed_mcq stores answer as option text; migration must canonicalize this only after verifying the option index.","All 110 records are original practice rather than historical-paper reproductions."],
+  "release_gate":{"practice":true,"blueprint_exact":false,"reason":"Canonical content requires validation and authoritative mark/blueprint mapping before full mock use."}
+}
