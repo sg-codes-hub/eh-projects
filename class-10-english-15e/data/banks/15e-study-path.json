@@ -1,0 +1,15 @@
+{
+  "course": "KSEAB First Language English (NCERT) 15-E",
+  "academic_year": "2026-27",
+  "study_path": [
+    {"id":"01","title":"Chapter Practice","description":"Practice First Flight prose, poetry and Footprints Without Feet chapter-wise."},
+    {"id":"02","title":"Grammar Practice","description":"Practise only the language areas and question forms verified for 15-E."},
+    {"id":"03","title":"Analogy Practice","description":"Build speed with board-style analogy relationships."},
+    {"id":"04","title":"Comprehension Practice","description":"Practise direct, vocabulary, inference and analytical reading questions."},
+    {"id":"05","title":"Composition Practice","description":"Practise board-oriented essay and letter writing with model-answer comparison."},
+    {"id":"06","title":"Mixed Revision","description":"Mix literature and language questions without exposing students to the answer key until submission."},
+    {"id":"07","title":"47-Question Mock","description":"Generate a full paper only after the question pools and blueprint constraints pass validation."},
+    {"id":"08","title":"Review and Retry","description":"Show incorrect objective answers and written-answer self-review prompts for targeted revision."}
+  ],
+  "student_mode": {"accounts_required": false, "public_access": true, "intended_audience":"school students"}
+}
