@@ -1,0 +1,14 @@
+{
+  "schema_version":"1.0",
+  "report":"15-E Question Bank Validation Report v1",
+  "generated_for":"Class 10 First Language English (NCERT) 15-E",
+  "status":"PARTIAL_AUDIT",
+  "policy":"Validation is conservative: unresolved structure or missing metadata is flagged rather than silently repaired.",
+  "audited_sources":[
+    {"file":"data/banks/grammar-practice-batch-01.json","observed_schema":"questions[]","status":"NEEDS_NORMALISATION","issues":["Uses questions[] rather than the loader's original items[] contract","Uses type values such as 1M/2M rather than a unified renderer type","Missing explicit section/syllabus_unit/source_type/provenance metadata on individual records"]},
+    {"file":"data/banks/composition-batch-01.json","observed_schema":"top-level array","status":"NEEDS_NORMALISATION","issues":["Top-level array rather than items[]","Uses question_type=writing and question field rather than the universal prompt/type convention","Contains useful answer_points/model_answer rubric data but requires mapping before automatic evaluation"]}
+  ],
+  "known_loader_compatibility":"The loader has been designed to normalise legacy bank shapes at runtime; this report keeps source files unchanged until a deliberate migration is performed.",
+  "release_gate":{"full_mock":"BLOCKED","reason":"Blueprint-exact 47-question assembly requires every candidate question to carry complete metadata and validated marks/section mapping.","practice_mode":"ALLOWED","reason":"Section practice can use normalised content where its question schema is supported."},
+  "next_actions":["Migrate each bank to canonical items[] records while retaining original IDs","Add section, syllabus_unit, source_type, historical_tag and marks metadata","Add canonical renderer type values: mcq, short_answer, writing, comprehension","Validate answer/rubric completeness","Run a full-bank duplicate and metadata audit","Only then activate blueprint-exact mock assembly"]
+}
