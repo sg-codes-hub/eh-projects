@@ -1,0 +1,14 @@
+{
+  "schema_version":"1.0",
+  "engine":"Blueprint Exact Assembly v1",
+  "purpose":"Control full-length 15-E mock construction from the official 2026-27 blueprint supplied to the project.",
+  "source_policy":"The supplied official 2026-27 blueprint is authoritative for allocation. Do not replace missing source evidence with assumptions.",
+  "exam_shell":{"questions":47,"marks":100,"duration_minutes":195},
+  "assembly_contract":{"required":true,"fail_if_unmapped":true,"fail_if_mark_total_mismatch":true,"fail_if_question_count_mismatch":true,"fail_if_duplicate_ids":true},
+  "question_record_requirements":["id","type","marks","section","source_type","syllabus_unit","difficulty","answer_or_rubric"],
+  "provenance":{"allowed_source_types":["original_english_hub","pyq_exact","pyq_near_repeat","recurring_concept","recurring_format"],"historical_papers_are_evidence_not_blueprint_authority":true},
+  "allocation":{"status":"requires exact row-level values from the supplied board blueprint before activation","placeholder_allowed":false},
+  "validation_pipeline":["load official blueprint","map every blueprint row to question type and marks","map approved bank questions to rows","verify 47 questions","verify 100 marks","verify every required component","verify syllabus mapping","verify answer/rubric availability","reject unresolved rows","freeze test manifest"],
+  "test_manifest":{"format":"json","fields":["test_id","blueprint_version","question_ids","marks_by_question","section_by_question","generated_at","validation_status"],"publish_only_if":"validation_status=PASS"},
+  "important_design_rule":"Do not silently manufacture a blueprint distribution. If the exact board row allocation is not available in machine-readable form, keep the assembler inactive and request/source the exact blueprint values."
+}
