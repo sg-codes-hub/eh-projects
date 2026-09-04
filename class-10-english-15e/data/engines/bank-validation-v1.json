@@ -1,0 +1,14 @@
+{
+  "schema_version":"1.0",
+  "engine":"15-E Question Bank Validation v1",
+  "purpose":"Validate bank records before they can feed practice or blueprint-exact mock tests.",
+  "required_normalized_fields":["id","prompt","type","difficulty"],
+  "recommended_fields":["marks","section","syllabus_unit","source_type","historical_tag","answer","answer_points","explanation"],
+  "accepted_source_shapes":["items[]","questions[]","top-level array","JSON string wrapper containing one of the above"],
+  "normalization":{"question":"prompt","question_type":"type","answer_points":"answer_when_answer_is_absent"},
+  "hard_fail_checks":["missing id","duplicate id within assembled test","missing question text","unsupported type","missing difficulty","malformed JSON","empty bank"],
+  "blueprint_activation_checks":["marks present","section present","syllabus_unit present","source_type present","answer or rubric present","historical metadata valid when claimed"],
+  "quality_checks":["no empty options","MCQ answer points to an available option","no accidental duplicate prompts","writing tasks have rubric or answer_points","comprehension tasks contain passage and questions"],
+  "report":{"statuses":["PASS","WARN","FAIL"],"include_counts":true,"include_invalid_ids":true,"include_warnings":true},
+  "policy":"A warning may remain in development; a FAIL blocks publication into the blueprint-exact mock-test pool."
+}
