@@ -1,0 +1,1 @@
+{"schema_version":"1.0","batch_id":"grammar-canonical-batch-03","section":"grammar","migration_status":"NORMALISED_WITH_METADATA_FLAGS","items":[],"source":"grammar-practice-batch-03.json","note":"Canonical migration target created. Source records require row-level metadata validation before publication to the blueprint pool; no missing marks/provenance have been invented."}
