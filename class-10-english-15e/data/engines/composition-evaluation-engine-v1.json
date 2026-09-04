@@ -1,0 +1,12 @@
+{
+  "schema_version":"1.0",
+  "engine":"Composition Evaluation Engine v1",
+  "purpose":"Evaluate student essays and formal letters for the English Hub Class 10 First Language English (NCERT) 15-E practice system.",
+  "important_note":"Practice feedback engine only. It must not claim to reproduce an official KSEAB examiner's mark decision unless an official evaluation scheme explicitly supports that decision.",
+  "rubric":{"content":{"weight":30,"checks":["relevance","coverage of task","development of ideas","specific examples where appropriate"]},"organisation":{"weight":20,"checks":["logical sequence","paragraphing","introduction/body/conclusion","cohesion"]},"language":{"weight":30,"checks":["grammar","sentence construction","vocabulary","appropriate tone"]},"format":{"weight":10,"checks":["required essay structure or formal-letter conventions"]},"mechanics":{"weight":10,"checks":["spelling","punctuation","capitalisation","legibility_proxy_if_text_input"]}},
+  "feedback_levels":["excellent","good","developing","needs_revision"],
+  "letter_checks":["recipient","date","subject","salutation","purpose","supporting_details","specific_request_or_solution","complimentary_close","signature"],
+  "essay_checks":["topic_focus","clear_introduction","developed_body","examples_or_reasoning","balanced_conclusion"],
+  "output":{"score":"rubric-based practice score","strengths":"3 strongest observed features","improvements":"up to 5 actionable corrections","language_corrections":"sentence-level corrections when confidently detected","rewrite_advice":"brief guidance, not automatic replacement of the student's full work"},
+  "safety_and_accuracy":["Do not penalise a valid alternative viewpoint merely because it differs from the model answer.","Do not require memorisation of the stored model answer.","Do not infer handwriting quality from plain text.","Flag uncertain grammar judgments instead of presenting them as official errors."]
+}
