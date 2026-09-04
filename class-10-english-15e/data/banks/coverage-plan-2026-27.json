@@ -1,0 +1,77 @@
+{
+  "course": "Class 10 First Language English (15-E) — NCERT",
+  "academic_year": "2026-27",
+  "purpose": "Engineering coverage plan for the interactive question bank.",
+  "important_note": "These are content-pool targets, not claims about the official KSEAB chapter-wise marks allocation. Official paper allocation must always be taken from the 2026-27 15E blueprint.",
+  "literature": {
+    "First Flight — Prose": {
+      "A Letter to God": {"target_pool": 15},
+      "Nelson Mandela: Long Walk to Freedom": {"target_pool": 18},
+      "His First Flight": {"target_pool": 15},
+      "The Black Aeroplane": {"target_pool": 15},
+      "From the Diary of Anne Frank": {"target_pool": 15},
+      "A Baker from Goa": {"target_pool": 15},
+      "Coorg": {"target_pool": 12},
+      "Tea from Assam": {"target_pool": 15},
+      "Mijbil the Otter": {"target_pool": 15},
+      "Madam Rides the Bus": {"target_pool": 15},
+      "The Sermon at Benares": {"target_pool": 15},
+      "The Proposal": {"target_pool": 15}
+    },
+    "First Flight — Poetry": {
+      "Dust of Snow": {"target_pool": 12},
+      "Fire and Ice": {"target_pool": 12},
+      "A Tiger in the Zoo": {"target_pool": 12},
+      "How to Tell Wild Animals": {"target_pool": 12},
+      "The Ball Poem": {"target_pool": 12},
+      "Amanda!": {"target_pool": 12},
+      "The Trees": {"target_pool": 12},
+      "Fog": {"target_pool": 12},
+      "The Tale of Custard the Dragon": {"target_pool": 12},
+      "For Anne Gregory": {"target_pool": 12}
+    },
+    "Footprints Without Feet": {
+      "A Triumph of Surgery": {"target_pool": 10},
+      "The Thief's Story": {"target_pool": 10},
+      "The Midnight Visitor": {"target_pool": 10},
+      "A Question of Trust": {"target_pool": 10},
+      "Footprints Without Feet": {"target_pool": 10},
+      "The Making of a Scientist": {"target_pool": 10},
+      "The Necklace": {"target_pool": 10},
+      "Bholi": {"target_pool": 10},
+      "The Book That Saved the Earth": {"target_pool": 10}
+    }
+  },
+  "language_pool_targets": {
+    "noun_forms": 25,
+    "figures_of_speech": 25,
+    "prepositions": 25,
+    "verb_forms": 25,
+    "question_tags": 25,
+    "verbal_phrases": 25,
+    "voice_transformation": 20,
+    "question_formation": 20,
+    "specified_part_of_speech": 20,
+    "reported_speech": 20,
+    "simple_compound_complex": 20,
+    "degrees_of_comparison": 20,
+    "analogy": 40
+  },
+  "writing_pool_targets": {
+    "essay": 20,
+    "letter": 20
+  },
+  "reading_pool_targets": {
+    "unseen_comprehension": 20,
+    "reference_to_context": 40,
+    "quote_from_memory": 20
+  },
+  "quality_rules": [
+    "Every item must have a unique stable ID.",
+    "Every literature item must identify book and chapter/poem.",
+    "Every item must carry question_type, marks, skill and difficulty.",
+    "Written-answer items must include model_answer and/or answer_points.",
+    "No 14E or 31E question should enter the 15E bank merely because it is a Karnataka English question.",
+    "Do not label a planning target as an official blueprint allocation."
+  ]
+}
