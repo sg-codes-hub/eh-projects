@@ -1,5 +1,5 @@
 {
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Modular question-bank manifest for Class 10 First Language English 15-E.",
   "banks": [
     "first-flight-prose-batch-01.json",
@@ -10,7 +10,9 @@
     "footprints-batch-02.json",
     "grammar-composition-complete.json",
     "grammar-batch-02.json",
+    "grammar-batch-03.json",
     "comprehension-batch-01.json",
+    "comprehension-batch-02.json",
     "analogy-batch-01.json",
     "composition-batch-01.json"
   ]
