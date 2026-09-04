@@ -1,0 +1,30 @@
+{
+  "course": "Class 10 First Language English (15-E) — NCERT",
+  "academic_year": "2026-27",
+  "blueprint_source": "KSEAB 2026-27 subject-wise blueprint for 15E (NCERT), official PDF linked by the project's source material.",
+  "official_blueprint_url": "https://kseab.karnataka.gov.in/uploads/15E_2026-27_1787990064.pdf",
+  "validation_reference": "KSEAB 15-E Model Question Paper-1, 2025-26 supplied for this project",
+  "paper_baseline": {
+    "questions": 47,
+    "maximum_marks": 100,
+    "duration": "3 hours 15 minutes",
+    "reading_time_included": "15 minutes"
+  },
+  "observed_question_architecture": [
+    {"q":"1-6","marks_each":1,"total_marks":6,"type":"objective language","formats":["noun form","figure of speech","preposition","verb form","question tag","verbal phrase"]},
+    {"q":"7-10","marks_each":1,"total_marks":4,"type":"analogy"},
+    {"q":"11-13","marks_each":1,"total_marks":3,"type":"rewrite as directed","formats":["voice","question formation","word used as specified part of speech"]},
+    {"q":"14-20","marks_each":1,"total_marks":7,"type":"literature short answer"},
+    {"q":"21-27","marks_each":2,"total_marks":14,"type":"literature short answer","answer_length":"2-3 sentences"},
+    {"q":"28-30","marks_each":2,"total_marks":6,"type":"rewrite as directed","formats":["reported speech","simple/compound/complex","degrees of comparison"]},
+    {"q":"31-36","marks_each":3,"total_marks":18,"type":"literature answer","answer_length":"5-6 sentences"},
+    {"q":"37-40","marks_each":3,"total_marks":12,"type":"reference to context"},
+    {"q":"41","marks_each":4,"total_marks":4,"type":"quote from memory"},
+    {"q":"42-44","marks_each":4,"total_marks":12,"type":"literature answer","answer_length":"7-8 sentences"},
+    {"q":"45","marks_each":4,"total_marks":4,"type":"unseen comprehension"},
+    {"q":"46","marks_each":5,"total_marks":5,"type":"essay","answer_length":"18-20 sentences"},
+    {"q":"47","marks_each":5,"total_marks":5,"type":"letter writing"}
+  ],
+  "important_rule": "The 2025-26 model-paper architecture is a validation reference only. The 2026-27 blueprint remains the controlling source for the new academic year; no 2026-27 allocation should be inferred solely from the older model paper.",
+  "content_scope": ["First Flight — Prose","First Flight — Poetry","Footprints Without Feet","Grammar and Vocabulary","Analogy","Comprehension","Essay Writing","Letter Writing"]
+}
