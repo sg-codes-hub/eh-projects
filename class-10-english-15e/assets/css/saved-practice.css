@@ -1,0 +1,63 @@
+/* Saved practice: keep the session list as a true viewport overlay, never normal document flow. */
+#savedPracticeOverlay{
+  position:fixed !important;
+  inset:0 !important;
+  width:100vw !important;
+  height:100vh !important;
+  min-height:100dvh !important;
+  z-index:99999 !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  padding:24px !important;
+  margin:0 !important;
+  background:rgba(23,32,51,.58) !important;
+  backdrop-filter:blur(5px);
+  -webkit-backdrop-filter:blur(5px);
+  overflow:auto !important;
+}
+#savedPracticeOverlay .saved-practice-modal{
+  width:min(760px,100%);
+  max-height:min(760px,calc(100dvh - 48px));
+  overflow:auto;
+  margin:auto !important;
+  padding:26px;
+  border:1px solid #e8eaf2;
+  border-radius:24px;
+  background:#fff;
+  color:#172033;
+  box-shadow:0 24px 70px rgba(23,32,51,.28);
+}
+#savedPracticeOverlay .saved-head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:18px;
+  margin-bottom:18px;
+}
+#savedPracticeOverlay .saved-head h2{margin:3px 0 5px;font-size:24px}
+#savedPracticeOverlay .saved-head p{margin:0;color:#667085;font-size:13px}
+#savedPracticeOverlay .saved-items{display:grid;gap:10px}
+#savedPracticeOverlay .saved-practice-item{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:15px;
+  border:1px solid #e8eaf2;
+  border-radius:16px;
+  background:#fafbff;
+}
+#savedPracticeOverlay .saved-item-main{flex:1;min-width:0}
+#savedPracticeOverlay .saved-item-main h3{margin:3px 0 2px;font-size:16px}
+#savedPracticeOverlay .saved-item-main p{margin:0;color:#667085;font-size:12px}
+#savedPracticeOverlay .saved-item-actions{display:flex;gap:7px;flex-shrink:0}
+#savedPracticeOverlay .saved-item-actions button{white-space:nowrap}
+@media(max-width:600px){
+  #savedPracticeOverlay{padding:14px !important;align-items:center}
+  #savedPracticeOverlay .saved-practice-modal{max-height:calc(100dvh - 28px);padding:19px;border-radius:20px}
+  #savedPracticeOverlay .saved-head{align-items:center}
+  #savedPracticeOverlay .saved-head h2{font-size:20px}
+  #savedPracticeOverlay .saved-practice-item{align-items:flex-start;flex-wrap:wrap}
+  #savedPracticeOverlay .saved-item-actions{width:100%}
+  #savedPracticeOverlay .saved-item-actions button{flex:1}
+}
