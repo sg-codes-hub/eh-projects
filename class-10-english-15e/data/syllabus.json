@@ -1,72 +1,28 @@
 {
   "course": "Class 10 First Language English (15-E)",
   "academic_year": "2026-27",
-  "source_note": "Chapter navigation is based on the board blueprint supplied for this project. Current blueprint allocation is shown as a planning aid; complete textbook coverage is retained.",
+  "source_note": "Chapter navigation is based on the supplied model question paper, marks allocation chart and weightage-wise blueprint. Question ranges shown below mirror the final mock-paper structure; complete textbook coverage is retained.",
   "sections": [
-    {"id":"ff-prose","module":"First Flight","group":"Prose","title":"First Flight — Prose","chapters":[
-      {"name":"A Letter to God","weight":"2 marks","priority":"High"},
-      {"name":"Nelson Mandela: Long Walk to Freedom","weight":"4 marks","priority":"Very High"},
-      {"name":"His First Flight","weight":"3 marks","priority":"High"},
-      {"name":"The Black Aeroplane","weight":"3 marks","priority":"High"},
-      {"name":"From the Diary of Anne Frank","weight":"3 marks","priority":"High"},
-      {"name":"A Baker from Goa","weight":"4 marks","priority":"Very High"},
-      {"name":"Coorg","weight":"No direct allocation shown","priority":"Revision"},
-      {"name":"Tea from Assam","weight":"1 mark","priority":"Focused"},
-      {"name":"Mijbil the Otter","weight":"3 marks","priority":"High"},
-      {"name":"Madam Rides the Bus","weight":"No direct allocation shown","priority":"Revision"},
-      {"name":"The Sermon at Benares","weight":"3 marks","priority":"High"},
-      {"name":"The Proposal","weight":"2 marks","priority":"High"}
+    {"id":"ff-prose","module":"First Flight","group":"Prose • Q14–20, Q21–27, Q31–44","title":"First Flight — Prose","chapters":[
+      {"name":"A Letter to God","weight":"2 marks","priority":"High"},{"name":"Nelson Mandela: Long Walk to Freedom","weight":"4 marks","priority":"Very High"},{"name":"His First Flight","weight":"3 marks","priority":"High"},{"name":"The Black Aeroplane","weight":"3 marks","priority":"High"},{"name":"From the Diary of Anne Frank","weight":"3 marks","priority":"High"},{"name":"A Baker from Goa","weight":"4 marks","priority":"Very High"},{"name":"Coorg","weight":"No direct allocation shown","priority":"Revision"},{"name":"Tea from Assam","weight":"1 mark","priority":"Focused"},{"name":"Mijbil the Otter","weight":"3 marks","priority":"High"},{"name":"Madam Rides the Bus","weight":"No direct allocation shown","priority":"Revision"},{"name":"The Sermon at Benares","weight":"3 marks","priority":"High"},{"name":"The Proposal","weight":"2 marks","priority":"High"}
     ]},
-    {"id":"ff-poetry","module":"First Flight","group":"Poetry","title":"First Flight — Poetry","chapters":[
-      {"name":"Dust of Snow","weight":"3 marks","priority":"High"},
-      {"name":"Fire and Ice","weight":"4 marks","priority":"Very High"},
-      {"name":"A Tiger in the Zoo","weight":"4 marks","priority":"Very High"},
-      {"name":"How to Tell Wild Animals","weight":"3 marks","priority":"High"},
-      {"name":"The Ball Poem","weight":"3 marks","priority":"High"},
-      {"name":"Amanda!","weight":"No direct allocation shown","priority":"Revision"},
-      {"name":"The Trees","weight":"3 marks","priority":"High"},
-      {"name":"Fog","weight":"1 mark","priority":"Focused"},
-      {"name":"The Tale of Custard the Dragon","weight":"No direct allocation shown","priority":"Revision"},
-      {"name":"For Anne Gregory","weight":"4 marks","priority":"Very High"}
+    {"id":"ff-poetry","module":"First Flight","group":"Poetry • Q14–20, Q21–27, Q31–44","title":"First Flight — Poetry","chapters":[
+      {"name":"Dust of Snow","weight":"3 marks","priority":"High"},{"name":"Fire and Ice","weight":"4 marks","priority":"Very High"},{"name":"A Tiger in the Zoo","weight":"4 marks","priority":"Very High"},{"name":"How to Tell Wild Animals","weight":"3 marks","priority":"High"},{"name":"The Ball Poem","weight":"3 marks","priority":"High"},{"name":"Amanda!","weight":"No direct allocation shown","priority":"Revision"},{"name":"The Trees","weight":"3 marks","priority":"High"},{"name":"Fog","weight":"1 mark","priority":"Focused"},{"name":"The Tale of Custard the Dragon","weight":"No direct allocation shown","priority":"Revision"},{"name":"For Anne Gregory","weight":"4 marks","priority":"Very High"}
     ]},
-    {"id":"footprints","module":"Footprints Without Feet","group":"Supplementary Reader","title":"Footprints Without Feet","chapters":[
-      {"name":"A Triumph of Surgery","weight":"2 marks","priority":"High"},
-      {"name":"The Thief's Story","weight":"1 mark","priority":"Focused"},
-      {"name":"The Midnight Visitor","weight":"2 marks","priority":"High"},
-      {"name":"A Question of Trust","weight":"1 mark","priority":"Focused"},
-      {"name":"Footprints Without Feet","weight":"1 mark","priority":"Focused"},
-      {"name":"The Making of a Scientist","weight":"2 marks","priority":"High"},
-      {"name":"The Necklace","weight":"3 marks","priority":"High"},
-      {"name":"Bholi","weight":"2 marks","priority":"High"},
-      {"name":"The Book That Saved the Earth","weight":"1 mark","priority":"Focused"}
+    {"id":"footprints","module":"Footprints Without Feet","group":"Supplementary Reader • Q14–20, Q21–27, Q31–40","title":"Footprints Without Feet","chapters":[
+      {"name":"A Triumph of Surgery","weight":"2 marks","priority":"High"},{"name":"The Thief's Story","weight":"1 mark","priority":"Focused"},{"name":"The Midnight Visitor","weight":"2 marks","priority":"High"},{"name":"A Question of Trust","weight":"1 mark","priority":"Focused"},{"name":"Footprints Without Feet","weight":"1 mark","priority":"Focused"},{"name":"The Making of a Scientist","weight":"2 marks","priority":"High"},{"name":"The Necklace","weight":"3 marks","priority":"High"},{"name":"Bholi","weight":"2 marks","priority":"High"},{"name":"The Book That Saved the Earth","weight":"1 mark","priority":"Focused"}
     ]},
-    {"id":"grammar","module":"Grammar","group":"Language","title":"Grammar & Vocabulary","chapters":[
-      {"name":"Noun forms","weight":"1 mark","priority":"High"},
-      {"name":"Figures of speech","weight":"1 mark","priority":"High"},
-      {"name":"Prepositions","weight":"1 mark","priority":"High"},
-      {"name":"Verb forms","weight":"1 mark","priority":"High"},
-      {"name":"Question tags","weight":"1 mark","priority":"High"},
-      {"name":"Verbal phrases","weight":"1 mark","priority":"High"},
-      {"name":"Voice transformation","weight":"1 mark","priority":"High"},
-      {"name":"Question formation","weight":"1 mark","priority":"High"},
-      {"name":"Parts of speech / word use","weight":"1 mark","priority":"High"},
-      {"name":"Reported speech","weight":"2 marks","priority":"Very High"},
-      {"name":"Simple, compound and complex sentences","weight":"2 marks","priority":"Very High"},
-      {"name":"Degrees of comparison","weight":"2 marks","priority":"Very High"}
+    {"id":"grammar","module":"Grammar","group":"Language • Q1–6, Q11–13, Q28–30","title":"Grammar & Vocabulary","chapters":[
+      {"name":"Noun forms","weight":"1 mark","priority":"High"},{"name":"Figures of speech","weight":"1 mark","priority":"High"},{"name":"Prepositions","weight":"1 mark","priority":"High"},{"name":"Verb forms","weight":"1 mark","priority":"High"},{"name":"Question tags","weight":"1 mark","priority":"High"},{"name":"Verbal phrases","weight":"1 mark","priority":"High"},{"name":"Voice transformation","weight":"1 mark","priority":"High"},{"name":"Question formation","weight":"1 mark","priority":"High"},{"name":"Parts of speech / word use","weight":"1 mark","priority":"High"},{"name":"Reported speech","weight":"2 marks","priority":"Very High"},{"name":"Simple, compound and complex sentences","weight":"2 marks","priority":"Very High"},{"name":"Degrees of comparison","weight":"2 marks","priority":"Very High"}
     ]},
-    {"id":"analogy","module":"Analogy","group":"Vocabulary","title":"Analogy","chapters":[
-      {"name":"Word formation relationships","weight":"1 mark","priority":"High"},
-      {"name":"Opposite / prefix relationships","weight":"1 mark","priority":"High"},
-      {"name":"Synonym / meaning relationships","weight":"1 mark","priority":"High"},
-      {"name":"Part-to-whole / functional relationships","weight":"1 mark","priority":"High"}
+    {"id":"analogy","module":"Analogy","group":"Vocabulary • Q7–10","title":"Analogy","chapters":[
+      {"name":"Word formation relationships","weight":"1 mark","priority":"High"},{"name":"Opposite / prefix relationships","weight":"1 mark","priority":"High"},{"name":"Synonym / meaning relationships","weight":"1 mark","priority":"High"},{"name":"Part-to-whole / functional relationships","weight":"1 mark","priority":"High"}
     ]},
-    {"id":"comprehension","module":"Comprehension","group":"Reading","title":"Unseen Passage / Comprehension","chapters":[
-      {"name":"Main idea and supporting details","weight":"4 marks","priority":"High"},
-      {"name":"Inference and vocabulary in context","weight":"4 marks","priority":"High"}
+    {"id":"comprehension","module":"Comprehension","group":"Reading • Q45","title":"Unseen Passage / Comprehension","chapters":[
+      {"name":"Main idea and supporting details","weight":"4 marks","priority":"High"},{"name":"Inference and vocabulary in context","weight":"4 marks","priority":"High"}
     ]},
-    {"id":"composition","module":"Composition","group":"Writing","title":"Composition","chapters":[
-      {"name":"Essay writing","weight":"5 marks","priority":"Very High"},
-      {"name":"Letter writing","weight":"5 marks","priority":"Very High"}
+    {"id":"composition","module":"Composition","group":"Writing • Q46–47","title":"Composition","chapters":[
+      {"name":"Essay writing","weight":"5 marks","priority":"Very High"},{"name":"Letter writing","weight":"5 marks","priority":"Very High"}
     ]}
   ]
 }
