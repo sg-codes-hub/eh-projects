@@ -61,6 +61,3 @@
   #savedPracticeOverlay .saved-item-actions{width:100%}
   #savedPracticeOverlay .saved-item-actions button{flex:1}
 }
-
-/* Keep the dashboard focused on exam preparation. */
-.continue-learning{display:none !important}
