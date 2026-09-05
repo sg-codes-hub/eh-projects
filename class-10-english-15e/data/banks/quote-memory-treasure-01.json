@@ -1,0 +1,9 @@
+{
+  "course":"Class 10 First Language English (15-E)",
+  "academic_year":"2026-27",
+  "bank":"Quote from Memory Treasure 01",
+  "questions":[
+    {"id":"quote-fire-01","module":"First Flight Poetry","chapter":"Fire and Ice","marks":4,"type":"Quote from Memory","skill":"Memory","question":"Quote from memory the prescribed lines from 'Fire and Ice' that express the poet's idea about the destructive power of desire and hatred.","model_answer":"Expected response: the prescribed lines from 'Fire and Ice' expressing the destructive power of desire and hatred. Students should reproduce the prescribed lines accurately and check spelling, line order and punctuation against their textbook."},
+    {"id":"quote-tiger-01","module":"First Flight Poetry","chapter":"A Tiger in the Zoo","marks":4,"type":"Quote from Memory","skill":"Memory","question":"Quote from memory the prescribed lines from 'A Tiger in the Zoo' that describe the tiger's confinement and restrained anger.","model_answer":"Expected response: the prescribed lines from 'A Tiger in the Zoo' describing the tiger's confinement and restrained anger. Students should reproduce the prescribed lines accurately and check spelling, line order and punctuation against their textbook."}
+  ]
+}
