@@ -4,7 +4,7 @@ const rawFetch=window.fetch.bind(window);
 async function loadComplete(){
  if(window.__EH_COMPLETE_BANK_READY&&Array.isArray(window.EnglishHubQuestions)&&window.EnglishHubQuestions.length)return window.EnglishHubQuestions;
  const manifest=await rawFetch('data/banks/manifest.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('manifest '+r.status);return r.json()});
- const base=await rawFetch('data/questions.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('core '+r.status);return r.json()});
+ const base=await rawFetch('data/questions.json?ehbridge=1',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('core '+r.status);return r.json()});
  const all=Array.isArray(base.questions)?base.questions.slice():[],failed=[];
  for(const name of(Array.isArray(manifest.banks)?manifest.banks:[])){try{const r=await rawFetch(`data/banks/${name}`,{cache:'no-store'});if(!r.ok){failed.push(`${name} (${r.status})`);continue}const b=await r.json(),arr=Array.isArray(b)?b:b.questions;if(Array.isArray(arr))all.push(...arr)}catch(e){failed.push(name)}}
  const seen=new Set(),merged=[];
