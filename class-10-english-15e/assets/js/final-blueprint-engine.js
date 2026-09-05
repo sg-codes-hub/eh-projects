@@ -57,7 +57,7 @@
     PATTERN.forEach(slot=>{const pool=domainPool(slot.domain,slot.marks);const orPositions=slot.orAt==='all'?Array.from({length:slot.count},(_,i)=>i+1):(slot.orAt||[]);
       for(let pos=1;pos<=slot.count;pos++){
         const need=orPositions.includes(pos)?2:1;
-        let choices=slot.domain==='letter'&&need===2?takeLetterPair(pool,used,rng):take(pool,used,need,rng);
+        const choices=slot.domain==='letter'&&need===2?takeLetterPair(pool,used,rng):take(pool,used,need,rng);
         if(choices.length<need){shortages.push(`${slot.section} Q${number}: need ${need} ${slot.domain} question${need>1?'s':''}, found ${choices.length}`);number++;continue;}
         selected.push({number:number++,section:slot.section,sectionTitle:slot.title,marks:slot.marks,kind:slot.kind,q:choices[0],or:choices[1]||null});
       }
@@ -74,10 +74,11 @@
     if(shortComp)shortages.unshift('VALIDATION: Q45 comprehension passage is shorter than the long-passage threshold');
     return {selected,shortages,totalMarks};
   }
-  window.buildStrictMock=buildStrictMock;window.buildMock=()=>buildStrictMock(paperNo);
+  window.buildStrictMock=buildStrictMock;
+  window.buildMock=()=>buildStrictMock(paperNo);
   try{buildMock=window.buildMock}catch(e){}
   const legacyStart=window.start;
   if(typeof legacyStart==='function')window.start=function(mode,o={}){let original;try{original=qs}catch(e){original=null}if(!original)return legacyStart(mode,o);let filtered=original;if(mode==='chapter')filtered=original.filter(q=>!isMCQ(q));else if(mode==='marks'){const m=Number(o.marks);filtered=original.filter(q=>!isMCQ(q)||m===1&&isGrammar(q));}try{qs=filtered;return legacyStart(mode,o);}finally{qs=original;}};
-  function renderMockCards(){const grid=document.querySelector('.quick-grid');if(!grid)return;grid.querySelectorAll('.mock-paper-card').forEach(x=>x.remove());let html='';for(let i=1;i<=10;i++)html+=`<button class="quick-card featured mock-paper-card" data-paper="${i}" type="button"><span>47Q</span><b>Mock Paper ${i}</b><small>47 questions • 100 marks • 3:15 hours • Exact paper pattern</small></button>`;grid.insertAdjacentHTML('beforeend',html);grid.querySelectorAll('.mock-paper-card').forEach(btn=>btn.onclick=async()=>{paperNo=Number(btn.dataset.paper)||1;try{if(window.QuestionBankLoader){const all=await window.QuestionBankLoader.loadAll();window.EnglishHubQuestions=all;window.qs=all;try{qs=all}catch(e){}}}catch(e){}if(typeof window.start==='function')window.start('mock',{title:`Class 10 English 15-E • Mock Paper ${paperNo}`});});}
+  function renderMockCards(){const grid=document.querySelector('.quick-grid');if(!grid)return;grid.querySelectorAll('.mock-paper-card').forEach(x=>x.remove());let html='';for(let i=1;i<=10;i++)html+=`<button class="quick-card featured mock-paper-card" data-paper="${i}" type="button"><span>47Q</span><b>Mock Paper ${i}</b><small>47 questions • 100 marks • 3:15 hours • Exact paper pattern</small></button>`;grid.insertAdjacentHTML('beforeend',html);grid.querySelectorAll('.mock-paper-card').forEach(btn=>btn.onclick=async()=>{paperNo=Number(btn.dataset.paper)||1;window.__ehPaperNo=paperNo;try{if(window.QuestionBankLoader){const all=await window.QuestionBankLoader.loadAll();window.EnglishHubQuestions=all;window.qs=all;try{qs=all}catch(e){}}}catch(e){}if(typeof window.start==='function')window.start('mock',{title:`Class 10 English 15-E • Mock Paper ${paperNo}`});});}
   document.addEventListener('DOMContentLoaded',()=>setTimeout(renderMockCards,150));
 })();
