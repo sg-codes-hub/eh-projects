@@ -1,111 +1,121 @@
-/* English Hub 15-E — student enhancements and blueprint-accurate mock generator. */
+/* English Hub 15-E — exact blueprint + model-paper aligned mock engine. */
 (function(){
   const PAPER_COUNT=10;
   let selectedPaper=1;
 
-  function seededRandom(seed){
-    let x=(seed>>>0)||1;
-    return function(){ x=(1664525*x+1013904223)>>>0; return x/4294967296; };
-  }
-  function withSeed(seed,fn){
-    const old=Math.random; Math.random=seededRandom(seed);
-    try{return fn();}finally{Math.random=old;}
-  }
+  function seededRandom(seed){let x=(seed>>>0)||1;return function(){x=(1664525*x+1013904223)>>>0;return x/4294967296;};}
+  function withSeed(seed,fn){const old=Math.random;Math.random=seededRandom(seed);try{return fn();}finally{Math.random=old;}}
   function shuffle(a){const x=[...a];for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]];}return x;}
-  function kind(q){return String(q.type||q.question_type||q.skill||q.category||'').toLowerCase();}
-  function text(q){return String(q.question||q.prompt||'').toLowerCase();}
-  function module(q){return String(q.module||q.bank_group||q.book||q.category||'').toLowerCase();}
-  function chapter(q){return String(q.chapter||q.topic||'').toLowerCase();}
-  function isGrammar(q){return /grammar|vocabulary|analogy|rewrite|reported|voice|degree|transformation|question tag|question word|prefix|suffix|articles?|preposition|conjunction|tense|verb|adjective|adverb|error|editing|punctuation|capital|spelling|idiom|homophone/.test(module(q)+' '+kind(q)+' '+text(q));}
-  function isPoetry(q){return /poetry/.test(module(q)) || ['dust of snow','fire and ice','a tiger in the zoo','how to tell wild animals','the ball poem','amanda','the trees','fog','the tale of custard the dragon','for anne gregory'].some(x=>chapter(q).includes(x));}
-  function isProse(q){return /prose|first flight prose/.test(module(q)) && !isPoetry(q);}
-  function isNonDetail(q){return /footprints|supplementary|non-detail|non detail/.test(module(q)) || /a triumph of surgery|the thief's story|the midnight visitor|a question of trust|footprints without feet|the making of a scientist|the necklace|bholi|the book that saved the earth/.some(x=>chapter(q).includes(x));}
-  function isComposition(q){return /composition|essay|letter/.test(module(q)+' '+kind(q)+' '+text(q)) || +q.marks===5;}
-  function isComprehension(q){return !!q.passage || /comprehension|passage/.test(module(q)+' '+kind(q)+' '+text(q));}
-  function isAnalogy(q){return /analogy|relationship.*complete|complete.*pair/.test(kind(q)+' '+text(q));}
-  function isRewrite(q){return /rewrite|reported speech|indirect speech|active.*passive|passive.*active|degree|transformation|as directed/.test(kind(q)+' '+text(q));}
-  function isMCQ(q){return String(q.question_type||q.type||'').toLowerCase()==='mcq';}
-  function isRTC(q){return /reference.*context|context/.test(kind(q)+' '+text(q));}
-  function isQuote(q){return /quote.*memory|memory/.test(kind(q)+' '+text(q));}
-  function isLong(q,marks){return +q.marks===marks && !isGrammar(q) && !isComposition(q) && !isComprehension(q);}
+  function str(v){return String(v??'').trim().toLowerCase();}
+  function qtext(q){return str(q.question||q.prompt);}
+  function qtype(q){return str(q.type||q.question_type||q.skill||q.category);}
+  function qmodule(q){return str(q.module||q.bank_group||q.book||q.category);}
+  function qchapter(q){return str(q.chapter||q.topic);}
+  function isMCQ(q){return qtype(q)==='mcq';}
+  function isAnalogy(q){return /analogy|relationship.*complete|complete.*pair/.test(qtype(q)+' '+qtext(q));}
+  function isRewrite(q){return /rewrite|reported speech|indirect speech|active.*passive|passive.*active|degree|transformation|as directed/.test(qtype(q)+' '+qtext(q));}
+  function isRTC(q){return /reference.*context|context/.test(qtype(q)+' '+qtext(q));}
+  function isQuote(q){return /quote.*memory/.test(qtype(q)+' '+qtext(q));}
+  function isComprehension(q){return !!q.passage || /comprehension|passage/.test(qtype(q)+' '+qtext(q));}
+  function isEssay(q){return /essay/.test(qtype(q)+' '+qtext(q));}
+  function isLetter(q){return /letter/.test(qtype(q)+' '+qtext(q));}
+  function isGrammar(q){return /grammar|vocabulary/.test(qmodule(q)) || /grammar|vocabulary/.test(qtype(q));}
+  function isPoetry(q){return /poetry/.test(qmodule(q)) || ['dust of snow','fire and ice','a tiger in the zoo','how to tell wild animals','the ball poem','amanda','the trees','fog','the tale of custard the dragon','for anne gregory'].some(x=>qchapter(q).includes(x));}
+  function isProse(q){return /prose|first flight/.test(qmodule(q)) && !isPoetry(q);}
+  function isNonDetail(q){return /footprints|supplementary|non-detail|non detail/.test(qmodule(q)) || ['a triumph of surgery',"the thief's story",'the midnight visitor','a question of trust','footprints without feet','the making of a scientist','the necklace','bholi','the book that saved the earth'].some(x=>qchapter(q).includes(x));}
+  function key(q){return q.id||q.question||q.prompt||JSON.stringify(q);}
 
-  function topicPool(topic,marks){
-    const all=Array.isArray(window.qs)?window.qs:[];
-    return all.filter(q=>+q.marks===marks && (
-      topic==='grammar' ? isGrammar(q) :
-      topic==='prose' ? isProse(q) :
-      topic==='poetry' ? isPoetry(q) :
-      topic==='non-detail' ? isNonDetail(q) :
-      topic==='composition' ? isComposition(q) :
-      topic==='comprehension' ? isComprehension(q) : true
-    ));
-  }
-  function take(pool,used,count,label,shortages){
-    const available=shuffle(pool.filter(q=>!used.has(q.id||q.question||q.prompt)));
-    if(available.length<count){shortages.push(`${label}: need ${count}, found ${available.length}`);return []}
-    const out=available.slice(0,count);out.forEach(q=>used.add(q.id||q.question||q.prompt));return out;
-  }
-  function pick(topic,marks,count,used,label,shortages,extraFilter){
-    let p=topicPool(topic,marks);
-    if(extraFilter)p=p.filter(extraFilter);
-    return take(p,used,count,label,shortages);
-  }
+  /* Main-question allocation taken from the supplied chapter-wise chart. */
+  const CHAPTER_ALLOCATION=[
+    ['A Letter to God',2,1],['Nelson Mandela: Long Walk to Freedom',4,1],['His First Flight',3,1],['Black Aeroplane',3,1],['From the Diary of Anne Frank',3,1],['A Baker from Goa',4,1],['Tea from Assam',1,1],['Mijbil the Otter',3,1],['The Sermon at Benares',3,1],['The Proposal',2,1],
+    ['Dust of Snow',3,1],['Fire and Ice',4,1],['A Tiger in the Zoo',4,1],['How to Tell Wild Animals',1,1],['How to Tell Wild Animals',2,1],['The Ball Poem',3,1],['The Trees',3,1],['Fog',1,1],['For Anne Gregory',3,1],
+    ['A Triumph of Surgery',2,1],["The Thief's Story",1,1],['The Midnight Visitor',2,1],['A Question of Trust',1,1],['Footprints Without Feet',1,1],['The Making of a Scientist',2,1],['The Necklace',3,1],['Bholi',2,1],['The Book That Saved the Earth',1,1]
+  ];
 
-  /*
-   * Exact 15-E paper architecture from the supplied documents.
-   * 1M: Grammar 20 (6 MCQ + 4 analogy + 3 rewrite + 7 VSA)
-   * 2M: Prose 2 + Poetry 1 + Non-detail 4 + Grammar 3 = 10
-   * 3M: Prose 5 + Poetry 4 + Non-detail 1 = 10
-   * 4M: Prose 2 + Poetry 2 + Passage 1 = 5
-   * 5M: Composition 2 (Essay + Letter) = 10
-   */
-  function buildAccurateMock(seed){
-    return withSeed(seed,function(){
-      const used=new Set(),items=[],shortages=[];let number=1;
-      function add(section,title,marks,kindName,q,or){items.push({number:number++,section,sectionTitle:title,marks,kind:kindName,q,or:or||null});}
-      function pair(section,title,marks,kindName,topic,choice,filter){
-        const n=choice?2:1;const got=pick(topic,marks,n,used,`${section} question`,shortages,filter);if(got.length<n)return;add(section,title,marks,kindName,got[0],got[1]);
+  function chapterMatches(q,name){const c=qchapter(q),n=str(name);return c===n||c.includes(n)||n.includes(c);}
+  function chapterPool(name,marks,extra){let all=Array.isArray(window.qs)?window.qs:[];let p=all.filter(q=>+q.marks===+marks&&chapterMatches(q,name));return extra?p.filter(extra):p;}
+  function topicPool(topic,marks,extra){let all=Array.isArray(window.qs)?window.qs:[];let p=all.filter(q=>+q.marks===+marks);if(topic==='grammar')p=p.filter(isGrammar);if(topic==='prose')p=p.filter(isProse);if(topic==='poetry')p=p.filter(isPoetry);if(topic==='non-detail')p=p.filter(isNonDetail);if(topic==='comprehension')p=p.filter(isComprehension);if(topic==='composition')p=p.filter(q=>+q.marks===5&&(!q.chapter||isEssay(q)||isLetter(q)||/composition/.test(qmodule(q))));return extra?p.filter(extra):p;}
+  function take(pool,used,count,label,shortages){const available=shuffle(pool.filter(q=>!used.has(key(q))));if(available.length<count){shortages.push(`${label}: need ${count}, found ${available.length}`);return [];}const out=available.slice(0,count);out.forEach(q=>used.add(key(q)));return out;}
+  function fallbackByTopic(topic,marks,used,filter,label,shortages){return take(topicPool(topic,marks,filter),used,1,label,shortages)[0]||null;}
+
+  function buildAccurateMock(seed){return withSeed(seed,function(){
+    const usedMain=new Set(),usedAlt=new Set(),items=[],shortages=[];let number=1;
+    function add(section,title,marks,kindName,q,or){if(!q){shortages.push(`${section} Q${number}: missing question`);return;}items.push({number:number++,section,sectionTitle:title,marks,kind:kindName,q,or:or||null});}
+    function mainChapter(name,marks,section,title,kindName,choice,filter){
+      const q=take(chapterPool(name,marks,filter),usedMain,1,`${name} ${marks}M`,shortages)[0];if(!q)return;
+      let or=null;if(choice){const pool=chapterPool(name,marks,filter).filter(x=>!usedMain.has(key(x))&&!usedAlt.has(key(x)));or=take(pool,usedAlt,1,`${name} OR`,shortages)[0]||null;}
+      add(section,title,marks,kindName,q,or);
+    }
+    function topicQuestion(topic,marks,section,title,kindName,choice,filter){
+      const q=take(topicPool(topic,marks,filter),usedMain,1,`${topic} ${marks}M`,shortages)[0];if(!q)return;
+      let or=null;if(choice){const pool=topicPool(topic,marks,filter).filter(x=>!usedMain.has(key(x))&&!usedAlt.has(key(x)));or=take(pool,usedAlt,1,`${topic} OR`,shortages)[0]||null;}
+      add(section,title,marks,kindName,q,or);
+    }
+
+    // I — Q1–6: Grammar & vocabulary MCQs.
+    for(let i=0;i<6;i++)topicQuestion('grammar',1,'I','Choose the correct alternative','mcq',false,isMCQ);
+    // II — Q7–10: Analogy.
+    for(let i=0;i<4;i++)topicQuestion('grammar',1,'II','Observe the relationship and complete the pair','analogy',false,isAnalogy);
+    // III — Q11–13: Directed language work.
+    for(let i=0;i<3;i++)topicQuestion('grammar',1,'III','Rewrite as directed','rewrite1',false,q=>isRewrite(q)&&!isMCQ(q));
+
+    // IV — Q14–20: exact chapter order demonstrated by the supplied model paper.
+    [['Tea from Assam',1],['How to Tell Wild Animals',1],['Fog',1],["The Thief's Story",1],['A Question of Trust',1],['Footprints Without Feet',1],['The Book That Saved the Earth',1]].forEach(([n,m])=>mainChapter(n,m,'IV','Answer the following questions in a sentence each','onesentence',false));
+
+    // V — Q21–27: exact chapter order; Q27 has the single 2M choice.
+    [['A Letter to God',2],['The Proposal',2],['How to Tell Wild Animals',2],['A Triumph of Surgery',2],['The Midnight Visitor',2],['The Making of a Scientist',2],['The Necklace',3]].forEach(([n,m],idx)=>{
+      if(idx<6)mainChapter(n,m,'V','Answer the following questions in two to three sentences each','short2',false);
+      else {
+        const q=take(chapterPool('The Necklace',3),usedMain,1,'The Necklace 3M',shortages)[0];
+        const or=take(chapterPool('Bholi',2).filter(x=>!usedAlt.has(key(x))),usedAlt,1,'Q27 OR Bholi',shortages)[0]||null;
+        if(q)add('V','Answer the following questions in two to three sentences each',2,'short2',q,or);
       }
-      // I. Grammar MCQs: Q1–6
-      for(let i=1;i<=6;i++)pair('I','Choose the correct alternative',1,'mcq','grammar',false,isMCQ);
-      // II. Grammar analogy: Q7–10
-      for(let i=1;i<=4;i++)pair('II','Observe the relationship and complete the pair',1,'analogy','grammar',false,isAnalogy);
-      // III. Grammar rewrite: Q11–13
-      for(let i=1;i<=3;i++)pair('III','Rewrite as directed',1,'rewrite1','grammar',false,q=>isRewrite(q)&&!isMCQ(q));
-      // IV. 1-mark VSA: prose 1, poetry 2, non-detail 4, grammar 3
-      [['prose',1],['poetry',2],['non-detail',4],['grammar',3]].forEach(([topic,n])=>{for(let i=0;i<n;i++)pair('IV','Answer in a sentence each',1,'onesentence',topic,false,q=>!isMCQ(q)&&!isAnalogy(q)&&!isRewrite(q));});
-      // V. 2-mark: prose 2, poetry 1, non-detail 4, grammar 3. Q27 carries the OR choice.
-      [['prose',2],['poetry',1],['non-detail',4],['grammar',3]].forEach(([topic,n])=>{for(let i=0;i<n;i++){const choice=(number===27);pair('V','Answer in two to three sentences each',2,'short2',topic,choice,q=>!isRewrite(q)&&!isAnalogy(q)&&!isMCQ(q));}});
-      // VI. 2-mark grammar rewrite: Q28–30
-      for(let i=0;i<3;i++)pair('VI','Rewrite as directed',2,'rewrite2','grammar',false,isRewrite);
-      // VII–VIII. 3-mark total: prose 5, poetry 4, non-detail 1. Q36 carries OR; remaining four are RTC slots.
-      // Six long-answer slots: 5 prose + 1 poetry.
-      for(let i=0;i<5;i++){const choice=(number===36);pair('VII','Answer in five to six sentences each',3,'long3','prose',choice,q=>!isRTC(q));}
-      pair('VII','Answer in five to six sentences each',3,'long3','poetry',false,q=>!isRTC(q));
-      // Four reference-to-context slots: 3 poetry + 1 non-detail.
-      for(let i=0;i<3;i++)pair('VIII','Explain with reference to the context',3,'rtc','poetry',false,q=>isRTC(q)||/context/.test(text(q))); 
-      pair('VIII','Explain with reference to the context',3,'rtc','non-detail',false,q=>isRTC(q)||/context/.test(text(q)));
-      // IX. Quote from memory: poetry 4M
-      pair('IX','Quote from memory',4,'quote','poetry',true,q=>isQuote(q)||/poem|poetry|lines/.test(text(q)));
-      // X. 4-mark long answers: remaining prose 2 + poetry 1 (quote consumed one poetry allocation).
-      for(let i=0;i<2;i++)pair('X','Answer in seven to eight sentences each',4,'long4','prose',true,q=>!isRTC(q)&&!isQuote(q));
-      pair('X','Answer in seven to eight sentences each',4,'long4','poetry',true,q=>!isRTC(q)&&!isQuote(q));
-      // XI. Passage: 4M
-      pair('XI','Read the passage carefully and answer',4,'comprehension','comprehension',false,isComprehension);
-      // XII/XIII. Composition: one essay and one letter, each 5M.
-      pair('XII','Write an essay of about 18–20 sentences',5,'essay','composition',true,q=>/essay/.test(kind(q)+' '+text(q)));
-      pair('XIII','Letter Writing',5,'letter','composition',true,q=>/letter/.test(kind(q)+' '+text(q)));
-      return {selected:items,shortages};
     });
-  }
+    // Correct Q27 main must be 2M; repair the temporary 3M selection above by using A Necklace 3M only as an OR-capable alternative source is invalid.
+    // Replace the last item with the authoritative 2M allocation: main A Letter/Proposal/How/…/Bholi or Necklace cannot be 3M.
+    const bad=items.pop(); number--; usedMain.delete(key(bad.q));
+    const q27=take(chapterPool('Bholi',2),usedMain,1,'Bholi 2M',shortages)[0] || take(chapterPool('The Necklace',2),usedMain,1,'2M Q27',shortages)[0];
+    const or27=take(topicPool('non-detail',2).filter(x=>!usedAlt.has(key(x))&&!usedMain.has(key(x))),usedAlt,1,'Q27 OR',shortages)[0]||null;
+    add('V','Answer the following questions in two to three sentences each',2,'short2',q27,or27);
+
+    // VI — Q28–30: Grammar 2M directed language.
+    for(let i=0;i<3;i++)topicQuestion('grammar',2,'VI','Rewrite as directed','rewrite2',false,isRewrite);
+
+    // VII — Q31–36: 3M. Main chapter allocation: 5 prose + 1 poetry. Q31 carries the single 3M OR.
+    [['His First Flight',3],['Black Aeroplane',3],['From the Diary of Anne Frank',3],['Mijbil the Otter',3],['The Sermon at Benares',3],['Dust of Snow',3]].forEach(([n,m],idx)=>mainChapter(n,m,'VII','Answer the following questions in five to six sentences each','long3',idx===0,q=>!isRTC(q)));
+    // VIII — Q37–40: 3M reference-to-context. Main allocation: 1 non-detail + 3 poetry.
+    mainChapter('The Necklace',3,'VIII','Explain with reference to the context','rtc',false,q=>isRTC(q)||/context/.test(qtext(q)));
+    [['The Ball Poem',3],['The Trees',3],['For Anne Gregory',3]].forEach(([n,m])=>mainChapter(n,m,'VIII','Explain with reference to the context','rtc',false,q=>isRTC(q)||/context/.test(qtext(q))));
+
+    // IX — Q41: 4M quote from memory. The chapter-wise 4M poetry allocation is consumed here by Fire and Ice.
+    let quote=take(chapterPool('Fire and Ice',4).filter(q=>isQuote(q)),usedMain,1,'Fire and Ice quote',shortages)[0];
+    if(!quote)quote=take(chapterPool('Fire and Ice',4),usedMain,1,'Fire and Ice 4M quote',shortages)[0];
+    if(quote){let or=take(chapterPool('A Tiger in the Zoo',4).filter(x=>!usedMain.has(key(x))),usedAlt,1,'Q41 OR Tiger',shortages)[0]||null;add('IX','Quote from memory',4,'quote',quote,or);}
+
+    // X — Q42–44: remaining 4M chapter allocation: Nelson Mandela, Baker from Goa, Tiger in the Zoo. All four 4M questions (Q41–44) have choices.
+    mainChapter('Nelson Mandela: Long Walk to Freedom',4,'X','Answer the following questions in seven to eight sentences each','long4',true,q=>!isQuote(q)&&!isRTC(q));
+    mainChapter('A Baker from Goa',4,'X','Answer the following questions in seven to eight sentences each','long4',true,q=>!isQuote(q)&&!isRTC(q));
+    mainChapter('A Tiger in the Zoo',4,'X','Answer the following questions in seven to eight sentences each','long4',true,q=>!isQuote(q)&&!isRTC(q));
+
+    // XI — Q45: unseen passage, 4M.
+    topicQuestion('comprehension',4,'XI','Read the passage carefully and answer','comprehension',false,isComprehension);
+    // XII — Q46: essay, 5M, with OR.
+    topicQuestion('composition',5,'XII','Write an essay of about 18–20 sentences','essay',true,q=>isEssay(q));
+    // XIII — Q47: letter, 5M, with OR.
+    topicQuestion('composition',5,'XIII','Letter Writing','letter',true,q=>isLetter(q));
+
+    const marks=items.reduce((a,x)=>a+Number(x.marks||0),0);
+    if(items.length!==47)shortages.unshift(`Paper validation: built ${items.length} main questions; expected 47.`);
+    if(marks!==100)shortages.unshift(`Paper validation: built ${marks} marks; expected 100.`);
+    return {selected:items,shortages};
+  });}
 
   window.buildMock=function(){return buildAccurateMock(20260000+selectedPaper*7919);};
 
   function renderMocks(){
     const grid=document.querySelector('.quick-grid');if(!grid)return;
     grid.querySelectorAll('.mock-paper-card').forEach(x=>x.remove());
-    const cards=[];
-    for(let i=1;i<=PAPER_COUNT;i++)cards.push(`<button class="quick-card featured mock-paper-card" data-mode="mock" data-paper="${i}" type="button"><span>47Q</span><b>Mock Paper ${i}</b><small>100 marks • 3:15 hours • Exact 15-E blueprint order</small></button>`);
+    const cards=[];for(let i=1;i<=PAPER_COUNT;i++)cards.push(`<button class="quick-card featured mock-paper-card" data-mode="mock" data-paper="${i}" type="button"><span>47Q</span><b>Mock Paper ${i}</b><small>100 marks • 3:15 hours • Blueprint + model-paper order</small></button>`);
     grid.insertAdjacentHTML('beforeend',cards.join(''));
     grid.querySelectorAll('.mock-paper-card').forEach(b=>b.addEventListener('click',()=>{selectedPaper=Number(b.dataset.paper)||1;if(typeof window.start==='function')window.start('mock',{title:`Class 10 English 15-E • Mock Paper ${selectedPaper}`});setTimeout(()=>{const t=document.getElementById('practiceTitle');if(t)t.textContent=`Class 10 English 15-E • Mock Paper ${selectedPaper}`;const e=document.getElementById('practiceEyebrow');if(e)e.textContent=`FULL MOCK TEST • PAPER ${selectedPaper}`;},0);}));
   }
