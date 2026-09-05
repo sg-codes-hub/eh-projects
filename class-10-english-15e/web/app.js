@@ -1,11 +1,1 @@
-(() => {
-  const STORAGE_KEY = 'eh15e.dashboard';
-  const state = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{"practiceSessions":0,"mockTests":0,"areas":[],"questionsAttempted":0,"challengeCompleted":0}');
-  state.practiceSessions=Number(state.practiceSessions)||0; state.mockTests=Number(state.mockTests)||0; state.questionsAttempted=Number(state.questionsAttempted)||0; state.challengeCompleted=Number(state.challengeCompleted)||0; state.areas=Array.isArray(state.areas)?state.areas:[];
-  const save=()=>localStorage.setItem(STORAGE_KEY,JSON.stringify(state));
-  const update=()=>{const m={practice:'practice-count',areas:'area-count',mocks:'mock-count',questions:'questions-count',mistakes:'mistake-count',challenge:'challenge-count'}; if(document.getElementById(m.practice))document.getElementById(m.practice).textContent=state.practiceSessions;if(document.getElementById(m.areas))document.getElementById(m.areas).textContent=state.areas.length;if(document.getElementById(m.mocks))document.getElementById(m.mocks).textContent=state.mockTests;if(document.getElementById(m.questions))document.getElementById(m.questions).textContent=state.questionsAttempted;if(document.getElementById(m.challenge))document.getElementById(m.challenge).textContent=state.challengeCompleted;const mistakes=JSON.parse(localStorage.getItem('eh15e.mistakes')||'[]');if(document.getElementById(m.mistakes))document.getElementById(m.mistakes).textContent=mistakes.length;const q=document.getElementById('questions-count');if(q)q.textContent=state.questionsAttempted;};
-  document.querySelectorAll('[data-area]').forEach(card=>card.addEventListener('click',()=>{const area=card.dataset.area;if(area&&!state.areas.includes(area)){state.areas.push(area);state.practiceSessions++;save();update()}}));
-  document.querySelectorAll('[data-dashboard-action="practice"]').forEach(b=>b.addEventListener('click',()=>{state.practiceSessions++;save()}));
-  const mock=document.getElementById('mock-start');if(mock)mock.addEventListener('click',()=>{state.mockTests++;save();update()});
-  update();
-})();
+(() => { const routes={"first-flight":"First Flight","footprints":"Footprints Without Feet","grammar":"Grammar","composition":"Composition","comprehension":"Comprehension","rtc":"RTC & Quote from Memory","mock-tests":"Mock Tests","revision":"Revision"}; document.querySelectorAll('.card').forEach(card=>card.addEventListener('click',()=>{const id=card.getAttribute('href')?.slice(1); if(routes[id]) console.log('Selected section:',routes[id]);})); })();
