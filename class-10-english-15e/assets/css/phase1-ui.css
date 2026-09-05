@@ -1,0 +1,104 @@
+/* Phase 1 UI polish — visual-only layer. No question, scoring or progress logic changes. */
+:root{
+  --ui-radius:22px;
+  --ui-shadow:0 10px 28px rgba(38,42,100,.08);
+}
+
+/* Hero */
+.hero{
+  min-height:220px;
+  padding:42px 40px;
+  box-shadow:0 20px 50px rgba(91,68,225,.22);
+}
+.hero h1{letter-spacing:-.04em;text-shadow:0 2px 12px rgba(32,20,90,.12)}
+.hero-badge{box-shadow:0 10px 28px rgba(32,20,90,.12)}
+
+/* Stats — stronger scanability */
+.stat{
+  padding:20px 18px 18px 21px;
+  transition:transform .18s ease,box-shadow .18s ease;
+}
+.stat:hover{transform:translateY(-2px);box-shadow:0 10px 25px rgba(38,42,100,.10)}
+.stat b{font-size:29px;line-height:1.15}
+.stat span{display:block;margin-top:4px}
+
+/* Section headings */
+.section-title{margin-top:31px;margin-bottom:15px}
+.section-title h2{font-size:23px;letter-spacing:-.02em}
+.section-title p{max-width:460px}
+
+/* Study & practise modules */
+.module-card{
+  min-height:178px;
+  padding:23px;
+  border-radius:var(--ui-radius);
+  box-shadow:var(--ui-shadow);
+}
+.module-card:after{
+  content:"→";
+  position:absolute;
+  right:18px;
+  bottom:15px;
+  width:31px;height:31px;
+  border-radius:50%;
+  display:grid;place-items:center;
+  background:#f4f3ff;color:var(--purple);
+  font-weight:900;
+  opacity:.72;
+  transition:transform .18s ease,opacity .18s ease;
+}
+.module-card:hover:after{transform:translateX(3px);opacity:1}
+.module-icon{width:54px;height:54px;border-radius:16px;box-shadow:inset 0 0 0 1px rgba(109,74,255,.05)}
+.module-card h3{font-size:18px;letter-spacing:-.01em}
+.module-count{margin-top:15px}
+
+/* Quick exam practice */
+.quick-grid{gap:15px}
+.quick-card{
+  min-height:126px;
+  padding:19px;
+  border-radius:18px;
+  box-shadow:var(--ui-shadow);
+}
+.quick-card span{min-width:55px;height:36px;border-radius:11px;font-size:13px}
+.quick-card b{font-size:16px}
+.quick-card small{line-height:1.45}
+
+/* Saved-practice entry — keep it compact and secondary */
+.saved-practice-panel{
+  margin:24px 0 4px;
+  padding:0;
+  background:transparent;
+  border:0;
+}
+.saved-panel-inner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  padding:17px 20px;
+  border:1px solid #e7e2b8;
+  border-radius:18px;
+  background:linear-gradient(135deg,#fffef5,#fffbe2);
+  box-shadow:0 7px 20px rgba(52,52,52,.06);
+}
+.saved-panel-inner h2{margin:2px 0 2px;font-size:18px}
+.saved-panel-inner p{margin:0;color:#667085;font-size:12px}
+.saved-panel-inner .primary-btn{white-space:nowrap}
+
+/* General touch/keyboard polish */
+button:focus-visible,a:focus-visible{outline:3px solid rgba(109,74,255,.28);outline-offset:2px}
+@media(max-width:760px){
+  .hero{padding:29px 25px}
+  .module-card{min-height:165px}
+  .saved-panel-inner{align-items:flex-start;flex-direction:column}
+  .saved-panel-inner .primary-btn{width:100%}
+}
+@media(max-width:480px){
+  .hero{padding:24px 20px;border-radius:23px}
+  .hero h1{font-size:32px}
+  .stat{padding:17px 16px 16px 19px}
+  .module-card{min-height:155px;padding:20px}
+  .quick-card{min-height:116px}
+  .saved-panel-inner{padding:15px 16px;border-radius:16px}
+}
