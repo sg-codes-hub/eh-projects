@@ -9,18 +9,41 @@
 
     const cards=Array.from(quickGrid.querySelectorAll('.mock-paper-card'));
     let section=document.querySelector('#full-mock-tests-section');
+    let heading=document.querySelector('#full-mock-tests-heading');
+
+    if(!heading){
+      heading=document.createElement('div');
+      heading.id='full-mock-tests-heading';
+      heading.className='section-title mock-tests-heading';
+      heading.innerHTML='<h2 id="mock-tests-title">Full Mock Tests</h2><p>Ten full-length papers designed around the 47-question, 100-mark examination pattern.</p>';
+    }
 
     if(!section){
       section=document.createElement('section');
       section.id='full-mock-tests-section';
       section.className='mock-tests-section';
       section.setAttribute('aria-labelledby','mock-tests-title');
-      section.innerHTML='<div class="section-title"><h2 id="mock-tests-title">Full Mock Tests</h2><p>Ten full-length papers designed around the 47-question, 100-mark examination pattern.</p></div><div class="quick-grid mock-tests-grid"></div>';
+      section.innerHTML='<div class="quick-grid mock-tests-grid"></div>';
 
-      /* Put the new section immediately after Quick Exam Practice, before promotion. */
+      /* Put the standalone heading and mock grid immediately after Quick Exam Practice. */
       const promo=document.querySelector('.continue-learning');
-      if(promo)promo.parentNode.insertBefore(section,promo);
-      else dashboard.appendChild(section);
+      if(promo){
+        promo.parentNode.insertBefore(heading,promo);
+        promo.parentNode.insertBefore(section,promo);
+      }else{
+        dashboard.appendChild(heading);
+        dashboard.appendChild(section);
+      }
+    }else{
+      /* Repair older DOM/CSS states: heading must be a sibling before the card section. */
+      if(heading.parentNode!==dashboard)dashboard.appendChild(heading);
+      const promo=document.querySelector('.continue-learning');
+      if(promo && heading.parentNode===dashboard && heading.nextElementSibling!==section){
+        promo.parentNode.insertBefore(heading,promo);
+        promo.parentNode.insertBefore(section,promo);
+      }
+      if(section.contains(heading))heading.remove();
+      if(section.previousElementSibling!==heading)section.parentNode.insertBefore(heading,section);
     }
 
     const mockGrid=section.querySelector('.mock-tests-grid');
