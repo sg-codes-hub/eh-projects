@@ -7,6 +7,13 @@
 
   function text(el){return (el&&el.textContent||'').trim()}
   function escapeHtml(s){return String(s??'').replace(/[&<>\"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[c]))}
+  function installAnswerFormatting(){
+    if(document.getElementById('previousPaperAnswerFormatting'))return;
+    const style=document.createElement('style');
+    style.id='previousPaperAnswerFormatting';
+    style.textContent=`#previous-paper-view .pp-answer{white-space:pre-wrap!important;line-height:1.7!important}#previous-paper-view .pp-answer strong{display:inline;font-weight:800}#previous-paper-view .pp-question{white-space:normal}#previous-paper-view .pp-letter-answer{font-family:inherit}`;
+    document.head.appendChild(style);
+  }
 
   async function repair(view){
     if(busy||view.dataset.numberingFixed==='1')return;
@@ -14,6 +21,7 @@
     if(!sections.length)return;
     busy=true;
     try{
+      installAnswerFormatting();
       const title=text(view.querySelector('.previous-paper-top h2'));
       const paperId=paperIds[title];
       let solution=null;
@@ -76,6 +84,7 @@
     if(view)repair(view);
   });
   function start(){
+    installAnswerFormatting();
     observer.observe(document.body,{childList:true,subtree:true});
     const view=document.querySelector('#previous-paper-view');if(view)repair(view);
   }
