@@ -69,7 +69,8 @@
       .previous-paper-top .previous-paper-back{margin:0 0 14px!important}.previous-paper-top .previous-paper-back{display:inline-flex;align-items:center;padding:8px 13px;border-radius:999px}
       .previous-paper-section{border-bottom:1px solid #ececf0}.previous-paper-section:last-child{border-bottom:0}.previous-paper-section-head{padding:13px 16px;background:#343434;color:#fff;display:flex;justify-content:space-between;gap:10px;align-items:center}.previous-paper-section-head b{font-size:14px}.previous-paper-section-head span{font-size:11px;opacity:.9}.previous-paper-item{padding:16px 18px;border-bottom:1px solid #eeeef2}.previous-paper-item:last-child{border-bottom:0}.previous-paper-item .pp-qno{font-weight:800;font-size:13px;color:#343434;margin-bottom:6px}.previous-paper-item .pp-question{margin:0;color:#30323a;line-height:1.55;font-size:14px}.previous-paper-item .pp-or{margin-top:8px;padding:9px 11px;border-left:3px solid #eadf9b;background:#fffdf0;color:#555;font-size:13px;line-height:1.5}
       .pp-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin:10px 0 0;padding:0;list-style:none}.pp-option{padding:9px 11px;border:1px solid #e5e7ef;border-radius:10px;background:#fafafa;color:#444;font-size:13px;line-height:1.45}.pp-option.correct{border-color:#eadf9b;background:#fffdf0;font-weight:800}.pp-option.correct::after{content:' ✓';color:#343434}.pp-solution{margin-top:11px;border:1px solid #e6e1c4;border-radius:12px;background:#fbfaf4;overflow:hidden}.pp-solution summary{cursor:pointer;list-style:none;padding:10px 12px;font-size:13px;font-weight:800;color:#343434;background:#fffdf0}.pp-solution summary::-webkit-details-marker{display:none}.pp-solution summary:after{content:' +';float:right}.pp-solution[open] summary:after{content:' −'}.pp-answer{padding:12px 13px 4px;color:#30323a;font-size:13px;line-height:1.6}.pp-answer strong,.pp-grammar strong{color:#343434}.pp-grammar{margin:0 13px 12px;padding:10px 11px;border-left:3px solid #eadf9b;background:#fff;color:#555;font-size:12px;line-height:1.55}.pp-note{margin:0 13px 12px;padding:9px 11px;border-left:3px solid #d6d2c0;background:#fff;color:#666;font-size:12px;line-height:1.55}.previous-paper-bottom-back{margin:16px 18px 18px}
-      @media(max-width:760px){#previous-papers-heading{margin:30px 0 16px!important;padding-bottom:12px!important}#previous-papers-heading h2{font-size:22px!important}.previous-papers-intro{display:block}.previous-papers-intro span{display:block;text-align:left;margin-top:4px}.previous-papers-grid{grid-template-columns:1fr}.previous-paper-card{min-height:145px}.previous-paper-top h2{font-size:21px}.previous-paper-item{padding:14px}.previous-paper-section-head{align-items:flex-start;flex-direction:column;gap:3px}.pp-options{grid-template-columns:1fr}.previous-paper-top .previous-paper-back{width:auto!important}}
+      .pp-passage{margin:12px 18px 0;padding:14px 15px;border:1px solid #e5e7ef;border-radius:12px;background:#fbfbf8;color:#333;line-height:1.65;font-size:13px}.pp-passage-title{font-weight:800;margin-bottom:7px;color:#343434}.pp-passage-questions{margin:12px 18px 16px;padding:12px 15px;border-left:3px solid #eadf9b;background:#fffdf0;color:#444;font-size:13px;line-height:1.6}.pp-passage-questions b{color:#343434}.pp-passage-questions ol{margin:6px 0 0 20px;padding:0}
+      @media(max-width:760px){#previous-papers-heading{margin:30px 0 16px!important;padding-bottom:12px!important}#previous-papers-heading h2{font-size:22px!important}.previous-papers-intro{display:block}.previous-papers-intro span{display:block;text-align:left;margin-top:4px}.previous-papers-grid{grid-template-columns:1fr}.previous-paper-card{min-height:145px}.previous-paper-top h2{font-size:21px}.previous-paper-item{padding:14px}.previous-paper-section-head{align-items:flex-start;flex-direction:column;gap:3px}.pp-options{grid-template-columns:1fr}.previous-paper-top .previous-paper-back{width:auto!important}.pp-passage{margin-left:14px;margin-right:14px}.pp-passage-questions{margin-left:14px;margin-right:14px}}
     `;
     document.head.appendChild(style);
     dashboard.insertBefore(heading,promo);dashboard.insertBefore(section,promo);
@@ -79,8 +80,8 @@
   async function openPreviousPaper(id,section,heading){
     try{
       const [paperRes,solutionRes,optionsRes]=await Promise.all([
-        fetch('data/previous-papers-2025.json?v=20260907-01',{cache:'no-store'}),
-        fetch('data/previous-papers-2025-solutions.json?v=20260907-01',{cache:'no-store'}),
+        fetch('data/previous-papers-2025.json?v=20260907-04',{cache:'no-store'}),
+        fetch('data/previous-papers-2025-solutions.json?v=20260907-04',{cache:'no-store'}),
         fetch('data/previous-papers-2025-mcq-options.json?v=20260907-02',{cache:'no-store'})
       ]);
       if(!paperRes.ok||!solutionRes.ok||!optionsRes.ok)throw new Error('Paper data unavailable');
@@ -102,14 +103,16 @@
           const optionsHtml=opts?`<ul class="pp-options" aria-label="Answer options">${opts.map((opt,index)=>`<li class="pp-option${ans&&ans.startsWith(opt.slice(0,3))?' correct':''}">${escapeHtml(opt)}</li>`).join('')}</ul>`:'';
           return `<article class="previous-paper-item"><div class="pp-qno">Q${qno}</div><p class="pp-question">${escapeHtml(item)}</p>${optionsHtml}${ans?`<details class="pp-solution"><summary>View model answer${grammar?' + grammar help':''}</summary><div class="pp-answer"><strong>Model Answer:</strong> ${escapeHtml(ans)}</div>${grammar?`<div class="pp-grammar"><strong>Grammar Help:</strong> ${escapeHtml(grammar)}</div>`:''}</details>`:''}</article>`
         }).join('');
-        return `<section class="previous-paper-section"><div class="previous-paper-section-head"><b>Section ${escapeHtml(s.section)} — ${escapeHtml(s.title)}</b><span>${s.count} × ${s.marks} mark${s.marks===1?'':'s'}</span></div>${html}</section>`;
+        const passage=s.passage?`<div class="pp-passage"><div class="pp-passage-title">Exact passage from the supplied QP</div>${escapeHtml(s.passage).replace(/\n\n/g,'</p><p>').replace(/\n/g,' ')} </div>`:'';
+        const pq=s.passageQuestions?`<div class="pp-passage-questions"><b>Exact passage questions from the supplied QP</b><ol>${s.passageQuestions.map(q=>`<li>${escapeHtml(q)}</li>`).join('')}</ol></div>`:'';
+        return `<section class="previous-paper-section"><div class="previous-paper-section-head"><b>Section ${escapeHtml(s.section)} — ${escapeHtml(s.title)}</b><span>${s.count} × ${s.marks} mark${s.marks===1?'':'s'}</span></div>${passage}${pq}${html}</section>`;
       }).join('');
       view.innerHTML=`<div class="previous-paper-view"><div class="previous-paper-top"><button class="secondary-btn previous-paper-back" type="button">← Back to Previous Papers</button><p class="eyebrow">PREVIOUS YEAR QUESTION PAPER • SOLVED</p><h2>${escapeHtml(paper.title)}</h2><div class="previous-paper-meta"><span>15-E</span><span>${escapeHtml(paper.date)}</span><span>${paper.questions} Questions</span><span>${paper.marks} Marks</span><span>${escapeHtml(paper.duration)}</span><span>Model Answers</span></div></div>${sectionsHtml}</div>`;
       view.querySelector('.previous-paper-back').onclick=()=>{view.remove();section.hidden=false;heading.hidden=false;window.scrollTo({top:section.offsetTop-20,behavior:'smooth'})};
       window.scrollTo({top:view.offsetTop-20,behavior:'smooth'});
     }catch(e){console.error(e);alert('Unable to open the solved paper. Please refresh after GitHub Pages finishes deploying.');}
   }
-  function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+  function escapeHtml(s){return String(s??'').replace(/[&<>\"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[c]))}
   function watch(){
     if(arrange()){addPreviousPapers();return}
     const dashboard=document.querySelector('#dashboard');if(!dashboard)return;
