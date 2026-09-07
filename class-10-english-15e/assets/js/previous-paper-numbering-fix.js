@@ -1,4 +1,4 @@
-/* Fix question numbering when a single numbered question contains OR alternatives. */
+/* Fix question numbering when a single numbered question contains OR alternatives, and preserve formatted model answers. */
 (function(){
   'use strict';
   const sectionStarts={I:1,II:7,III:11,IV:14,V:21,VI:28,VII:31,VIII:37,IX:41,X:42,XI:45,XII:46,XIII:47};
@@ -7,8 +7,15 @@
 
   function text(el){return (el&&el.textContent||'').trim()}
   function escapeHtml(s){return String(s??'').replace(/[&<>\"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[c]))}
+  function installAnswerFormatting(){
+    if(document.getElementById('previous-paper-answer-formatting'))return;
+    const style=document.createElement('style');style.id='previous-paper-answer-formatting';
+    style.textContent='.pp-answer{white-space:pre-line!important;line-height:1.7!important}.pp-answer strong{font-weight:800}.pp-answer br{line-height:1.7}';
+    document.head.appendChild(style);
+  }
 
   async function repair(view){
+    installAnswerFormatting();
     if(busy||view.dataset.numberingFixed==='1')return;
     const sections=Array.from(view.querySelectorAll('.previous-paper-section'));
     if(!sections.length)return;
@@ -68,6 +75,7 @@
     if(view)repair(view);
   });
   function start(){
+    installAnswerFormatting();
     observer.observe(document.body,{childList:true,subtree:true});
     const view=document.querySelector('#previous-paper-view');if(view)repair(view);
   }
