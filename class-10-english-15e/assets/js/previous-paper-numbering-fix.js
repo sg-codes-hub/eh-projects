@@ -1,4 +1,4 @@
-/* Generic previous-paper numbering guard: a single numbered question may contain OR alternatives. */
+/* Generic previous-paper numbering and official-layout guard. */
 (function(){
   'use strict';
   const sectionStarts={I:1,II:7,III:11,IV:14,V:21,VI:28,VII:31,VIII:37,IX:41,X:42,XI:45,XII:46,XIII:47};
@@ -11,8 +11,36 @@
     if(document.getElementById('previousPaperAnswerFormatting'))return;
     const style=document.createElement('style');
     style.id='previousPaperAnswerFormatting';
-    style.textContent=`#previous-paper-view .pp-answer{white-space:pre-wrap!important;line-height:1.7!important}#previous-paper-view .pp-answer strong{display:inline;font-weight:800}#previous-paper-view .pp-question{white-space:normal}#previous-paper-view .pp-letter-answer{font-family:inherit}`;
+    style.textContent=`#previous-paper-view .pp-answer{white-space:pre-wrap!important;line-height:1.7!important}#previous-paper-view .pp-answer strong{display:inline;font-weight:800}#previous-paper-view .pp-question{white-space:normal}#previous-paper-view .pp-letter-answer{font-family:inherit}#previous-paper-view .pp-official-passage{margin:12px 0 0;padding:14px 15px;border:1px solid #e5e7ef;border-radius:12px;background:#fbfbf8;font-size:13px;line-height:1.65}#previous-paper-view .pp-official-passage-title{font-weight:800;margin-bottom:7px}#previous-paper-view .pp-official-passage p{margin:0 0 10px}#previous-paper-view .pp-official-subquestions{margin:12px 0 0;padding:12px 15px;border-left:3px solid #eadf9b;background:#fffdf0;font-size:13px;line-height:1.6}#previous-paper-view .pp-official-subquestions ol{margin:6px 0 0 20px;padding:0}`;
     document.head.appendChild(style);
+  }
+
+  function repairPassageSection(section){
+    const head=section.querySelector('.previous-paper-section-head b');
+    const m=text(head).match(/^Section\s+([IVX]+)\s+—/);
+    if(!m||m[1]!=='XI')return;
+    const passage=section.querySelector(':scope > .pp-passage');
+    const passageQuestions=section.querySelector(':scope > .pp-passage-questions');
+    const first=section.querySelector(':scope > .previous-paper-item');
+    if(!first||!passage)return;
+
+    /* The official paper treats the passage + its two sub-questions as one numbered Q45.
+       Move both pieces inside Q45 and remove the duplicated renderer text. */
+    const q=first.querySelector('.pp-question');
+    if(q){
+      q.textContent='Read the following passage carefully and answer the questions given below:';
+      q.setAttribute('aria-label','Question 45 passage');
+    }
+    passage.classList.add('pp-official-passage');
+    const title=passage.querySelector('.pp-passage-title');
+    if(title)title.textContent='Passage';
+    first.appendChild(passage);
+    if(passageQuestions){
+      passageQuestions.classList.add('pp-official-subquestions');
+      const pqTitle=passageQuestions.querySelector('b');
+      if(pqTitle)pqTitle.textContent='Questions';
+      first.appendChild(passageQuestions);
+    }
   }
 
   async function repair(view){
@@ -33,6 +61,7 @@
       }
 
       sections.forEach(section=>{
+        repairPassageSection(section);
         const head=section.querySelector('.previous-paper-section-head b');
         const m=text(head).match(/^Section\s+([IVX]+)\s+—/);
         if(!m)return;
@@ -45,7 +74,7 @@
         let items=Array.from(section.querySelectorAll(':scope > .previous-paper-item'));
 
         /* If the source declares one question but stores multiple OR alternatives as items,
-           combine them into one displayed question. This makes the renderer safe for future papers too. */
+           combine them into one displayed question. This is a generic safeguard for future papers. */
         if(declaredCount===1 && items.length>1){
           const first=items[0];
           const questionParts=items.map(item=>text(item.querySelector('.pp-question'))).filter(Boolean);
