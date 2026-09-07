@@ -2,6 +2,20 @@
 (function(){
   'use strict';
   let timer=null;
+  const nativeFetch=window.fetch.bind(window);
+  const v3SolutionUrls={
+    '2025-exam-1':'data/previous-papers-2025-solved-exam-1.json?v=20260907-01',
+    '2025-exam-2':'data/previous-papers-2025-solved-exam-2.json?v=20260907-01',
+    '2025-exam-3':'data/previous-papers-2025-solved-exam-3.json?v=20260907-01'
+  };
+  window.fetch=function(input,init){
+    const url=typeof input==='string'?input:(input&&input.url)||'';
+    if(url.indexOf('data/previous-papers-2025-solutions.json')!==-1){
+      return Promise.all(Object.values(v3SolutionUrls).map(path=>nativeFetch(path,init).then(r=>{if(!r.ok)throw new Error('Solved paper data unavailable');return r.json()})))
+        .then(rows=>new Response(JSON.stringify({course:'Class 10 First Language English (NCERT)',code:'15-E',version:'2025-solved-v3',papers:Object.fromEntries(rows.map((paper,i)=>[Object.keys(v3SolutionUrls)[i],paper]))}),{status:200,headers:{'Content-Type':'application/json'}}));
+    }
+    return nativeFetch(input,init);
+  };
   function arrange(){
     const dashboard=document.querySelector('#dashboard');const quickGrid=document.querySelector('.quick-grid');if(!dashboard||!quickGrid)return false;
     const cards=Array.from(quickGrid.querySelectorAll('.mock-paper-card'));let section=document.querySelector('#full-mock-tests-section');let heading=document.querySelector('#full-mock-tests-heading');
@@ -18,10 +32,9 @@
   }
   async function openPreviousPaper(id,section,heading){
     try{
-      const [paperRes,solutionRes,optionsRes,correctionRes]=await Promise.all([fetch('data/previous-papers-2025.json?v=20260907-04',{cache:'no-store'}),fetch('data/previous-papers-2025-solutions.json?v=20260907-04',{cache:'no-store'}),fetch('data/previous-papers-2025-mcq-options.json?v=20260907-02',{cache:'no-store'}),fetch('data/previous-papers-2025-answer-corrections.json?v=20260907-01',{cache:'no-store'})]);
+      const [paperRes,solutionRes,optionsRes,correctionRes]=await Promise.all([fetch('data/previous-papers-2025.json?v=20260907-04',{cache:'no-store'}),fetch('data/previous-papers-2025-solutions.json?v=20260907-05',{cache:'no-store'}),fetch('data/previous-papers-2025-mcq-options.json?v=20260907-02',{cache:'no-store'}),fetch('data/previous-papers-2025-answer-corrections.json?v=20260907-01',{cache:'no-store'})]);
       if(!paperRes.ok||!solutionRes.ok||!optionsRes.ok||!correctionRes.ok)throw new Error('Paper data unavailable');
       const paperText=await paperRes.text();
-      // Some extracted PDF quote marks were stored as invalid JSON escapes (\\“ / \\”). Clean them before JSON parsing.
       const cleanPaperText=paperText.replace(/\\“/g,'“').replace(/\\”/g,'”');
       const [data,solutions,mcqOptions,corrections]=[JSON.parse(cleanPaperText),await solutionRes.json(),await optionsRes.json(),await correctionRes.json()];
       const paper=data.papers.find(p=>p.id===id),solved=solutions.papers[id],paperOptions=mcqOptions[id]||{},paperCorrections=corrections[id]||{};
@@ -33,7 +46,7 @@
       view.querySelector('.previous-paper-back').onclick=()=>{view.remove();section.hidden=false;heading.hidden=false;window.scrollTo({top:section.offsetTop-20,behavior:'smooth'})};window.scrollTo({top:view.offsetTop-20,behavior:'smooth'});
     }catch(e){console.error('Previous paper open error:',e);alert('Unable to open the solved paper. Please refresh after GitHub Pages finishes deploying.');}
   }
-  function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+  function escapeHtml(s){return String(s??'').replace(/[&<>\"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[c]))}
   function watch(){if(arrange()){addPreviousPapers();return}const dashboard=document.querySelector('#dashboard');if(!dashboard)return;const observer=new MutationObserver(()=>{if(arrange())addPreviousPapers()});observer.observe(dashboard,{childList:true,subtree:true});let attempts=0;timer=setInterval(()=>{attempts++;if(arrange()||attempts>=48){clearInterval(timer);observer.disconnect();addPreviousPapers()}},250)}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',watch);else watch();
 })();
