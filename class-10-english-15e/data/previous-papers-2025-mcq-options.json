@@ -1,0 +1,26 @@
+{
+  "2025-exam-1": {
+    "1": ["(A) is she?", "(B) will she?", "(C) won't she?", "(D) does she?"],
+    "2": ["(A) as", "(B) though", "(C) when", "(D) but"],
+    "3": ["(A) explore", "(B) explored", "(C) to have explored", "(D) to explore"],
+    "4": ["(A) carry on", "(B) carry through", "(C) carry away", "(D) carry off"],
+    "5": ["(A) Verb", "(B) Noun", "(C) Conjunction", "(D) Adverb"],
+    "6": ["(A) Simile", "(B) Metaphor", "(C) Personification", "(D) Synecdoche"]
+  },
+  "2025-exam-2": {
+    "1": ["(A) sail", "(B) take off", "(C) depart", "(D) start"],
+    "2": ["(A) She was lived in Nepal for ten years.", "(B) She lived in Nepal for ten years.", "(C) She has been lived in Nepal for ten years.", "(D) She lives in Nepal for ten years."],
+    "3": ["(A) for, by", "(B) of, with", "(C) with, to", "(D) of, in"],
+    "4": ["(A) looks out", "(B) looks after", "(C) looks into", "(D) looks up"],
+    "5": ["(A) does he?", "(B) did he?", "(C) won't he?", "(D) didn't he?"],
+    "6": ["(A) Personification", "(B) Metaphor", "(C) Simile", "(D) Synecdoche"]
+  },
+  "2025-exam-3": {
+    "1": ["(A) blow", "(B) blew", "(C) blown", "(D) blowing"],
+    "2": ["(A) doesn't he?", "(B) does he?", "(C) won't he?", "(D) will he?"],
+    "3": ["(A) Simile", "(B) Metaphor", "(C) Personification", "(D) Alliteration"],
+    "4": ["(A) the, an", "(B) a, an", "(C) a, the", "(D) the, the"],
+    "5": ["(A) but", "(B) and", "(C) as", "(D) than"],
+    "6": ["(A) reach in", "(B) reach up", "(C) reach down", "(D) reach out"]
+  }
+}
