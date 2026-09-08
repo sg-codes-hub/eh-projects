@@ -36,12 +36,22 @@ const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
 function add(name,status,detail){const d=document.createElement('div');d.className='check '+status;d.innerHTML=`<b>${status==='pass'?'PASS':status==='warn'?'REVIEW':'FAIL'} — ${esc(name)}</b><div class="detail">${esc(detail)}</div>`;$('results').appendChild(d);}
 function wait(ms){return new Promise(r=>setTimeout(r,ms));}
+async function waitForQuestionBank(w,timeoutMs=30000){
+  const deadline=Date.now()+timeoutMs;
+  while(Date.now()<deadline){
+    if(Array.isArray(w.EnglishHubQuestions)&&w.EnglishHubQuestions.length>0)return w.EnglishHubQuestions.length;
+    await wait(250);
+  }
+  return 0;
+}
 async function run(){
   $('results').innerHTML='';$('summary').className='summary';$('summary').textContent='Running…';
   const frame=$('appFrame');frame.src='./?uiAudit='+Date.now();
-  await new Promise((resolve,reject)=>{const t=setTimeout(()=>reject(new Error('Student app did not load within 20 seconds.')),20000);frame.onload=()=>{clearTimeout(t);resolve();};frame.onerror=()=>reject(new Error('Student app iframe failed to load.'));});
-  await wait(1800);
+  await new Promise((resolve,reject)=>{const t=setTimeout(()=>reject(new Error('Student app did not load within 20 seconds.')),20000);frame.onload=()=>{clearTimeout(t);resolve();};frame.onerror=()=>{clearTimeout(t);reject(new Error('Student app iframe failed to load.'));};});
   const w=frame.contentWindow,d=frame.contentDocument;
+  const bankCount=await waitForQuestionBank(w,30000);
+  if(!bankCount)throw new Error('Question bank did not finish loading within 30 seconds.');
+  await wait(500);
   let passed=0,failed=0,warn=0;
   const check=(n,ok,detail,level)=>{const s=ok?'pass':(level||'fail');add(n,s,detail);if(s==='pass')passed++;else if(s==='fail')failed++;else warn++;};
   check('Dashboard loads',!!d.querySelector('#dashboard.active'),'Dashboard view is active after initial load.');
@@ -53,6 +63,7 @@ async function run(){
   check('Ten mock cards render',d.querySelectorAll('.mock-paper-card').length===10,`${d.querySelectorAll('.mock-paper-card').length} mock-paper cards rendered.`);
   check('Previous-paper cards render',d.querySelectorAll('.previous-paper-card').length===3,`${d.querySelectorAll('.previous-paper-card').length} 2025 previous-paper cards rendered.`);
   check('External English Hub link',!!d.querySelector('a[href="https://www.englishhub.co.in/"]'),'Continue Learning link points to englishhub.co.in.');
+  check('Question bank ready',bankCount>=400,`${bankCount} merged questions available to the student app.`);
   check('Strict mock engine available',typeof w.buildStrictMock==='function','buildStrictMock is exposed to the student app.');
   const papers=[];
   if(typeof w.buildStrictMock==='function'){
@@ -62,15 +73,13 @@ async function run(){
       check(`Mock Paper ${p} runtime structure`,items.length===47&&marks===100&&sections.length===13,`${items.length} questions, ${marks} marks, ${sections.length} sections; shortages: ${(r?.shortages||[]).length}.`,(r?.shortages||[]).length?'fail':undefined);
     }
   }
-  // Exercise the actual UI mock flow using Paper 1.
   const card=d.querySelector('.mock-paper-card');
   if(card){card.click();await wait(500);check('Mock UI opens',d.querySelector('#practice.active')&&!!d.querySelector('#quizArea .question-card'),'Clicking Mock Paper 1 opens the practice view.');check('Mock palette has 47 questions',d.querySelectorAll('#questionPalette .palette-btn').length===47,`${d.querySelectorAll('#questionPalette .palette-btn').length} palette buttons rendered.`);check('Mock timer appears',!!d.querySelector('#timer'),'Exam timer is present in the mock view.');check('Section label appears',!!d.querySelector('.mock-section-title'),'Section heading is visible in the mock view.');}
   const opts=d.querySelectorAll('#quizArea .option');if(opts.length){opts[0].click();await wait(80);check('MCQ interaction works',!!d.querySelector('#quizArea .feedback')&&d.querySelector('#nextBtn')&&!d.querySelector('#nextBtn').disabled,'Selecting an MCQ produces feedback and enables Next.');}
-  // Basic mobile-width overflow check by temporarily shrinking the iframe document viewport.
-  try{const old=Object.getOwnPropertyDescriptor(w,'innerWidth');const width=390;let scroll=d.documentElement.scrollWidth;let client=d.documentElement.clientWidth;check('Current document has no horizontal overflow',scroll<=client+12,`scrollWidth ${scroll}, clientWidth ${client}.`, 'warn');}catch(e){add('Mobile overflow check','warn','Could not measure iframe viewport precisely; perform the manual phone-width check.');warn++;}
-  const total=passed+failed+warn;$('summary').className='summary '+(failed?'fail':warn?'warn':'pass');$('summary').textContent=`Overall: ${failed?'FAIL':warn?'PASS WITH REVIEW':'PASS'} — ${passed} passed, ${failed} failed, ${warn} review items.`;$('time').textContent=`Completed ${new Date().toLocaleString()}`;
+  try{let scroll=d.documentElement.scrollWidth;let client=d.documentElement.clientWidth;check('Current document has no horizontal overflow',scroll<=client+12,`scrollWidth ${scroll}, clientWidth ${client}.`,'warn');}catch(e){add('Mobile overflow check','warn','Could not measure iframe viewport precisely; perform the manual phone-width check.');warn++;}
+  $('summary').className='summary '+(failed?'fail':warn?'warn':'pass');$('summary').textContent=`Overall: ${failed?'FAIL':warn?'PASS WITH REVIEW':'PASS'} — ${passed} passed, ${failed} failed, ${warn} review items.`;$('time').textContent=`Completed ${new Date().toLocaleString()}`;
 }
-$('run').onclick=()=>run().catch(e=>{$('summary').className='summary fail';$('summary').textContent='Overall: FAIL — '+e.message;add('Audit runner', 'fail', e.stack||e.message);});
+$('run').onclick=()=>run().catch(e=>{$('summary').className='summary fail';$('summary').textContent='Overall: FAIL — '+e.message;add('Audit runner','fail',e.stack||e.message);});
 </script>
 </body>
 </html>
