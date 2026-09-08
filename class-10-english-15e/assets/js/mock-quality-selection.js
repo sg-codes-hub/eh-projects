@@ -14,11 +14,26 @@
   const letterFormatScore=q=>{const a=answer(q).toLowerCase(),k=letterKind(q);if(!k||k==='unknown')return 0;let s=0;if(/\[address\]|address|street|road|nagar|shahapur|kalaburagi|kalburgi|karnataka|india/.test(a))s++;if(/\[date\]|\b(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\s+\d{1,2}|\b\d{1,2}[\/-]\d{1,2}[\/-]\d{2,4}\b/.test(a))s++;if(k==='formal'){if(/\bto\s*\n|\bto\s+(?:the|a)\b/.test(a))s++;if(/\bsubject\s*:/.test(a))s++;if(/\b(?:sir|madam|respected sir|respected madam)\b/.test(a))s++;if(/\b(?:yours faithfully|yours sincerely|yours obediently)\b/.test(a))s++;}else{if(/\bdear\b/.test(a))s++;if(/\b(?:yours lovingly|yours affectionately|with love|love)\b/.test(a))s++;}return s;};
   const bank=()=>Array.isArray(window.EnglishHubQuestions)&&window.EnglishHubQuestions.length?window.EnglishHubQuestions:(Array.isArray(window.qs)?window.qs:[]);
   const key=q=>q?.id||meta(q)+'|'+text(q);
-  function replaceChoice(current, predicate, used, score){
-    if(current&&predicate(current)&&(!score||score(current)>=score))return current;
-    const candidates=bank().filter(q=>!used.has(key(q))&&predicate(q));
-    candidates.sort((a,b)=>(score?score(b):sentences(b))-(score?score(a):sentences(a)));
-    return candidates[0]||current;
+  function candidates(predicate,used){return bank().filter(q=>!used.has(key(q))&&predicate(q));}
+  function replaceChoice(current,predicate,used,score){
+    if(current&&predicate(current)){
+      if(!score||score(current)>=6)return current;
+    }
+    const list=candidates(predicate,used);
+    list.sort((a,b)=>(score?score(b):sentences(b))-(score?score(a):sentences(a)));
+    return list[0]||current;
+  }
+  function preferred(ids,predicate,used){
+    for(const id of ids){const q=bank().find(x=>x?.id===id&&!used.has(key(x))&&predicate(x));if(q)return q;}
+    return null;
+  }
+  function bestEssay(used){
+    const preferredIds=['COMPOS1-001','COMPOS1-002','COMPOS1-006','COMPOS1-007','COMPOS1-008','COMPOS1-012','COMPOS1-015','COMPOS1-017','COMPOS1-018'];
+    return preferred(preferredIds,q=>isEssay(q)&&sentences(q)>=16,used)||candidates(q=>isEssay(q)&&sentences(q)>=16,used).sort((a,b)=>sentences(b)-sentences(a))[0]||null;
+  }
+  function bestLetter(kind,used){
+    const ids=kind==='formal'?['LETTER-T01','LETTER-T03','LETTER-T05']:['LETTER-T02','LETTER-T04','LETTER-T06'];
+    return preferred(ids,q=>letterKind(q)===kind&&letterFormatScore(q)>=(kind==='formal'?6:4),used)||candidates(q=>letterKind(q)===kind&&letterFormatScore(q)>=(kind==='formal'?6:4),used).sort((a,b)=>letterFormatScore(b)-letterFormatScore(a))[0]||null;
   }
   window.buildStrictMock=function(no){
     const p=original(no),used=new Set();
@@ -32,13 +47,13 @@
     p.selected.filter(x=>x.section==='V').forEach(x=>process(x,isLit,2));
     p.selected.filter(x=>x.section==='VII').forEach(x=>process(x,isLit,5));
     p.selected.filter(x=>x.section==='X').forEach(x=>process(x,isLit,7));
-    p.selected.filter(x=>x.section==='XII').forEach(x=>{const old=x.q;if(!isEssay(old)||sentences(old)<16){const cand=replaceChoice(old,q=>isEssay(q)&&sentences(q)>=16,used);if(cand&&cand!==old){used.delete(key(old));x.q=cand;used.add(key(cand));}}});
+    p.selected.filter(x=>x.section==='XII').forEach(x=>{const old=x.q;if(!isEssay(old)||sentences(old)<16){const cand=bestEssay(used);if(cand&&cand!==old){used.delete(key(old));x.q=cand;used.add(key(cand));}}});
     p.selected.filter(x=>x.section==='XIII').forEach(x=>{
-      const old=x.q;if(letterKind(old)!=='formal'||letterFormatScore(old)<6){const cand=replaceChoice(old,q=>letterKind(q)==='formal'&&letterFormatScore(q)>=6,used,letterFormatScore);if(cand&&cand!==old){used.delete(key(old));x.q=cand;used.add(key(cand));}}
-      const oldOr=x.or;if(letterKind(oldOr)!=='informal'||letterFormatScore(oldOr)<4){const cand=replaceChoice(oldOr,q=>letterKind(q)==='informal'&&letterFormatScore(q)>=4,used,letterFormatScore);if(cand&&cand!==oldOr){if(oldOr)used.delete(key(oldOr));x.or=cand;used.add(key(cand));}}
+      const old=x.q;if(letterKind(old)!=='formal'||letterFormatScore(old)<6){const cand=bestLetter('formal',used);if(cand&&cand!==old){used.delete(key(old));x.q=cand;used.add(key(cand));}}
+      const oldOr=x.or;if(letterKind(oldOr)!=='informal'||letterFormatScore(oldOr)<4){const cand=bestLetter('informal',used);if(cand&&cand!==oldOr){if(oldOr)used.delete(key(oldOr));x.or=cand;used.add(key(cand));}}
     });
     p.totalMarks=p.selected.reduce((s,x)=>s+Number(x.marks||0),0);
     return p;
   };
-  window.__EH_MOCK_QUALITY_SELECTOR_VERSION='20260908-01';
+  window.__EH_MOCK_QUALITY_SELECTOR_VERSION='20260908-05';
 })();
