@@ -21,8 +21,8 @@
   function replaceWeak(x,pred,min,used){
     if(!x)return;
     const old=x.q;
-    if(!pred(old)||sentences(old)<min){const cand=candidates(q=>pred(q)&&sentences(q)>=min,used)[0]||null;if(cand){used.delete(key(old));x.q=cand;used.add(key(cand));}}
-    if(x.or){const oldOr=x.or;if(!pred(oldOr)||sentences(oldOr)<min){const cand=candidates(q=>pred(q)&&sentences(q)>=min,used)[0]||null;if(cand){used.delete(key(oldOr));x.or=cand;used.add(key(cand));}}}
+    if(!pred(old)||sentences(old)<min){const cand=candidates(q=>Number(q?.marks)===Number(x.marks)&&pred(q)&&sentences(q)>=min,used)[0]||null;if(cand){used.delete(key(old));x.q=cand;used.add(key(cand));}}
+    if(x.or){const oldOr=x.or;if(!pred(oldOr)||sentences(oldOr)<min){const cand=candidates(q=>Number(q?.marks)===Number(x.marks)&&pred(q)&&sentences(q)>=min,used)[0]||null;if(cand){used.delete(key(oldOr));x.or=cand;used.add(key(cand));}}}
   }
   window.buildStrictMock=function(no){
     const p=original(no),used=new Set();
@@ -31,19 +31,14 @@
     p.selected.filter(x=>x.section==='VII').forEach(x=>replaceWeak(x,isLit,5,used));
     p.selected.filter(x=>x.section==='X').forEach(x=>replaceWeak(x,isLit,7,used));
     p.selected.filter(x=>x.section==='XII').forEach(x=>{
-      const old=x.q;if(old)used.delete(key(old));
-      let cand=bestEssay(used);if(cand){x.q=cand;used.add(key(cand));}
-      const oldOr=x.or;if(oldOr)used.delete(key(oldOr));
-      cand=bestEssay(used);if(cand){x.or=cand;used.add(key(cand));}
+      const old=x.q;if(old)used.delete(key(old));let cand=bestEssay(used);if(cand){x.q=cand;used.add(key(cand));}
+      const oldOr=x.or;if(oldOr)used.delete(key(oldOr));cand=bestEssay(used);if(cand){x.or=cand;used.add(key(cand));}
     });
     p.selected.filter(x=>x.section==='XIII').forEach(x=>{
-      const old=x.q;if(old)used.delete(key(old));
-      const oldOr=x.or;if(oldOr)used.delete(key(oldOr));
-      let cand=bestLetter('formal',used);if(cand){x.q=cand;used.add(key(cand));}
-      cand=bestLetter('informal',used);if(cand){x.or=cand;used.add(key(cand));}
+      const old=x.q;if(old)used.delete(key(old));const oldOr=x.or;if(oldOr)used.delete(key(oldOr));let cand=bestLetter('formal',used);if(cand){x.q=cand;used.add(key(cand));}cand=bestLetter('informal',used);if(cand){x.or=cand;used.add(key(cand));}
     });
     p.totalMarks=p.selected.reduce((s,x)=>s+Number(x.marks||0),0);
     return p;
   };
-  window.__EH_MOCK_QUALITY_SELECTOR_VERSION='20260908-07';
+  window.__EH_MOCK_QUALITY_SELECTOR_VERSION='20260908-08';
 })();
