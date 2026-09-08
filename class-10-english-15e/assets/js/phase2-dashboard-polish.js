@@ -49,15 +49,11 @@
 #dashboard>#previous-papers-heading p,#dashboard>#full-mock-tests-heading p{display:block!important;margin:4px 0 0!important;padding:0!important;font-size:11px!important;line-height:1.35!important;color:#4d5963!important;white-space:normal!important;user-select:text!important;-webkit-user-select:text!important;pointer-events:auto!important}
 #dashboard>#previous-papers-heading p::before,#dashboard>#previous-papers-heading p::after,#dashboard>#full-mock-tests-heading p::before,#dashboard>#full-mock-tests-heading p::after{content:none!important;display:none!important}
 #dashboard>.previous-papers-intro{border-radius:13px!important}
-
-/* English Hub promotional card */
 #dashboard .continue-learning{text-align:center!important}
 #dashboard .continue-learning h3,#dashboard .continue-learning p{display:block!important;width:100%!important;text-align:center!important}
-#dashboard .continue-learning p{max-width:650px!important;margin:0 auto 10px!important}
-#dashboard .continue-learning a{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:7px!important;text-decoration:none!important;white-space:nowrap!important;line-height:1.2!important;box-sizing:border-box!important;background:#343434!important;color:#fff!important;font-size:13px!important;font-weight:900!important;padding:9px 15px!important;border-radius:8px!important;box-shadow:0 4px 10px rgba(52,52,52,.16)!important}
-#dashboard .continue-learning a:hover{background:#202020!important;transform:translateY(-1px)!important}
-#dashboard .continue-learning a span{color:#fff!important;text-decoration:none!important;font-weight:900!important}
-
+#dashboard .continue-learning p{max-width:650px!important;margin:0 auto 9px!important}
+#dashboard .continue-learning a{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:7px!important;text-decoration:none!important;white-space:nowrap!important;line-height:1.2!important;box-sizing:border-box!important}
+#dashboard .continue-learning a span{text-decoration:none!important}
 .hero .eyebrow{font-size:13px!important;letter-spacing:.045em!important}
 .hero{padding:18px 22px!important;min-height:0!important}
 .hero-content-row{display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;align-items:center!important;column-gap:22px!important}
@@ -66,26 +62,23 @@
 .hero .hero-exam-info-in-hero{display:block!important;margin:9px 0 0!important;padding:0!important;text-align:left!important;font-size:13px!important;font-weight:800!important;letter-spacing:.01em!important;color:#343434!important}
 .previous-paper-bottom-actions{display:flex;justify-content:flex-start;padding:16px 18px;background:#fff}
 .previous-paper-bottom-back{margin:0!important}
-
-@media(max-width:700px){
-  .hero{padding:18px 17px!important;border-radius:17px!important}
-  .hero-content-row{display:block!important;width:100%!important}
-  .hero-content-row>div:first-child{width:100%!important;max-width:none!important}
-  .hero-content-row .hero-badge{display:none!important}
-  .hero-content-row>div:first-child .eyebrow{font-size:10px!important;line-height:1.3!important;letter-spacing:.06em!important;margin:0 0 5px!important}
-  .hero-content-row>div:first-child h1{font-size:28px!important;line-height:1.08!important;margin:4px 0 8px!important;letter-spacing:-.025em!important}
-  .hero-content-row>div:first-child>p:not(.eyebrow):not(.hero-exam-info-in-hero){font-size:12px!important;line-height:1.42!important;margin:0!important;max-width:none!important}
-  .hero .hero-exam-info-in-hero{font-size:11px!important;line-height:1.35!important;margin-top:10px!important;padding-top:9px!important;border-top:1px solid rgba(52,52,52,.16)!important}
-}
+@media(max-width:700px){.hero-content-row{grid-template-columns:minmax(0,1fr) auto!important;column-gap:12px!important;align-items:start!important}.hero-content-row .hero-badge{display:none!important}.hero-content-row>div:first-child h1{font-size:30px!important;line-height:1.12!important}}
 @media(max-width:520px){
-  .hero{padding:17px 15px!important;border-radius:16px!important}
-  .hero-content-row>div:first-child h1{font-size:26px!important;line-height:1.08!important;margin:3px 0 8px!important}
-  .hero-content-row>div:first-child>p:not(.eyebrow):not(.hero-exam-info-in-hero){font-size:11.5px!important;line-height:1.42!important}
-  .hero .hero-exam-info-in-hero{font-size:10.5px!important;line-height:1.35!important;margin-top:9px!important;padding-top:8px!important}
-  #dashboard .continue-learning{padding:14px 15px!important}
-  #dashboard .continue-learning h3{font-size:15px!important;margin-bottom:4px!important}
-  #dashboard .continue-learning p{font-size:10px!important;line-height:1.35!important;margin-bottom:9px!important}
-  #dashboard .continue-learning a{font-size:12px!important;padding:9px 14px!important;border-radius:8px!important}
+  .hero{padding:13px 14px 11px!important;border-radius:16px!important}
+  .hero-content-row{display:block!important;width:100%!important;min-width:0!important}
+  .hero-content-row>div:first-child{display:block!important;width:100%!important;min-width:0!important}
+  .hero-content-row>div:first-child h1{display:block!important;width:100%!important;max-width:none!important;font-size:clamp(18px,6.3vw,23px)!important;line-height:1.05!important;letter-spacing:-.025em!important;margin:3px 0 6px!important;white-space:nowrap!important;overflow:visible!important}
+  .hero-content-row>div:first-child>p:not(.eyebrow):not(.hero-exam-info-in-hero){font-size:10px!important;line-height:1.3!important;margin:0!important;width:100%!important;max-width:none!important}
+  .hero .hero-exam-info-in-hero{font-size:9px!important;line-height:1.25!important;margin-top:6px!important;padding-top:6px!important;border-top:1px solid rgba(52,52,52,.16)!important;white-space:nowrap!important;width:100%!important}
+  .hero .eyebrow{font-size:9px!important;line-height:1.2!important;margin:0 0 2px!important;white-space:nowrap!important}
+  .hero-badge{display:none!important}
+}
+@media(max-width:390px){
+  .hero{padding:11px 12px 10px!important;border-radius:15px!important}
+  .hero-content-row>div:first-child h1{font-size:18px!important;line-height:1.05!important;letter-spacing:-.03em!important}
+  .hero .eyebrow{font-size:8.5px!important}
+  .hero-content-row>div:first-child>p:not(.eyebrow):not(.hero-exam-info-in-hero){font-size:9px!important}
+  .hero .hero-exam-info-in-hero{font-size:8.5px!important}
 }
 `;
     document.head.appendChild(style);
