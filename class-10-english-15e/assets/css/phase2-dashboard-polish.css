@@ -55,6 +55,46 @@
 .previous-papers-intro{border-radius:14px!important}
 .previous-paper-card{cursor:pointer!important}
 
+/* English Hub promotion */
+#dashboard .continue-learning{
+  text-align:center!important;
+}
+#dashboard .continue-learning h3{
+  display:block!important;
+  width:100%!important;
+  text-align:center!important;
+}
+#dashboard .continue-learning p{
+  display:block!important;
+  width:100%!important;
+  max-width:650px!important;
+  margin:0 auto 10px!important;
+  text-align:center!important;
+}
+#dashboard .continue-learning a{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:7px!important;
+  padding:9px 15px!important;
+  margin:0 auto!important;
+  background:#343434!important;
+  color:#fff!important;
+  border:1px solid #343434!important;
+  border-radius:8px!important;
+  font-size:13px!important;
+  font-weight:900!important;
+  line-height:1.2!important;
+  text-decoration:none!important;
+  white-space:nowrap!important;
+  box-sizing:border-box!important;
+}
+#dashboard .continue-learning a span{
+  color:#fff!important;
+  text-decoration:none!important;
+}
+
+/* Compact professional mobile hero */
 @media(max-width:760px){
   #dashboard>.section-title,
   #full-mock-tests-heading,
@@ -65,4 +105,64 @@
   #dashboard>.section-title p,
   #full-mock-tests-heading p,
   #previous-papers-heading p{font-size:12px!important;padding:0 15px 13px!important}
+
+  #dashboard .hero{
+    width:100%!important;
+    min-height:0!important;
+    height:auto!important;
+    padding:14px 15px 13px!important;
+    border-radius:16px!important;
+  }
+  #dashboard .hero-content-row{
+    display:block!important;
+    width:100%!important;
+  }
+  #dashboard .hero-content-row>div:first-child{
+    width:100%!important;
+    min-width:0!important;
+  }
+  #dashboard .hero .eyebrow{
+    font-size:9px!important;
+    line-height:1.2!important;
+    letter-spacing:.045em!important;
+    margin:0 0 3px!important;
+    white-space:nowrap!important;
+  }
+  #dashboard .hero h1{
+    display:block!important;
+    width:100%!important;
+    max-width:none!important;
+    margin:2px 0 6px!important;
+    font-size:clamp(22px,7vw,29px)!important;
+    line-height:1.08!important;
+    letter-spacing:-.025em!important;
+    white-space:nowrap!important;
+  }
+  #dashboard .hero-content-row>div:first-child>p:not(.eyebrow):not(.hero-exam-info-in-hero){
+    width:100%!important;
+    max-width:none!important;
+    margin:0!important;
+    font-size:10px!important;
+    line-height:1.3!important;
+  }
+  #dashboard .hero .hero-exam-info-in-hero{
+    display:block!important;
+    width:100%!important;
+    margin:6px 0 0!important;
+    padding-top:6px!important;
+    border-top:1px solid rgba(52,52,52,.16)!important;
+    text-align:left!important;
+    font-size:9px!important;
+    line-height:1.25!important;
+    white-space:nowrap!important;
+  }
+  #dashboard .hero-badge{display:none!important}
+}
+
+@media(max-width:390px){
+  #dashboard .hero{padding:12px 13px 11px!important;border-radius:15px!important}
+  #dashboard .hero h1{font-size:22px!important}
+  #dashboard .hero .eyebrow{font-size:8.5px!important}
+  #dashboard .hero-content-row>div:first-child>p:not(.eyebrow):not(.hero-exam-info-in-hero){font-size:9px!important}
+  #dashboard .hero .hero-exam-info-in-hero{font-size:8.5px!important}
 }
