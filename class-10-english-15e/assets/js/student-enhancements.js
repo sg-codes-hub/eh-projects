@@ -147,3 +147,45 @@
   };
   window.EnglishHubMockReadinessGuard=true;
 })();
+
+/* Dashboard practice-card reliability: wait for the real bank/app before opening a study area. */
+(function(){
+  'use strict';
+  let appReadyPromise=null;
+  function ensureAppReady(){
+    if(appReadyPromise)return appReadyPromise;
+    appReadyPromise=Promise.resolve().then(async function(){
+      if(typeof window.load==='function')await window.load();
+      else if(window.QuestionBankLoader&&typeof window.QuestionBankLoader.loadAll==='function')await window.QuestionBankLoader.loadAll();
+      return true;
+    }).catch(function(err){appReadyPromise=null;throw err;});
+    return appReadyPromise;
+  }
+  function markTitle(m){return ({1:'One-mark practice',2:'Two-mark practice',3:'Three-mark practice',4:'Four-mark practice',5:'Five-mark practice'})[m]||`${m}-Mark Practice`;}
+  function bind(){
+    if(window.__EH_PRACTICE_CARDS_BOUND)return;
+    document.addEventListener('click',function(e){
+      const card=e.target.closest('.quick-card[data-mode="marks"]');
+      if(!card)return;
+      e.preventDefault();e.stopImmediatePropagation();
+      const marks=Number(card.dataset.marks);
+      if(!marks)return;
+      ensureAppReady().then(function(){
+        if(!Array.isArray(window.EnglishHubQuestions)||!window.EnglishHubQuestions.length){alert('The question bank could not be loaded. Please refresh the page and try again.');return;}
+        if(typeof window.start==='function')window.start('marks',{marks,title:markTitle(marks)});
+      }).catch(function(err){console.error('Practice-card startup failed:',err);alert('The practice questions are still loading. Please wait a moment and try again.');});
+    },true);
+    document.addEventListener('click',function(e){
+      const card=e.target.closest('#courseGrid .module-card[data-sec]');
+      if(!card)return;
+      e.preventDefault();e.stopImmediatePropagation();
+      const id=card.dataset.sec;
+      ensureAppReady().then(function(){
+        if(typeof window.openSection==='function')window.openSection(id);
+        else alert('The study area is still loading. Please wait a moment and try again.');
+      }).catch(function(err){console.error('Study-card startup failed:',err);alert('The study content is still loading. Please wait a moment and try again.');});
+    },true);
+    window.__EH_PRACTICE_CARDS_BOUND=true;
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind);else bind();
+})();
