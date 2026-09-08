@@ -15,6 +15,7 @@
     {section:'XII',title:'Write an essay of about 18–20 sentences on any one',marks:5,count:1,domain:'essay',kind:'essay',orAt:[1]},
     {section:'XIII',title:'Letter Writing',marks:5,count:1,domain:'letter',kind:'letter',orAt:[1]}
   ];
+  const ENGINE_VERSION='20260908-05';
   let paperNo=1;
   const norm=v=>String(v??'').trim().toLowerCase();
   const qText=q=>norm(q?.question||q?.prompt||q?.text);
@@ -29,8 +30,9 @@
   const isQuote=q=>/quote.*memory|quote from memory/.test(qMeta(q)+' '+qText(q));
   const isComprehension=q=>norm(q?.bank_group)==='comprehension'||!!q?.passage||/comprehension|unseen passage|read the following passage/.test(qMeta(q)+' '+qText(q));
   const isEssay=q=>!isMCQ(q)&&/essay/.test(qMeta(q)+' '+qText(q));
-  const isLetter=q=>!isMCQ(q)&&/letter|letter writing|write a letter/.test(qMeta(q)+' '+qText(q));
-  const letterType=q=>{const s=norm([q?.letter_type,q?.skill,q?.topic,q?.category,q?.question].filter(Boolean).join(' '));if(/informal\s*letter|informal_letter|informal/.test(s))return 'informal';if(/formal\s*letter|formal_letter|formal/.test(s))return 'formal';return '';};
+  const isLetterCandidate=q=>{if(isMCQ(q)||Number(q?.marks)!==5)return false;const s=qMeta(q)+' '+qText(q);return /letter|letter writing|write a letter/.test(s)||((norm(q?.question_type)==='writing'||norm(q?.type)==='writing')&&/composition/.test(norm(q?.category))&&/letter/.test(norm(q?.topic)));};
+  const isLetter=q=>isLetterCandidate(q);
+  const letterType=q=>{const s=norm([q?.letter_type,q?.skill,q?.topic,q?.category,q?.question].filter(Boolean).join(' '));if(/informal\s*letter|informal_letter|informal/.test(s))return 'informal';if(/formal\s*letter|formal_letter|formal/.test(s))return 'formal';const t=qText(q);if(/to your (friend|cousin|brother|sister|uncle|aunt)|to (my|your) friend|inviting (him|her)|write a letter to your/.test(t))return 'informal';if(/to the (editor|headmaster|principal|municipal|commissioner|chief engineer|authority)|complaining|requesting|expressing concern|suggesting measures|application to/.test(t))return 'formal';return '';};
   const isFormalLetter=q=>letterType(q)==='formal';
   const isInformalLetter=q=>letterType(q)==='informal';
   const isLiterature=q=>{if(isMCQ(q)||isAnalogy(q)||isRewrite(q)||isRTC(q)||isQuote(q)||isComprehension(q)||isEssay(q)||isLetter(q))return false;const bg=norm(q?.bank_group),mod=norm(q?.module);return ['firstflight','footprints','poetry'].includes(bg)||/first flight|footprints without feet/.test(mod)||/poetry/.test(mod);};
@@ -47,7 +49,7 @@
     case 'quote':return p.filter(q=>Number(q.marks)===4&&isQuote(q));
     case 'comprehension':{const all=p.filter(q=>Number(q.marks)===4&&isComprehension(q));const long=all.filter(q=>String(q.passage||'').trim().length>=600);return long.length>=2?long:all;}
     case 'essay':return p.filter(q=>Number(q.marks)===5&&isEssay(q));
-    case 'letter':return p.filter(q=>Number(q.marks)===5&&isLetter(q));
+    case 'letter':return p.filter(isLetterCandidate);
     default:return [];
   }}
   function take(pool,used,n,rng){const available=shuffle(pool.filter(q=>!used.has(key(q))),rng);const out=available.slice(0,n);out.forEach(q=>used.add(key(q)));return out;}
@@ -81,6 +83,8 @@
     if(shortComp)shortages.unshift('VALIDATION: Q45 comprehension passage is shorter than the long-passage threshold');
     return {selected,shortages,totalMarks};
   }
+  window.__EH_FINAL_BLUEPRINT_ENGINE_VERSION=ENGINE_VERSION;
+  window.__EH_LETTER_DIAGNOSTICS=()=>{const all=bank(),p=all.filter(q=>Number(q.marks)===5);return{engine:ENGINE_VERSION,bank:all.length,marks5:p.length,letterCandidates:p.filter(isLetterCandidate).length,formal:p.filter(isFormalLetter).length,informal:p.filter(isInformalLetter).length,ids:p.filter(isLetterCandidate).map(q=>q.id).filter(Boolean)}};
   window.buildStrictMock=buildStrictMock;
   window.buildMock=()=>buildStrictMock(paperNo);
   try{buildMock=window.buildMock}catch(e){}
