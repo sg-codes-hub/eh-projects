@@ -40,10 +40,6 @@
     catch(e){console.warn('Grammar rules unavailable',e);}
   }
 
-  /* Find the exact question in the loaded source bank and use its answer field
-     when older records use `answer` instead of `model_answer`. This prevents
-     the student UI from ever showing the misleading generic fallback when a
-     real answer exists in the bank. */
   async function findSourceAnswer(questionText){
     const target=clean(questionText);if(!target)return null;
     let all=window.EnglishHubQuestions||window.qs;
@@ -67,6 +63,46 @@
     }
   }
 
+  function isLetterContext(el){
+    const host=el.closest('.question-card,.review-card,.review-detail,.mock-or')||el.parentElement;
+    const text=low(host?.textContent||'');
+    return /letter writing|write a letter|letter to|informal letter|formal letter/.test(text);
+  }
+
+  /* Letter answers are stored as answer text, but the student UI must teach the
+     examination layout. Convert the standard labelled template into explicit
+     line/paragraph breaks without changing its wording. */
+  function formatLetterText(value){
+    let s=String(value||'').replace(/\r\n?/g,'\n').trim();
+    if(!s)return s;
+    s=s.replace(/\s+/g,' ');
+    s=s.replace(/\s+(To\s+)/i,'\n\n$1');
+    s=s.replace(/\s+(Subject\s*:\s*)/i,'\n$1');
+    s=s.replace(/\s+(Sir\/Madam,|Sir,|Madam,|Dear\s+[^,]+,)/i,'\n\n$1');
+    s=s.replace(/\s+(Yours\s+(?:faithfully|sincerely|lovingly),?)/i,'\n\n$1');
+    s=s.replace(/(\bYours\s+(?:faithfully|sincerely|lovingly),?)(?:\s+)/i,'$1\n');
+    /* Separate the common sender block when placeholders are used. */
+    s=s.replace(/^(\[[^\]]+\])\s+(\[[^\]]+\])\s+(\[[^\]]+\])\s+/,'$1\n$2\n$3\n\n');
+    /* Keep the salutation/body/closing readable even when the source answer is one line. */
+    s=s.replace(/(Sir\/Madam,|Sir,|Madam,|Dear\s+[^,]+,)\s+/i,'$1\n\n');
+    s=s.replace(/\s+(Kindly\s+take|I\s+request|I\s+am\s+a|Thank\s+you|Please\s+)/i,'\n$1');
+    return s.replace(/\n{3,}/g,'\n\n').trim();
+  }
+
+  function formatLetterAnswers(){
+    const selectors=['#modelAnswer p','.review-detail .feedback p','.mock-or .feedback p','.pp-answer'];
+    document.querySelectorAll(selectors.join(',')).forEach(node=>{
+      if(node.dataset.letterFormatted==='1'||!isLetterContext(node))return;
+      const raw=node.textContent||'';
+      const formatted=formatLetterText(raw);
+      if(formatted!==raw){
+        node.textContent=formatted;
+        node.style.whiteSpace='pre-line';
+      }
+      node.dataset.letterFormatted='1';
+    });
+  }
+
   function shareScore(){
     const score=document.getElementById('scoreValue')?.textContent||'0';
     const total=(document.getElementById('scoreTotal')?.textContent||'/ 100').replace(/^\s*\/\s*/,'');
@@ -84,9 +120,9 @@
   }
 
   function watch(){
-    new MutationObserver(()=>{ensureShare();addRule();repairFallbackAnswers();}).observe(document.body,{childList:true,subtree:true});
-    setTimeout(()=>{ensureShare();addRule();repairFallbackAnswers();},300);
+    new MutationObserver(()=>{ensureShare();addRule();repairFallbackAnswers();formatLetterAnswers();}).observe(document.body,{childList:true,subtree:true});
+    setTimeout(()=>{ensureShare();addRule();repairFallbackAnswers();formatLetterAnswers();},300);
   }
 
-  window.addEventListener('load',()=>{loadRules().then(()=>{addRule();repairFallbackAnswers();});watch();});
+  window.addEventListener('load',()=>{loadRules().then(()=>{addRule();repairFallbackAnswers();formatLetterAnswers();});watch();});
 })();
