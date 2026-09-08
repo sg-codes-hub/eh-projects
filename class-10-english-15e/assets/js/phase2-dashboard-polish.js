@@ -2,18 +2,24 @@
 (function(){
   'use strict';
 
+  const PREVIOUS_PAPER_TITLE='Previous Year Question Papers';
   const PREVIOUS_PAPER_DESCRIPTION='Practise previous-year 15-E question papers with solved answers, explanations and focused grammar support.';
 
   function normalizePreviousPaperHeading(){
-    const headings=Array.from(document.querySelectorAll('#previous-papers-heading'));
+    const headings=Array.from(document.querySelectorAll('#previous-papers-heading, .previous-papers-heading'));
     if(!headings.length)return false;
     const primary=headings[headings.length-1];
     headings.slice(0,-1).forEach(el=>el.remove());
-    primary.querySelectorAll('p').forEach(el=>el.remove());
-    primary.querySelectorAll('h2').forEach((el,i)=>{if(i>0)el.remove()});
+
+    primary.id='previous-papers-heading';
+    primary.className='section-title previous-papers-heading';
+    primary.replaceChildren();
+
+    const h2=document.createElement('h2');
+    h2.textContent=PREVIOUS_PAPER_TITLE;
     const p=document.createElement('p');
     p.textContent=PREVIOUS_PAPER_DESCRIPTION;
-    primary.appendChild(p);
+    primary.append(h2,p);
     return true;
   }
 
@@ -40,9 +46,10 @@
     const style=document.createElement('style');
     style.id='phase2-generated-heading-fix';
     style.textContent=`
-#dashboard>#full-mock-tests-heading,#dashboard>#previous-papers-heading{display:block!important;width:100%!important;box-sizing:border-box!important;margin:25px 0 12px!important;padding:11px 16px 12px!important;border:0!important;border-radius:13px!important;background:linear-gradient(90deg,#e7f3ff 0%,#eef9f5 52%,#fff4c9 100%)!important;box-shadow:0 5px 15px rgba(52,52,52,.07)!important}
+#dashboard>#full-mock-tests-heading,#dashboard>#previous-papers-heading{display:block!important;width:100%!important;box-sizing:border-box!important;margin:25px 0 12px!important;padding:11px 16px 12px!important;border:0!important;border-radius:13px!important;background:linear-gradient(90deg,#e7f3ff 0%,#eef9f5 52%,#fff4c9 100%)!important;box-shadow:0 5px 15px rgba(52,52,52,.07)!important;user-select:text!important;-webkit-user-select:text!important;pointer-events:auto!important}
 #dashboard>#full-mock-tests-heading h2,#dashboard>#previous-papers-heading h2{margin:0!important;padding:0!important;font-size:22px!important;line-height:1.2!important;color:#202c42!important;white-space:normal!important}
-#dashboard>#previous-papers-heading p,#dashboard>#full-mock-tests-heading p{margin:4px 0 0!important;padding:0!important;font-size:11px!important;line-height:1.35!important;color:#4d5963!important}
+#dashboard>#previous-papers-heading p,#dashboard>#full-mock-tests-heading p{display:block!important;margin:4px 0 0!important;padding:0!important;font-size:11px!important;line-height:1.35!important;color:#4d5963!important;white-space:normal!important;user-select:text!important;-webkit-user-select:text!important;pointer-events:auto!important}
+#dashboard>#previous-papers-heading p::before,#dashboard>#previous-papers-heading p::after,#dashboard>#full-mock-tests-heading p::before,#dashboard>#full-mock-tests-heading p::after{content:none!important;display:none!important}
 #dashboard>.previous-papers-intro{border-radius:13px!important}
 .hero .eyebrow{font-size:13px!important;letter-spacing:.045em!important}
 .hero{padding:18px 22px!important;min-height:0!important}
@@ -58,6 +65,20 @@
     document.head.appendChild(style);
   }
 
+  function watchPreviousHeading(){
+    const dashboard=document.getElementById('dashboard');
+    if(!dashboard||dashboard.dataset.previousHeadingObserver)return;
+    dashboard.dataset.previousHeadingObserver='1';
+    let scheduled=false;
+    const observer=new MutationObserver(()=>{
+      if(scheduled)return;
+      scheduled=true;
+      requestAnimationFrame(()=>{scheduled=false;normalizePreviousPaperHeading()});
+    });
+    observer.observe(dashboard,{childList:true,subtree:true});
+    setTimeout(()=>observer.disconnect(),5000);
+  }
+
   function setupPreviousPaperBack(){
     let tries=0;
     const timer=setInterval(()=>{
@@ -68,13 +89,13 @@
     },100);
   }
 
-  function watchPreviousHeading(){
-    let checks=0;
-    const timer=setInterval(()=>{checks++;if(normalizePreviousPaperHeading()||checks>=120)clearInterval(timer)},100);
-  }
-
   document.addEventListener('click',event=>{if(event.target.closest('.previous-paper-card'))setupPreviousPaperBack()});
 
-  function start(){apply();moveExamInfoIntoHero();styleGeneratedHeadings();watchPreviousHeading()}
+  function start(){
+    apply();
+    moveExamInfoIntoHero();
+    styleGeneratedHeadings();
+    watchPreviousHeading();
+  }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
 })();
