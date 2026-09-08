@@ -11,7 +11,8 @@
     'data/model-answer-quality-overrides-lit-05.json',
     'data/model-answer-quality-overrides-lit-06.json',
     'data/model-answer-quality-overrides-lit-07.json',
-    'data/model-answer-quality-overrides-lit-08.json'
+    'data/model-answer-quality-overrides-lit-08.json',
+    'data/model-answer-quality-overrides-letter-01.json'
   ];
   function normalize(q, source) {
     const copy = { ...q };
@@ -68,6 +69,10 @@
           if (typeof o.model_answer === 'string' && o.model_answer.trim()) q.model_answer = o.model_answer.trim();
           if (typeof o.answer === 'string' && o.answer.trim()) q.answer = o.answer.trim();
           if (Array.isArray(o.answer_points)) q.answer_points = o.answer_points.slice();
+          if (typeof o.letter_type === 'string' && o.letter_type.trim()) q.letter_type = o.letter_type.trim();
+          if (typeof o.skill === 'string' && o.skill.trim()) q.skill = o.skill.trim();
+          if (typeof o.topic === 'string' && o.topic.trim()) q.topic = o.topic.trim();
+          if (typeof o.question_type === 'string' && o.question_type.trim()) q.question_type = o.question_type.trim();
         }
       } catch (_) {}
     }
