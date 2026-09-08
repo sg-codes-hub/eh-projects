@@ -70,13 +70,13 @@
   .hero-content-row>div:first-child h1{display:block!important;width:100%!important;max-width:none!important;font-size:clamp(18px,6.3vw,23px)!important;line-height:1.05!important;letter-spacing:-.025em!important;margin:3px 0 6px!important;white-space:nowrap!important;overflow:visible!important}
   .hero-content-row>div:first-child>p:not(.eyebrow):not(.hero-exam-info-in-hero){font-size:10px!important;line-height:1.3!important;margin:0!important;width:100%!important;max-width:none!important}
   .hero .hero-exam-info-in-hero{font-size:9px!important;line-height:1.25!important;margin-top:6px!important;padding-top:6px!important;border-top:1px solid rgba(52,52,52,.16)!important;white-space:nowrap!important;width:100%!important}
-  .hero .eyebrow{font-size:9px!important;line-height:1.2!important;margin:0 0 2px!important;white-space:nowrap!important}
+  .hero .eyebrow{font-size:11px!important;line-height:1.2!important;margin:0 0 2px!important;white-space:nowrap!important}
   .hero-badge{display:none!important}
 }
 @media(max-width:390px){
   .hero{padding:11px 12px 10px!important;border-radius:15px!important}
   .hero-content-row>div:first-child h1{font-size:18px!important;line-height:1.05!important;letter-spacing:-.03em!important}
-  .hero .eyebrow{font-size:8.5px!important}
+  .hero .eyebrow{font-size:10px!important}
   .hero-content-row>div:first-child>p:not(.eyebrow):not(.hero-exam-info-in-hero){font-size:9px!important}
   .hero .hero-exam-info-in-hero{font-size:8.5px!important}
 }
