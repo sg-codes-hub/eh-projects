@@ -1,0 +1,12 @@
+{
+  "audit":"2025 previous papers model-answer audit v1",
+  "scope":"Three supplied 2025 15-E papers used by the Previous Year Question Papers section",
+  "papers":{
+    "2025-exam-1":{"questions":47,"status":"audited","verified_sections":["I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII","XIII"],"corrections_applied":[12,14,17,18,24,25,26,27,40]},
+    "2025-exam-2":{"questions":47,"status":"audited","verified_sections":["I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII","XIII"],"corrections_applied":[16,17,18,19,20,22,24,25,35,37,38,39,40]},
+    "2025-exam-3":{"questions":47,"status":"audited","verified_sections":["I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII","XIII"],"corrections_applied":[8,37,38,39,40]}
+  },
+  "method":"Questions were checked against the supplied paper text and, where available, KSEAB-style model-answer evidence. Corrections are kept in the answer-corrections layer so the source question paper remains unchanged.",
+  "notes":["Quote-from-memory items intentionally provide a cue rather than reproducing the full prescribed extract.","Essay and letter answers are model responses; students may receive marks for other relevant, grammatically correct responses.","This audit concerns the three 2025 previous papers, not the entire independent question bank."],
+  "last_updated":"2026-09-08"
+}
