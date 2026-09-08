@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>15-E Mock Paper Audit</title>
+<style>body{font-family:system-ui,sans-serif;margin:0;background:#faf8f2;color:#252525;padding:20px}main{max-width:1100px;margin:auto}button{padding:10px 14px;border:0;border-radius:10px;background:#222;color:#fff}pre{white-space:pre-wrap;background:#fff;border:1px solid #ddd;border-radius:12px;padding:16px;overflow:auto}.ok{color:#176b35}.bad{color:#a12626}.paper{background:#fff;border:1px solid #ddd;border-radius:14px;padding:14px;margin:12px 0}.pass{color:#176b35}.fail{color:#a12626}</style>
+</head>
+<body><main>
+<h1>Class 10 English 15-E — Mock Papers 1–10 Audit</h1>
+<p>This audit uses the same question-bank loader and deterministic blueprint engine as the live app. It does not alter the live dashboard.</p>
+<button id="run">Run audit</button> <button id="download" disabled>Download JSON</button>
+<div id="status">Ready.</div><div id="results"></div><pre id="json" hidden></pre>
+<script src="assets/js/question-bank-loader.js?v=20260908-audit1"></script>
+<script src="assets/js/final-blueprint-engine.js?v=20260908-audit1"></script>
+<script>
+const $=id=>document.getElementById(id);
+function sentences(s){return String(s||'').replace(/\n+/g,' ').split(/[.!?]+(?:\s|$)/).map(x=>x.trim()).filter(Boolean).length}
+function letterFormat(q){const a=String(q?.model_answer||'').toLowerCase();return ['subject:','sir','madam','yours'].every(x=>a.includes(x)) && (a.includes('to\n')||a.includes('to '));}
+function inspectPaper(no,p){
+ const issues=[]; const seen=new Set();
+ if(p.selected.length!==47)issues.push(`main questions ${p.selected.length}/47`);
+ if(p.totalMarks!==100)issues.push(`marks ${p.totalMarks}/100`);
+ const sectionCounts={};
+ p.selected.forEach(x=>{sectionCounts[x.section]=(sectionCounts[x.section]||0)+1; const id=x.q?.id||'';if(id&&seen.has(id))issues.push(`duplicate main ID ${id}`);if(id)seen.add(id);if(x.or?.id&&seen.has(x.or.id))issues.push(`duplicate OR ID ${x.or.id}`);if(x.or?.id)seen.add(x.or.id);
+   if(x.section==='XII' && sentences(x.q?.model_answer)<15)issues.push(`Q${x.number} essay answer short (${sentences(x.q?.model_answer)} sentences)`);
+   if(x.section==='XIII'){if(!x.or)issues.push('Q47 missing OR');else{if(!/formal/i.test(String(x.q?.letter_type||x.q?.skill||'')))issues.push('Q47 first choice not marked formal');if(!/informal/i.test(String(x.or?.letter_type||x.or?.skill||'')))issues.push('Q47 second choice not marked informal');if(!letterFormat(x.q)||!letterFormat(x.or))issues.push('Q47 letter model-answer format incomplete');}}
+   if(x.section==='XI' && String(x.q?.passage||'').trim().length<600)issues.push('Q45 passage below 600 characters');
+ });
+ const expected={I:6,II:4,III:3,IV:7,V:7,VI:3,VII:6,VIII:4,IX:1,X:3,XI:1,XII:1,XIII:1};
+ for(const [s,n] of Object.entries(expected))if(sectionCounts[s]!==n)issues.push(`Section ${s}: ${sectionCounts[s]||0}/${n}`);
+ return {paper:no,status:issues.length?'FAIL':'PASS',issues,shortages:p.shortages,sectionCounts,totalMarks:p.totalMarks,questions:p.selected.map(x=>({number:x.number,section:x.section,marks:x.marks,id:x.q?.id||null,type:x.q?.type||null,or:x.or?{id:x.or.id||null,type:x.or.type||null}:null}))};
+}
+async function run(){
+ $('status').textContent='Loading complete question bank…';
+ try{const all=await window.QuestionBankLoader.loadAll();const rows=[];for(let i=1;i<=10;i++)rows.push(inspectPaper(i,window.buildStrictMock(i)));
+ const report={audit:'Mock Papers 1-10 deterministic runtime audit v2',updated:new Date().toISOString(),bankStatus:window.EnglishHubBankStatus||null,blueprint:'47 questions / 100 marks / Sections I-XIII',papers:rows,overall:rows.every(x=>x.status==='PASS')?'PASS':'FAIL'};
+ window.__auditReport=report;$('status').innerHTML=`<b class="${report.overall==='PASS'?'ok':'bad'}">Overall: ${report.overall}</b> — ${all.length} merged questions loaded.`;
+ $('results').innerHTML=rows.map(r=>`<div class="paper"><b>Mock Paper ${r.paper}: <span class="${r.status==='PASS'?'pass':'fail'}">${r.status}</span></b><div>47Q target: ${r.questions.length} • Marks: ${r.totalMarks} • Issues: ${r.issues.length}</div>${r.issues.length?'<ul>'+r.issues.map(i=>`<li>${i}</li>`).join('')+'</ul>':'<div class="pass">Structure and basic content checks passed.</div>'}</div>`).join('');
+ $('json').hidden=false;$('json').textContent=JSON.stringify(report,null,2);$('download').disabled=false;
+ }catch(e){$('status').innerHTML='<b class="bad">Audit failed to run: '+String(e.message||e)+'</b>';console.error(e)}
+}
+$('run').onclick=run;$('download').onclick=()=>{const b=new Blob([JSON.stringify(window.__auditReport,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='mock-papers-audit-runtime-v2.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
+</script></main></body></html>
