@@ -75,7 +75,7 @@
     const heading=document.createElement('div');
     heading.id='previous-papers-heading';
     heading.className='section-title previous-papers-heading';
-    heading.innerHTML='<h2>Previous Year Question Papers</h2><p>Practise the 2025 15-E Exam–1, Exam–2 and Exam–3 papers with solved answers and grammar help.</p>';
+    heading.innerHTML='<h2>Previous Year Question Papers</h2><p>Practise previous-year 15-E question papers with solved answers, explanations and focused grammar support.</p>';
     const section=document.createElement('section');
     section.id='previous-papers-section';
     section.className='previous-papers-section';
