@@ -1,0 +1,208 @@
+/* English Hub 15-E — UI Refresh A: compact dashboard.
+   Presentation-only. Does not alter question-bank, blueprint, mock logic or navigation. */
+:root{
+  --dash-ink:#343434;
+  --dash-muted:#6b6a64;
+  --dash-line:#e6dfb6;
+  --dash-yellow:#ffd92a;
+  --dash-yellow-soft:#fff5b8;
+  --dash-cream:#fffdf1;
+  --dash-shadow:0 7px 20px rgba(52,52,52,.06);
+}
+
+/* ---------- Dashboard rhythm ---------- */
+#dashboard{padding-bottom:8px}
+#dashboard .hero{
+  min-height:178px;
+  padding:27px 31px;
+  border-radius:22px;
+  box-shadow:0 13px 30px rgba(52,52,52,.14);
+}
+#dashboard .hero h1{font-size:clamp(29px,4.2vw,42px);margin:6px 0 9px}
+#dashboard .hero>div:first-child>p:last-child{font-size:14px;line-height:1.45;max-width:650px}
+#dashboard .hero-badge{width:82px;height:82px;min-width:82px;border-radius:18px}
+#dashboard .hero-badge b{font-size:27px}
+#dashboard .stats-grid{gap:10px;margin:13px 0 24px}
+#dashboard .stat{min-height:72px;padding:13px 15px;border-radius:14px;box-shadow:var(--dash-shadow)}
+#dashboard .stat b{font-size:24px}
+#dashboard .stat span{margin-top:4px;font-size:11px}
+
+/* ---------- Section headings ---------- */
+#dashboard>.section-title,
+#dashboard>#full-mock-tests-heading,
+#dashboard>#previous-papers-heading{
+  margin:25px 0 11px!important;
+  padding:0!important;
+  min-height:0!important;
+}
+#dashboard>.section-title h2,
+#dashboard>#full-mock-tests-heading h2,
+#dashboard>#previous-papers-heading h2{
+  font-size:20px!important;
+  line-height:1.2!important;
+  letter-spacing:-.02em;
+}
+#dashboard>.section-title p,
+#dashboard>#full-mock-tests-heading p,
+#dashboard>#previous-papers-heading p{
+  font-size:11px!important;
+  line-height:1.35!important;
+  margin-top:3px!important;
+}
+
+/* ---------- Study & Practise ---------- */
+#dashboard #courseGrid.course-grid{
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:11px;
+}
+#dashboard #courseGrid .module-card{
+  min-height:128px;
+  padding:15px 15px 14px;
+  border-radius:16px;
+  box-shadow:var(--dash-shadow);
+}
+#dashboard #courseGrid .module-card:before{height:3px}
+#dashboard #courseGrid .module-icon{
+  width:39px;height:39px;border-radius:11px;font-size:20px;margin-bottom:9px;
+}
+#dashboard #courseGrid .module-card h3{font-size:14px;margin:0 0 3px;line-height:1.25}
+#dashboard #courseGrid .module-card p{font-size:10px;line-height:1.3;max-width:170px}
+#dashboard #courseGrid .module-count{font-size:9px;padding:3px 7px;margin-top:7px!important}
+#dashboard #courseGrid .module-card:after{right:11px;bottom:11px;width:25px;height:25px;font-size:12px}
+
+/* ---------- Mark-wise practice ---------- */
+#dashboard .quick-grid:not(.mock-tests-grid){
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:10px;
+}
+#dashboard .quick-grid:not(.mock-tests-grid) .quick-card{
+  min-height:91px;
+  padding:13px 14px;
+  border-radius:15px;
+  box-shadow:var(--dash-shadow);
+}
+#dashboard .quick-grid:not(.mock-tests-grid) .quick-card:before{height:3px}
+#dashboard .quick-grid:not(.mock-tests-grid) .quick-card span{
+  min-width:43px;height:28px;border-radius:8px;font-size:11px;margin-bottom:7px;
+}
+#dashboard .quick-grid:not(.mock-tests-grid) .quick-card b{font-size:13px;line-height:1.2}
+#dashboard .quick-grid:not(.mock-tests-grid) .quick-card small{font-size:9px;line-height:1.25;margin-top:3px}
+
+/* ---------- Full mock tests ---------- */
+#dashboard #full-mock-tests-section{margin-top:27px!important}
+#dashboard #full-mock-tests-section>.mock-tests-grid{
+  grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  gap:10px!important;
+}
+#dashboard #full-mock-tests-section .mock-paper-card{
+  min-height:105px!important;
+  padding:14px!important;
+  border-radius:15px!important;
+  box-shadow:var(--dash-shadow)!important;
+}
+#dashboard #full-mock-tests-section .mock-paper-card span{
+  min-width:42px!important;height:25px!important;padding:0 7px!important;border-radius:7px!important;font-size:9px!important;
+}
+#dashboard #full-mock-tests-section .mock-paper-card b{
+  margin:8px 0 3px!important;font-size:14px!important;line-height:1.2!important;
+}
+#dashboard #full-mock-tests-section .mock-paper-card small{
+  font-size:9px!important;line-height:1.25!important;max-width:160px!important;
+}
+#dashboard #full-mock-tests-section .mock-paper-card:after{
+  right:10px!important;bottom:10px!important;min-width:0!important;min-height:0!important;padding:0!important;background:transparent!important;color:#8b7b16!important;font-size:10px!important;
+}
+
+/* ---------- Previous year papers ---------- */
+#dashboard #previous-papers-section{margin-top:0!important}
+#dashboard .previous-papers-intro{padding:9px 12px!important;margin-bottom:10px!important;border-radius:12px!important}
+#dashboard .previous-papers-intro strong{font-size:11px}
+#dashboard .previous-papers-intro span{font-size:10px!important}
+#dashboard .previous-papers-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:10px!important}
+#dashboard .previous-paper-card{min-height:105px!important;padding:13px!important;border-radius:15px!important;box-shadow:var(--dash-shadow)!important}
+#dashboard .previous-paper-card .pp-year{font-size:9px!important;padding:4px 7px!important;margin-bottom:8px!important}
+#dashboard .previous-paper-card b{font-size:16px!important}
+#dashboard .previous-paper-card small{font-size:10px!important}
+#dashboard .previous-paper-card em{padding-top:8px!important;font-size:10px!important}
+
+/* ---------- English Hub promo ---------- */
+#dashboard .continue-learning{
+  margin:25px 0 4px!important;
+  padding:15px 17px!important;
+  border-radius:15px!important;
+}
+#dashboard .continue-learning .cl-icon{display:none}
+#dashboard .continue-learning h3{font-size:15px!important;margin-bottom:3px!important}
+#dashboard .continue-learning p{font-size:10px!important;margin-bottom:9px!important}
+#dashboard .continue-learning a{font-size:10px!important;padding:7px 11px!important}
+
+/* ---------- Medium screens ---------- */
+@media(max-width:980px){
+  #dashboard #courseGrid.course-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  #dashboard .quick-grid:not(.mock-tests-grid){grid-template-columns:repeat(5,minmax(0,1fr))}
+  #dashboard #full-mock-tests-section>.mock-tests-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+}
+
+/* ---------- Mobile: compact two-column dashboard ---------- */
+@media(max-width:760px){
+  #dashboard .hero{min-height:0;padding:21px 20px;border-radius:19px}
+  #dashboard .hero h1{font-size:29px}
+  #dashboard .hero>div:first-child>p:last-child{font-size:12px;line-height:1.4}
+  #dashboard .hero-badge{width:68px;height:68px;min-width:68px;margin-top:14px;border-radius:15px}
+  #dashboard .hero-badge b{font-size:23px}
+  #dashboard .hero-badge span{font-size:7px!important}
+  #dashboard .stats-grid{gap:8px;margin:9px 0 19px}
+  #dashboard .stat{min-height:65px;padding:11px 12px;border-radius:12px}
+  #dashboard .stat b{font-size:22px}
+  #dashboard .stat span{font-size:10px}
+
+  #dashboard>.section-title,
+  #dashboard>#full-mock-tests-heading,
+  #dashboard>#previous-papers-heading{margin:21px 0 9px!important}
+  #dashboard>.section-title h2,
+  #dashboard>#full-mock-tests-heading h2,
+  #dashboard>#previous-papers-heading h2{font-size:18px!important}
+  #dashboard>.section-title p,
+  #dashboard>#full-mock-tests-heading p,
+  #dashboard>#previous-papers-heading p{font-size:10px!important}
+
+  #dashboard #courseGrid.course-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  #dashboard #courseGrid .module-card{min-height:112px;padding:13px;border-radius:14px}
+  #dashboard #courseGrid .module-icon{width:34px;height:34px;border-radius:9px;font-size:17px;margin-bottom:7px}
+  #dashboard #courseGrid .module-card h3{font-size:13px}
+  #dashboard #courseGrid .module-card p{font-size:9px}
+  #dashboard #courseGrid .module-count{font-size:8px;padding:3px 6px;margin-top:5px!important}
+  #dashboard #courseGrid .module-card:after{width:22px;height:22px;right:8px;bottom:8px;font-size:11px}
+
+  #dashboard .quick-grid:not(.mock-tests-grid){grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  #dashboard .quick-grid:not(.mock-tests-grid) .quick-card{min-height:78px;padding:11px 12px;border-radius:13px}
+  #dashboard .quick-grid:not(.mock-tests-grid) .quick-card span{min-width:39px;height:25px;font-size:10px;margin-bottom:5px}
+  #dashboard .quick-grid:not(.mock-tests-grid) .quick-card b{font-size:12px}
+  #dashboard .quick-grid:not(.mock-tests-grid) .quick-card small{font-size:8px}
+
+  #dashboard #full-mock-tests-section>.mock-tests-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+  #dashboard #full-mock-tests-section .mock-paper-card{min-height:91px!important;padding:12px!important;border-radius:13px!important}
+  #dashboard #full-mock-tests-section .mock-paper-card b{font-size:13px!important;margin:7px 0 2px!important}
+  #dashboard #full-mock-tests-section .mock-paper-card small{font-size:8px!important}
+  #dashboard #full-mock-tests-section .mock-paper-card:after{font-size:9px!important;bottom:8px!important;right:8px!important}
+
+  #dashboard .previous-papers-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:7px!important}
+  #dashboard .previous-paper-card{min-height:91px!important;padding:10px!important;border-radius:12px!important}
+  #dashboard .previous-paper-card .pp-year{font-size:8px!important;padding:3px 6px!important;margin-bottom:6px!important}
+  #dashboard .previous-paper-card b{font-size:14px!important}
+  #dashboard .previous-paper-card small{font-size:8px!important}
+  #dashboard .previous-paper-card em{font-size:8px!important;padding-top:6px!important}
+
+  #dashboard .continue-learning{margin:20px 0 2px!important;padding:13px 14px!important}
+  #dashboard .continue-learning h3{font-size:14px!important}
+  #dashboard .continue-learning p{font-size:9px!important}
+}
+
+@media(max-width:390px){
+  #dashboard .hero h1{font-size:27px}
+  #dashboard #courseGrid .module-card{min-height:108px;padding:12px}
+  #dashboard #courseGrid .module-card p{display:none}
+  #dashboard #courseGrid .module-count{margin-top:4px!important}
+  #dashboard .quick-grid:not(.mock-tests-grid) .quick-card small{display:none}
+  #dashboard #full-mock-tests-section .mock-paper-card small{display:none}
+}
