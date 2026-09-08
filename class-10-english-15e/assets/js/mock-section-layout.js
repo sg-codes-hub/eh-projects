@@ -72,10 +72,14 @@
   function addPreviousPapers(){
     const dashboard=document.querySelector('#dashboard'),promo=document.querySelector('.continue-learning');
     if(!dashboard||!promo||document.querySelector('#previous-papers-section'))return;
+
+    document.querySelectorAll('#previous-papers-heading').forEach(el=>el.remove());
+
     const heading=document.createElement('div');
     heading.id='previous-papers-heading';
     heading.className='section-title previous-papers-heading';
     heading.innerHTML='<h2>Previous Year Question Papers</h2><p>Practise previous-year 15-E question papers with solved answers, explanations and focused grammar support.</p>';
+
     const section=document.createElement('section');
     section.id='previous-papers-section';
     section.className='previous-papers-section';
