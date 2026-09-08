@@ -32,6 +32,25 @@
     return isLit;
   };
   const diversityMinimum=section=>section==='V'?2:section==='VII'?5:section==='X'?7:0;
+
+  // Usage is tracked by paper number so rebuilding a paper does not double-count it.
+  // The audit builds Papers 1–10 in order, allowing later papers to prefer fresh IDs.
+  const usageByPaper=Object.create(null);
+  const usageTotals=Object.create(null);
+  const removeUsage=(no)=>{
+    const old=usageByPaper[no];
+    if(!old)return;
+    old.forEach(k=>{usageTotals[k]=Math.max(0,(usageTotals[k]||1)-1);});
+    delete usageByPaper[no];
+  };
+  const addUsage=(no,p)=>{
+    const ids=[];
+    p.selected.filter(x=>DIVERSITY_SECTIONS.has(x.section)).forEach(x=>{if(x.q)ids.push(key(x.q));if(x.or)ids.push(key(x.or));});
+    usageByPaper[no]=ids;
+    ids.forEach(k=>usageTotals[k]=(usageTotals[k]||0)+1);
+  };
+  const usage=q=>usageTotals[key(q)]||0;
+
   function rebalanceLiterature(p,used){
     const counts={};
     const add=q=>{if(q){const c=chapter(q);counts[c]=(counts[c]||0)+1;}};
@@ -44,12 +63,21 @@
       if(oldMain){const c=chapter(oldMain);counts[c]=Math.max(0,(counts[c]||1)-1);}
       if(oldOr){const c=chapter(oldOr);counts[c]=Math.max(0,(counts[c]||1)-1);}
       const pool=bank().filter(q=>Number(q?.marks)===Number(x.marks)&&!used.has(key(q))&&pred(q)&&sentences(q)>=min);
-      const choose=blocked=>pool.filter(q=>!blocked.has(chapter(q))).sort((a,b)=>{
-        const ca=counts[chapter(a)]||0,cb=counts[chapter(b)]||0;
-        if(ca!==cb)return ca-cb;
-        const sa=sentences(a),sb=sentences(b);
-        return sb-sa;
-      })[0]||null;
+      const choose=blocked=>{
+        const available=pool.filter(q=>!blocked.has(chapter(q)));
+        if(!available.length)return null;
+        const fresh=available.filter(q=>usage(q)<4);
+        const ranked=(fresh.length?fresh:available).sort((a,b)=>{
+          const ca=counts[chapter(a)]||0,cb=counts[chapter(b)]||0;
+          if(ca!==cb)return ca-cb;
+          const ua=usage(a),ub=usage(b);
+          if(ua!==ub)return ua-ub;
+          const sa=sentences(a),sb=sentences(b);
+          if(sa!==sb)return sb-sa;
+          return String(key(a)).localeCompare(String(key(b)));
+        });
+        return ranked[0]||null;
+      };
       let main=choose(new Set());
       if(!main&&oldMain)main=oldMain;
       if(main){x.q=main;used.add(key(main));const c=chapter(main);counts[c]=(counts[c]||0)+1;}
@@ -63,7 +91,9 @@
       }
     }
   }
+
   window.buildStrictMock=function(no){
+    removeUsage(no);
     const p=original(no),used=new Set();
     p.selected.forEach(x=>{if(x.q)used.add(key(x.q));if(x.or)used.add(key(x.or));});
     p.selected.filter(x=>x.section==='V').forEach(x=>replaceWeak(x,isLit,2,used));
@@ -78,7 +108,8 @@
     });
     rebalanceLiterature(p,used);
     p.totalMarks=p.selected.reduce((s,x)=>s+Number(x.marks||0),0);
+    addUsage(no,p);
     return p;
   };
-  window.__EH_MOCK_QUALITY_SELECTOR_VERSION='20260908-09';
+  window.__EH_MOCK_QUALITY_SELECTOR_VERSION='20260908-10';
 })();
