@@ -1,0 +1,41 @@
+name: Build merged Class 10 English 15-E question bank
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'class-10-english-15e/data/questions.json'
+      - 'class-10-english-15e/data/banks/**'
+      - 'class-10-english-15e/data/model-answer-quality-overrides*.json'
+      - 'class-10-english-15e/scripts/build-merged-question-bank.js'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Generate merged question bank
+        run: node class-10-english-15e/scripts/build-merged-question-bank.js
+
+      - name: Commit generated bank when changed
+        run: |
+          if git diff --quiet -- class-10-english-15e/data/questions-merged.json; then
+            echo 'Merged question bank is already up to date.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add class-10-english-15e/data/questions-merged.json
+          git commit -m 'Build merged production question bank'
+          git push
