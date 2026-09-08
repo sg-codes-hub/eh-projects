@@ -83,8 +83,17 @@
 
   window.buildMock=function(){return buildAccurateMock(20260000+selectedPaper*7919);};
 
+  function dedupeMockCards(){
+    const seen=new Set();
+    document.querySelectorAll('.mock-paper-card').forEach(card=>{
+      const paper=card.dataset.paper;
+      if(!paper)return;
+      if(seen.has(paper))card.remove();
+      else seen.add(paper);
+    });
+  }
+
   function renderMocks(){
-    // Idempotent rendering: only one authoritative set of ten mock cards may exist.
     if(window.__EH_MOCK_CARDS_RENDERED)return;
     const grid=document.querySelector('.quick-grid');if(!grid)return;
     document.querySelectorAll('.mock-paper-card').forEach(x=>x.remove());
@@ -92,6 +101,15 @@
     grid.insertAdjacentHTML('beforeend',cards.join(''));
     window.__EH_MOCK_CARDS_RENDERED=true;
     grid.querySelectorAll('.mock-paper-card').forEach(b=>b.addEventListener('click',()=>{selectedPaper=Number(b.dataset.paper)||1;if(typeof window.start==='function')window.start('mock',{title:`Class 10 English 15-E • Mock Paper ${selectedPaper}`});setTimeout(()=>{const t=document.getElementById('practiceTitle');if(t)t.textContent=`Class 10 English 15-E • Mock Paper ${selectedPaper}`;const e=document.getElementById('practiceEyebrow');if(e)e.textContent=`FULL MOCK TEST • PAPER ${selectedPaper}`;},0);}));
+    dedupeMockCards();
   }
-  document.addEventListener('DOMContentLoaded',()=>setTimeout(renderMocks,50));
+
+  document.addEventListener('DOMContentLoaded',()=>{
+    setTimeout(renderMocks,50);
+    const dashboard=document.getElementById('dashboard');
+    if(dashboard){
+      const observer=new MutationObserver(()=>dedupeMockCards());
+      observer.observe(dashboard,{childList:true,subtree:true});
+    }
+  });
 })();
