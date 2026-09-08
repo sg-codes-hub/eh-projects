@@ -8,6 +8,7 @@
     const heading=document.querySelector('#previous-papers-heading');
     if(!heading)return false;
 
+    /* The paper-layout script creates this heading later and currently carries legacy copy. Replace it completely. */
     heading.querySelectorAll('p').forEach(el=>el.remove());
     const intro=document.createElement('p');
     intro.textContent=PREVIOUS_PAPER_DESCRIPTION;
@@ -122,12 +123,11 @@
   function watchPreviousHeading(){
     const dashboard=document.getElementById('dashboard');
     if(!dashboard)return;
-    if(cleanGeneratedPreviousHeading())return;
-    const observer=new MutationObserver(()=>{
-      if(cleanGeneratedPreviousHeading())observer.disconnect();
-    });
-    observer.observe(dashboard,{childList:true,subtree:true});
-    setTimeout(()=>observer.disconnect(),5000);
+    let checks=0;
+    const timer=setInterval(()=>{
+      checks++;
+      if(cleanGeneratedPreviousHeading()||checks>=100)clearInterval(timer);
+    },100);
   }
 
   document.addEventListener('click',event=>{
