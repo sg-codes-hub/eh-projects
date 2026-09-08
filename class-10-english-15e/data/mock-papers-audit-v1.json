@@ -1,0 +1,74 @@
+{
+  "audit": "Mock Papers 1-10 audit v1",
+  "last_updated": "2026-09-08",
+  "scope": [
+    "final-blueprint-engine.js assembly logic",
+    "question-bank-loader.js manifest loading and normalization",
+    "syllabus.json",
+    "key grammar, literature, comprehension, composition and letter banks inspected during this audit"
+  ],
+  "status": "flagged_for_correction",
+  "structural_findings": {
+    "engine_target": "47 questions / 100 marks",
+    "engine_sections": [
+      {"section":"I","count":6,"marks_each":1,"domain":"grammar_mcq"},
+      {"section":"II","count":4,"marks_each":1,"domain":"analogy"},
+      {"section":"III","count":3,"marks_each":1,"domain":"rewrite1"},
+      {"section":"IV","count":7,"marks_each":1,"domain":"literature"},
+      {"section":"V","count":7,"marks_each":2,"domain":"literature","choice":"Q7 OR"},
+      {"section":"VI","count":3,"marks_each":2,"domain":"grammar2"},
+      {"section":"VII","count":6,"marks_each":3,"domain":"literature","choice":"Q1 OR"},
+      {"section":"VIII","count":4,"marks_each":3,"domain":"rtc"},
+      {"section":"IX","count":1,"marks_each":4,"domain":"quote","choice":"OR"},
+      {"section":"X","count":3,"marks_each":4,"domain":"literature","choice":"each question OR"},
+      {"section":"XI","count":1,"marks_each":4,"domain":"comprehension"},
+      {"section":"XII","count":1,"marks_each":5,"domain":"essay","choice":"OR"},
+      {"section":"XIII","count":1,"marks_each":5,"domain":"letter","choice":"formal OR informal"}
+    ],
+    "result": "The engine is internally designed to assemble 47 main questions and 100 marks, with alternatives stored separately. It explicitly validates question count, marks, MCQ placement, comprehension length and the Q47 formal/informal letter pair."
+  },
+  "critical_findings": [
+    {
+      "id": "MPA-001",
+      "severity": "critical",
+      "area": "Blueprint/version alignment",
+      "finding": "The application is configured for a 47-question pattern, while current public 2026-27 Karnataka SSLC English pattern references report 45 questions with Section IV = 4 questions and Section VIII = 5 questions. The application syllabus and engine still use the older 47-question structure.",
+      "action": "Do not silently change the app. Confirm which official 2026-27 15-E blueprint/model-paper version English Hub should follow before changing the mock-paper structure."
+    },
+    {
+      "id": "MPA-002",
+      "severity": "high",
+      "area": "Essay model answers",
+      "finding": "Multiple inspected 5-mark essay banks use model answers substantially shorter than the prompt requirement of about 18–20 sentences. This occurs in composition-batch-01, kseab-15e-composition-batch-02 and comprehension-composition-treasure-01; comprehension-composition-treasure-02 also contains prompts explicitly requesting 18–20 sentences while the supplied model answers are around 9–10 sentences.",
+      "action": "Expand all 5-mark essay model answers to approximately 18–20 well-formed sentences while preserving the exact topic and required points."
+    },
+    {
+      "id": "MPA-003",
+      "severity": "high",
+      "area": "Formal letter model-answer consistency",
+      "finding": "Some formal-letter model answers in composition-batch-01 omit a complete sender/address/date block and receiver place/address, whereas the dedicated letter treasure and KSEAB composition batch use a fuller format.",
+      "action": "Standardise every formal-letter model answer to the same school-exam format: sender/address/date, receiver designation/address, subject, salutation, body, complimentary close and name/class where appropriate."
+    },
+    {
+      "id": "MPA-004",
+      "severity": "medium",
+      "area": "Question-bank quality control",
+      "finding": "The loader merges every manifest bank into one pool and deduplicates mainly by ID or question text/marks/chapter. This makes source-bank metadata and answer quality directly relevant to mock-paper quality; a single weak bank item can enter a mock if it satisfies the domain classifier.",
+      "action": "Add a pre-build content-quality audit that flags missing model answers, missing answer points, malformed options, weak essay length, incomplete letter format, missing comprehension passages/questions, and missing RTC metadata before a question is eligible for mock assembly."
+    }
+  ],
+  "positive_findings": [
+    "MCQs are explicitly restricted to Section I by the strict engine.",
+    "Section XIII explicitly requires one formal and one informal letter alternative.",
+    "Section XI attempts to require long comprehension passages of at least 600 characters when enough candidates exist.",
+    "Question-bank loading is centralized through manifest.json and deduplicated before mock assembly.",
+    "The strict mock builder uses deterministic seeds, so Mock Papers 1-10 can be reproduced consistently."
+  ],
+  "next_correction_order": [
+    "1. Confirm the official 2026-27 15-E blueprint/version to avoid auditing against the wrong question count.",
+    "2. Run a complete deterministic content audit of the exact ten generated mock selections after the blueprint is confirmed.",
+    "3. Correct all selected essay model answers to the required sentence range.",
+    "4. Correct all selected formal/informal letter formats.",
+    "5. Rebuild the ten deterministic mocks and re-run structural and content validation."
+  ]
+}
