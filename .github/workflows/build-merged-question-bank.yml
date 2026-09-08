@@ -4,6 +4,7 @@ on:
   push:
     branches: [main]
     paths:
+      - 'class-10-english-15e/index.html'
       - 'class-10-english-15e/data/questions.json'
       - 'class-10-english-15e/data/banks/**'
       - 'class-10-english-15e/data/model-answer-quality-overrides*.json'
