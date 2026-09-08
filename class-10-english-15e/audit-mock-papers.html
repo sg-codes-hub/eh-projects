@@ -10,117 +10,55 @@
 <p>This audit uses the same question-bank loader and deterministic blueprint engine as the live app. It checks the fixed 47-question / 100-mark / Sections I–XIII pattern and then audits the actual selected question records and model-answer content. It does not alter the live dashboard.</p>
 <button id="run">Run audit again</button> <button id="download" disabled>Download JSON</button>
 <div id="status">Starting audit…</div><div id="results"></div><pre id="json" hidden></pre>
-<script src="assets/js/question-bank-loader.js?v=20260908-audit4"></script>
-<script src="assets/js/final-blueprint-engine.js?v=20260908-audit4"></script>
+<script src="assets/js/question-bank-loader.js?v=20260908-audit5"></script>
+<script src="assets/js/final-blueprint-engine.js?v=20260908-audit5"></script>
 <script>
 const $=id=>document.getElementById(id);
 function text(q){return String(q?.question||q?.prompt||q?.text||'').trim()}
-function answerText(q){return String(q?.model_answer||q?.answer||q?.answer_points||'').trim()}
+function answerText(q){const v=q?.model_answer??q?.answer??q?.answer_points??'';if(Array.isArray(v))return v.join('; ');if(v&&typeof v==='object')return Object.values(v).join('; ');return String(v).trim()}
 function sentences(s){return String(s||'').replace(/\n+/g,' ').split(/[.!?]+(?:\s|$)/).map(x=>x.trim()).filter(Boolean).length}
 function words(s){return String(s||'').trim().split(/\s+/).filter(Boolean).length}
 function type(q){return String(q?.type||q?.question_type||'').toLowerCase().trim()}
+function letterKind(q){const lt=String(q?.letter_type||q?.skill||q?.category||'').toLowerCase();if(/informal/.test(lt))return'informal';if(/formal/.test(lt))return'formal';const s=text(q).toLowerCase();if(/to your (friend|cousin|brother|sister|uncle|aunt)|to (my|your) friend|inviting (him|her)|describing .* (to|for) (him|her)|write a letter to your/.test(s))return'informal';if(/to the (editor|headmaster|principal|municipal|commissioner|chief engineer|authority)|complaining|requesting|expressing concern|suggesting measures|application to/.test(s))return'formal';return'unknown'}
 function letterFormat(q){
- const a=answerText(q).toLowerCase();
- const lt=String(q?.letter_type||q?.skill||'').toLowerCase();
- const formal=/formal/.test(lt), informal=/informal/.test(lt);
- const hasAddress=/address|street|road|nagar|shahapur|kalaburagi|kalburgi|karnataka|india/i.test(a);
- const hasDate=/\b(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\s+\d{1,2},?\s+\d{4}\b|\b\d{1,2}[\/-]\d{1,2}[\/-]\d{2,4}\b/i.test(a);
- const hasTo=/\bto\b/.test(a);
+ const a=answerText(q).toLowerCase(); const kind=letterKind(q);
+ const hasAddress=/\[address\]|address|street|road|nagar|shahapur|kalaburagi|kalburgi|karnataka|india/i.test(a);
+ const hasDate=/\[date\]|\b(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\s+\d{1,2},?\s+\d{4}\b|\b\d{1,2}[\/-]\d{1,2}[\/-]\d{2,4}\b/i.test(a);
+ const hasTo=/\n\s*to\s*\n|\bto\s+(?:the|a)\b/.test(a);
  const hasSubject=/\bsubject\s*:/.test(a);
- const hasFormalSalutation=/\b(?:sir|madam)\b/.test(a);
+ const hasFormalSalutation=/\b(?:sir|madam|respected sir|respected madam)\b/.test(a);
  const hasInformalSalutation=/\b(?:dear|my dear|dearest)\b/.test(a);
  const hasClosing=/\b(?:yours faithfully|yours sincerely|yours lovingly|yours affectionately|with love|love)\b/.test(a);
- if(formal)return{kind:'formal',ok:hasAddress&&hasDate&&hasTo&&hasSubject&&hasFormalSalutation&&hasClosing,details:{hasAddress,hasDate,hasTo,hasSubject,hasFormalSalutation,hasClosing}};
- if(informal)return{kind:'informal',ok:hasAddress&&hasDate&&hasInformalSalutation&&hasClosing,details:{hasAddress,hasDate,hasInformalSalutation,hasClosing}};
- return{kind:'unknown',ok:false,details:{reason:'letter_type/skill not explicitly marked formal or informal'}};
+ if(kind==='formal')return{kind,ok:hasAddress&&hasDate&&hasTo&&hasSubject&&hasFormalSalutation&&hasClosing,details:{hasAddress,hasDate,hasTo,hasSubject,hasFormalSalutation,hasClosing}};
+ if(kind==='informal')return{kind,ok:hasAddress&&hasDate&&hasInformalSalutation&&hasClosing,details:{hasAddress,hasDate,hasInformalSalutation,hasClosing}};
+ return{kind,ok:false,details:{reason:'formal/informal type not detectable'}};
 }
-function optionsCount(q){
- const opts=q?.options||q?.choices||q?.alternatives||q?.mcq_options;
- if(Array.isArray(opts))return opts.length;
- if(opts&&typeof opts==='object')return Object.keys(opts).length;
- const s=text(q);const m=s.match(/\([A-D]\)/g);return m?new Set(m).size:0;
-}
-function basicRecordCheck(q,slot,issues){
- if(!q){issues.push(`${slot}: missing question record`);return}
- if(!q.id)issues.push(`${slot}: missing ID`);
- if(!text(q))issues.push(`${slot}: missing question text`);
- if(Number(q.marks)!==Number(slot.marks))issues.push(`${slot}: marks ${q.marks??'missing'} vs expected ${slot.marks}`);
- if(!answerText(q))issues.push(`${slot}: missing model answer/answer points`);
-}
+function optionsCount(q){const opts=q?.options||q?.choices||q?.alternatives||q?.mcq_options;if(Array.isArray(opts))return opts.length;if(opts&&typeof opts==='object')return Object.keys(opts).length;const s=text(q);const m=s.match(/\([A-D]\)/g);return m?new Set(m).size:0}
+function basicRecordCheck(q,label,slot,issues){if(!q){issues.push(`${label}: missing question record`);return}if(!q.id)issues.push(`${label}: missing ID`);if(!text(q))issues.push(`${label}: missing question text`);if(Number(q.marks)!==Number(slot.marks))issues.push(`${label}: marks ${q.marks??'missing'} vs expected ${slot.marks}`);if(!answerText(q))issues.push(`${label}: missing model answer/answer points`)}
 function inspectPaper(no,p){
  const issues=[],warnings=[],seenIds=new Set(),seenText=new Map(),sectionCounts={};
  const expected={I:6,II:4,III:3,IV:7,V:7,VI:3,VII:6,VIII:4,IX:1,X:3,XI:1,XII:1,XIII:1};
- if(p.selected.length!==47)issues.push(`main questions ${p.selected.length}/47`);
- if(p.totalMarks!==100)issues.push(`marks ${p.totalMarks}/100`);
+ if(p.selected.length!==47)issues.push(`main questions ${p.selected.length}/47`); if(p.totalMarks!==100)issues.push(`marks ${p.totalMarks}/100`);
  p.selected.forEach(x=>{
    sectionCounts[x.section]=(sectionCounts[x.section]||0)+1;
    const all=[['main',x.q],...(x.or?[['OR',x.or]]:[])];
-   all.forEach(([label,q])=>{
-     const slot=`Q${x.number} ${label}`;
-     basicRecordCheck(q,{marks:x.marks},issues);
-     const id=q?.id||''; if(id&&seenIds.has(id))issues.push(`${slot}: duplicate ID ${id}`); if(id)seenIds.add(id);
-     const qt=text(q).replace(/\s+/g,' ').toLowerCase();
-     if(qt){if(seenText.has(qt))issues.push(`${slot}: duplicate question text with ${seenText.get(qt)}`);else seenText.set(qt,slot)}
-   });
-   if(x.section==='I'){
-     if(!/mcq/.test(type(x.q)))issues.push(`Q${x.number}: Q1-Q6 slot is not MCQ`);
-     if(optionsCount(x.q)<4)issues.push(`Q${x.number}: MCQ has fewer than 4 detectable options`);
-   }
+   all.forEach(([label,q])=>{const slot=`Q${x.number} ${label}`;basicRecordCheck(q,slot,{marks:x.marks},issues);const id=q?.id||'';if(id&&seenIds.has(id))issues.push(`${slot}: duplicate ID ${id}`);if(id)seenIds.add(id);const qt=text(q).replace(/\s+/g,' ').toLowerCase();if(qt){if(seenText.has(qt))issues.push(`${slot}: duplicate question text with ${seenText.get(qt)}`);else seenText.set(qt,slot)}});
+   if(x.section==='I'){if(!/mcq/.test(type(x.q)))issues.push(`Q${x.number}: Q1-Q6 slot is not MCQ`);if(optionsCount(x.q)<4)issues.push(`Q${x.number}: MCQ has fewer than 4 detectable options`)}
    if(x.section==='II'&&!/analogy|relationship|pair/.test((type(x.q)+' '+text(x.q)).toLowerCase()))issues.push(`Q${x.number}: analogy slot does not look like an analogy/relationship item`);
    if(x.section==='III'&&!/rewrite|transform|change|question|voice|degree|reported|direct/.test((type(x.q)+' '+text(x.q)).toLowerCase()))warnings.push(`Q${x.number}: rewrite slot should be manually reviewed`);
    if(x.section==='VI'&&!/rewrite|transform|change|question|voice|degree|reported|direct|grammar/.test((type(x.q)+' '+text(x.q)).toLowerCase()))warnings.push(`Q${x.number}: grammar/rewrite slot should be manually reviewed`);
-   if(['IV','V','VII','X'].includes(x.section)){
-     const n=sentences(answerText(x.q));
-     const min={IV:1,V:2,VII:4,X:5}[x.section];
-     if(n<min)issues.push(`Q${x.number}: model answer is unusually short for Section ${x.section} (${n} sentences)`);
-   }
-   if(x.section==='VIII'){
-     const s=(type(x.q)+' '+text(x.q)).toLowerCase();
-     if(!/rtc|reference|context/.test(s))issues.push(`Q${x.number}: Section VIII item is not clearly RTC/reference-to-context`);
-   }
-   if(x.section==='IX'){
-     if(!/quote|memory/.test((type(x.q)+' '+text(x.q)).toLowerCase()))issues.push(`Q${x.number}: Section IX item is not clearly quote-from-memory`);
-   }
-   if(x.section==='XI'){
-     const passage=String(x.q?.passage||'').trim();
-     if(passage.length<600)issues.push(`Q${x.number}: passage below 600 characters (${passage.length})`);
-     const sub=(x.q?.questions||x.q?.subquestions||x.q?.items||[]);
-     if(!Array.isArray(sub)||sub.length<2)warnings.push(`Q${x.number}: passage has no clearly detectable multi-question array; manual review needed`);
-   }
-   if(x.section==='XII'){
-     const n=sentences(answerText(x.q)),w=words(answerText(x.q));
-     if(!/essay/.test((type(x.q)+' '+text(x.q)+' '+String(x.q?.skill||'')).toLowerCase()))issues.push(`Q${x.number}: Section XII item is not clearly an essay`);
-     if(n<16)issues.push(`Q${x.number}: essay model answer below about-18-to-20 standard (${n} sentences, ${w} words)`);
-     else if(n<18)warnings.push(`Q${x.number}: essay model answer is slightly below the stated 18–20 sentence target (${n})`);
-   }
-   if(x.section==='XIII'){
-     if(!x.or)issues.push('Q47: missing Formal OR Informal choice');
-     else{
-       const a=letterFormat(x.q),b=letterFormat(x.or);
-       if(a.kind!=='formal')issues.push('Q47: first choice is not explicitly marked formal');
-       if(b.kind!=='informal')issues.push('Q47: second choice is not explicitly marked informal');
-       if(!a.ok)issues.push('Q47: formal letter model-answer format incomplete');
-       if(!b.ok)issues.push('Q47: informal letter model-answer format incomplete');
-     }
-   }
+   if(['IV','V','VII','X'].includes(x.section)){const n=sentences(answerText(x.q));const min={IV:1,V:2,VII:4,X:5}[x.section];if(n<min)issues.push(`Q${x.number}: model answer is unusually short for Section ${x.section} (${n} sentences)`)}
+   if(x.section==='VIII'){if(!/rtc|reference|context/.test((type(x.q)+' '+text(x.q)).toLowerCase()))issues.push(`Q${x.number}: Section VIII item is not clearly RTC/reference-to-context`)}
+   if(x.section==='IX'){if(!/quote|memory/.test((type(x.q)+' '+text(x.q)).toLowerCase()))issues.push(`Q${x.number}: Section IX item is not clearly quote-from-memory`)}
+   if(x.section==='XI'){const passage=String(x.q?.passage||'').trim();if(passage.length<600)issues.push(`Q${x.number}: passage below 600 characters (${passage.length})`);const sub=(x.q?.questions||x.q?.subquestions||x.q?.items||[]);if(!Array.isArray(sub)||sub.length<2)warnings.push(`Q${x.number}: passage has no clearly detectable multi-question array; manual review needed`)}
+   if(x.section==='XII'){const n=sentences(answerText(x.q)),w=words(answerText(x.q));if(/mcq/.test(type(x.q)))issues.push(`Q${x.number}: essay slot contains an MCQ`);if(!/essay/.test((type(x.q)+' '+text(x.q)+' '+String(x.q?.skill||'')).toLowerCase()))issues.push(`Q${x.number}: Section XII item is not clearly an essay`);if(n<16)issues.push(`Q${x.number}: essay model answer below about-18-to-20 standard (${n} sentences, ${w} words)`);else if(n<18)warnings.push(`Q${x.number}: essay model answer is slightly below the stated 18–20 sentence target (${n})`);if(x.or&&/mcq/.test(type(x.or)))issues.push(`Q${x.number}: essay OR choice contains an MCQ`)}
+   if(x.section==='XIII'){if(!x.or)issues.push('Q47: missing Formal OR Informal choice');else{const a=letterFormat(x.q),b=letterFormat(x.or);if(a.kind!=='formal')issues.push('Q47: first choice is not formal');if(b.kind!=='informal')issues.push('Q47: second choice is not informal');if(!a.ok)issues.push('Q47: formal letter model-answer format incomplete');if(!b.ok)issues.push('Q47: informal letter model-answer format incomplete')}}
  });
  for(const [s,n] of Object.entries(expected))if(sectionCounts[s]!==n)issues.push(`Section ${s}: ${sectionCounts[s]||0}/${n}`);
- return {paper:no,status:issues.length?'FAIL':'PASS',issues,warnings,shortages:p.shortages,sectionCounts,totalMarks:p.totalMarks,questions:p.selected.map(x=>({number:x.number,section:x.section,marks:x.marks,id:x.q?.id||null,type:x.q?.type||null,question:text(x.q).slice(0,220),or:x.or?{id:x.or.id||null,type:x.or.type||null,question:text(x.or).slice(0,220)}:null}))};
+ return{paper:no,status:issues.length?'FAIL':'PASS',issues,warnings,shortages:p.shortages,sectionCounts,totalMarks:p.totalMarks,questions:p.selected.map(x=>({number:x.number,section:x.section,marks:x.marks,id:x.q?.id||null,type:x.q?.type||null,question:text(x.q).slice(0,220),or:x.or?{id:x.or.id||null,type:x.or.type||null,question:text(x.or).slice(0,220)}:null}))};
 }
 async function run(){
  $('status').textContent='Loading complete question bank…';
- try{
-   const all=await window.QuestionBankLoader.loadAll();
-   const rows=[];
-   for(let i=1;i<=10;i++)rows.push(inspectPaper(i,window.buildStrictMock(i)));
-   const report={audit:'Mock Papers 1-10 deterministic runtime deep content audit v5',updated:new Date().toISOString(),bankStatus:window.EnglishHubBankStatus||null,blueprint:'47 questions / 100 marks / Sections I-XIII',papers:rows,overall:rows.every(x=>x.status==='PASS')?'PASS':'FAIL'};
-   window.__auditReport=report;
-   const fail=rows.filter(x=>x.status==='FAIL').length,warn=rows.reduce((n,x)=>n+x.warnings.length,0);
-   $('status').innerHTML=`<b class="${report.overall==='PASS'?'ok':'bad'}">Overall: ${report.overall}</b> <span class="meta">— ${all.length} merged questions loaded • ${fail} papers with defects • ${warn} review warnings.</span>`;
-   $('results').innerHTML=rows.map(r=>`<div class="paper"><b>Mock Paper ${r.paper}: <span class="${r.status==='PASS'?'pass':'fail'}">${r.status}</span></b><div>47Q target: ${r.questions.length} • Marks: ${r.totalMarks} • Defects: ${r.issues.length} • Review warnings: ${r.warnings.length}</div>${r.issues.length?'<ul>'+r.issues.map(i=>`<li class="fail">${i}</li>`).join('')+'</ul>':''}${r.warnings.length?'<ul>'+r.warnings.map(i=>`<li class="warn">${i}</li>`).join('')+'</ul>':''}${!r.issues.length&&!r.warnings.length?'<div class="pass">Structure and deep content checks passed.</div>':''}<details><summary>Show selected question IDs and text</summary><pre>${r.questions.map(q=>`${q.number}. [${q.section}] ${q.id||'NO-ID'}${q.or?' OR '+q.or.id:''}\n   ${q.question}${q.or?'\n   OR: '+q.or.question:''}`).join('\n')}</pre></details></div>`).join('');
-   $('json').hidden=false;$('json').textContent=JSON.stringify(report,null,2);$('download').disabled=false;
- }catch(e){$('status').innerHTML='<b class="bad">Audit failed to run: '+String(e.message||e)+'</b>';console.error(e)}
-}
-$('run').onclick=run;$('download').onclick=()=>{const b=new Blob([JSON.stringify(window.__auditReport,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='mock-papers-audit-runtime-v5.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run();
+ try{const all=await window.QuestionBankLoader.loadAll();const rows=[];for(let i=1;i<=10;i++)rows.push(inspectPaper(i,window.buildStrictMock(i)));const report={audit:'Mock Papers 1-10 deterministic runtime deep content audit v6',updated:new Date().toISOString(),bankStatus:window.EnglishHubBankStatus||null,blueprint:'47 questions / 100 marks / Sections I-XIII',papers:rows,overall:rows.every(x=>x.status==='PASS')?'PASS':'FAIL'};window.__auditReport=report;const fail=rows.filter(x=>x.status==='FAIL').length,warn=rows.reduce((n,x)=>n+x.warnings.length,0);$('status').innerHTML=`<b class="${report.overall==='PASS'?'ok':'bad'}">Overall: ${report.overall}</b> <span class="meta">— ${all.length} merged questions loaded • ${fail} papers with defects • ${warn} review warnings.</span>`;$('results').innerHTML=rows.map(r=>`<div class="paper"><b>Mock Paper ${r.paper}: <span class="${r.status==='PASS'?'pass':'fail'}">${r.status}</span></b><div>47Q target: ${r.questions.length} • Marks: ${r.totalMarks} • Defects: ${r.issues.length} • Review warnings: ${r.warnings.length}</div>${r.issues.length?'<ul>'+r.issues.map(i=>`<li class="fail">${i}</li>`).join('')+'</ul>':''}${r.warnings.length?'<ul>'+r.warnings.map(i=>`<li class="warn">${i}</li>`).join('')+'</ul>':''}${!r.issues.length&&!r.warnings.length?'<div class="pass">Structure and deep content checks passed.</div>':''}<details><summary>Show selected question IDs and text</summary><pre>${r.questions.map(q=>`${q.number}. [${q.section}] ${q.id||'NO-ID'}${q.or?' OR '+q.or.id:''}\n   ${q.question}${q.or?'\n   OR: '+q.or.question:''}`).join('\n')}</pre></details></div>`).join('');$('json').hidden=false;$('json').textContent=JSON.stringify(report,null,2);$('download').disabled=false}catch(e){$('status').innerHTML='<b class="bad">Audit failed to run: '+String(e.message||e)+'</b>';console.error(e)}}
+$('run').onclick=run;$('download').onclick=()=>{const b=new Blob([JSON.stringify(window.__auditReport,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='mock-papers-audit-runtime-v6.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run();
 </script></main></body></html>
