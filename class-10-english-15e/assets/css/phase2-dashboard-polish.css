@@ -1,0 +1,68 @@
+/* Phase 2 dashboard polish — direct-click cards + colourful section headers. */
+#dashboard>.section-title,
+#full-mock-tests-heading,
+#previous-papers-heading{
+  display:block!important;
+  width:100%!important;
+  max-width:none!important;
+  box-sizing:border-box!important;
+  margin:34px 0 16px!important;
+  padding:0!important;
+  overflow:hidden!important;
+  border:0!important;
+  border-radius:16px!important;
+  background:linear-gradient(135deg,#3b4cca 0%,#6a4bc4 52%,#9b4d96 100%)!important;
+  box-shadow:0 10px 24px rgba(61,64,120,.14)!important;
+}
+#dashboard>.section-title h2,
+#full-mock-tests-heading h2,
+#previous-papers-heading h2{
+  display:block!important;
+  width:auto!important;
+  margin:0!important;
+  padding:15px 18px 4px!important;
+  color:#fff!important;
+  font-size:23px!important;
+  line-height:1.2!important;
+  white-space:normal!important;
+}
+#dashboard>.section-title p,
+#full-mock-tests-heading p,
+#previous-papers-heading p{
+  display:block!important;
+  width:auto!important;
+  max-width:none!important;
+  margin:0!important;
+  padding:0 18px 15px!important;
+  color:rgba(255,255,255,.88)!important;
+  line-height:1.45!important;
+  font-size:13px!important;
+}
+#dashboard>.section-title::before,
+#dashboard>.section-title::after,
+#full-mock-tests-heading::before,
+#full-mock-tests-heading::after,
+#previous-papers-heading::before,
+#previous-papers-heading::after{content:none!important;display:none!important}
+
+/* Cards are the controls. No redundant Open/Start/arrow affordances. */
+#courseGrid .module-count,
+#courseGrid .module-card .module-count,
+.mock-paper-card .module-count,
+.mock-paper-card em,
+.previous-paper-card em{display:none!important}
+
+.previous-papers-intro{border-radius:14px!important}
+.previous-paper-card{cursor:pointer!important}
+
+@media(max-width:760px){
+  #dashboard>.section-title,
+  #full-mock-tests-heading,
+  #previous-papers-heading{margin:28px 0 14px!important;border-radius:14px!important}
+  #dashboard>.section-title h2,
+  #full-mock-tests-heading h2,
+  #previous-papers-heading h2{font-size:20px!important;padding:13px 15px 3px!important}
+  #dashboard>.section-title p,
+  #full-mock-tests-heading p,
+  #previous-papers-heading p{font-size:12px!important;padding:0 15px 13px!important}
+}
