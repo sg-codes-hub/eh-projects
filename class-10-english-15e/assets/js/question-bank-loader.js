@@ -41,40 +41,51 @@
     if (!manifestResponse.ok) throw new Error(`Question-bank manifest failed: ${manifestResponse.status}`);
     const manifest = await manifestResponse.json();
     const bankNames = Array.isArray(manifest.banks) ? manifest.banks : [];
-    const extras = [], failed = [];
-    for (const name of bankNames) {
+
+    const bankResults = await Promise.all(bankNames.map(async name => {
       try {
         const response = await originalFetch(`data/banks/${name}`, { cache: 'no-store' });
-        if (!response.ok) { failed.push(`${name} (${response.status})`); continue; }
+        if (!response.ok) return { name, items: [], failed: `${name} (${response.status})` };
         const bank = await response.json();
         const items = Array.isArray(bank) ? bank : bank.questions;
-        if (Array.isArray(items)) extras.push(...items.map(q => normalize(q, name)));
-      } catch (_) { failed.push(name); }
+        return { name, items: Array.isArray(items) ? items.map(q => normalize(q, name)) : [], failed: null };
+      } catch (_) {
+        return { name, items: [], failed: name };
+      }
+    }));
+    const extras = [], failed = [];
+    for (const result of bankResults) {
+      if (result.failed) failed.push(result.failed);
+      extras.push(...result.items);
     }
+
     const seen = new Set(), merged = [];
     for (const q of [...baseQuestions, ...extras]) {
       const key = q.id ? `id:${q.id}` : `text:${String(q.question || q.prompt || '').trim().toLowerCase()}|marks:${q.marks}|chapter:${q.chapter || ''}`;
       if (seen.has(key)) continue;
       seen.add(key); merged.push(q);
     }
-    for (const path of qualityOverridePaths) {
+
+    const overrideResults = await Promise.all(qualityOverridePaths.map(async path => {
       try {
         const overrideResponse = await originalFetch(path, { cache: 'no-store' });
-        if (!overrideResponse.ok) continue;
+        if (!overrideResponse.ok) return {};
         const overrideData = await overrideResponse.json();
-        const overrides = overrideData && overrideData.overrides && typeof overrideData.overrides === 'object' ? overrideData.overrides : {};
-        for (const q of merged) {
-          const o = overrides[q.id];
-          if (!o) continue;
-          if (typeof o.model_answer === 'string' && o.model_answer.trim()) q.model_answer = o.model_answer.trim();
-          if (typeof o.answer === 'string' && o.answer.trim()) q.answer = o.answer.trim();
-          if (Array.isArray(o.answer_points)) q.answer_points = o.answer_points.slice();
-          if (typeof o.letter_type === 'string' && o.letter_type.trim()) q.letter_type = o.letter_type.trim();
-          if (typeof o.skill === 'string' && o.skill.trim()) q.skill = o.skill.trim();
-          if (typeof o.topic === 'string' && o.topic.trim()) q.topic = o.topic.trim();
-          if (typeof o.question_type === 'string' && o.question_type.trim()) q.question_type = o.question_type.trim();
-        }
-      } catch (_) {}
+        return overrideData && overrideData.overrides && typeof overrideData.overrides === 'object' ? overrideData.overrides : {};
+      } catch (_) { return {}; }
+    }));
+    for (const overrides of overrideResults) {
+      for (const q of merged) {
+        const o = overrides[q.id];
+        if (!o) continue;
+        if (typeof o.model_answer === 'string' && o.model_answer.trim()) q.model_answer = o.model_answer.trim();
+        if (typeof o.answer === 'string' && o.answer.trim()) q.answer = o.answer.trim();
+        if (Array.isArray(o.answer_points)) q.answer_points = o.answer_points.slice();
+        if (typeof o.letter_type === 'string' && o.letter_type.trim()) q.letter_type = o.letter_type.trim();
+        if (typeof o.skill === 'string' && o.skill.trim()) q.skill = o.skill.trim();
+        if (typeof o.topic === 'string' && o.topic.trim()) q.topic = o.topic.trim();
+        if (typeof o.question_type === 'string' && o.question_type.trim()) q.question_type = o.question_type.trim();
+      }
     }
     window.EnglishHubQuestions = merged;
     window.qs = merged;
