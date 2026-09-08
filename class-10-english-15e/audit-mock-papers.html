@@ -15,7 +15,7 @@ li{margin:4px 0}pre{white-space:pre-wrap;background:#fff;border:1px solid #ddd;b
 </head>
 <body>
 <main>
-<h1>Class 10 English 15-E — Mock Papers 1–10 Deep Audit</h1>
+<h1>Class 10 English 15-E — Mock Paper Audit</h1>
 <p>Fixed target: <b>47 questions / 100 marks / Sections I–XIII</b>.</p>
 <button id="run" type="button">Run audit again</button>
 <button id="download" type="button" disabled>Download JSON</button>
@@ -23,18 +23,13 @@ li{margin:4px 0}pre{white-space:pre-wrap;background:#fff;border:1px solid #ddd;b
 <div id="results"></div>
 <pre id="json" hidden></pre>
 </main>
-<script src="assets/js/question-bank-loader.js?v=20260908-09"></script>
-<script src="assets/js/final-blueprint-engine.js?v=20260908-09"></script>
-<script src="assets/js/mock-quality-selection.js?v=20260908-06"></script>
+<script src="assets/js/question-bank-loader.js?v=20260908-10"></script>
+<script src="assets/js/final-blueprint-engine.js?v=20260908-10"></script>
+<script src="assets/js/mock-quality-selection.js?v=20260908-07"></script>
 <script>
 (function(){
 'use strict';
-var status=document.getElementById('status');
-var results=document.getElementById('results');
-var json=document.getElementById('json');
-var run=document.getElementById('run');
-var download=document.getElementById('download');
-var report=null;
+var status=document.getElementById('status'),results=document.getElementById('results'),json=document.getElementById('json'),run=document.getElementById('run'),download=document.getElementById('download'),report=null;
 function text(q){return String(q&&(q.question||q.prompt||q.text)||'').trim();}
 function answer(q){var v=q&&(q.model_answer!=null?q.model_answer:(q.answer!=null?q.answer:q.answer_points));if(Array.isArray(v))return v.join('. ');if(v&&typeof v==='object')return Object.values(v).join('. ');return String(v||'').trim();}
 function sentences(q){return answer(q).replace(/\n+/g,' ').split(/[.!?]+(?:\s|$)/).map(function(x){return x.trim();}).filter(Boolean).length;}
@@ -45,55 +40,10 @@ function letterKind(q){if(!q)return'unknown';var s=[q.letter_type,q.skill,q.topi
 function letterScore(q){var a=answer(q).toLowerCase(),k=letterKind(q),s=0;if(k==='unknown')return 0;if(/\[address\]|address|street|road|nagar|shahapur|kalaburagi|kalburgi|karnataka|india/.test(a))s++;if(/\[date\]|\b(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\s+\d{1,2}|\b\d{1,2}[\/-]\d{1,2}[\/-]\d{2,4}\b/.test(a))s++;if(k==='formal'){if(/\bto\s*\n|\bto\s+(?:the|a)\b/.test(a))s++;if(/\bsubject\s*:/.test(a))s++;if(/\b(?:sir|madam|respected sir|respected madam)\b/.test(a))s++;if(/\b(?:yours faithfully|yours sincerely|yours obediently)\b/.test(a))s++;}else{if(/\bdear\b/.test(a))s++;if(/\b(?:yours lovingly|yours affectionately|with love|love)\b/.test(a))s++;}return s;}
 function isMCQ(q){return type(q)==='mcq';}
 function isEssay(q){return !isMCQ(q)&&Number(q&&q.marks)===5&&/essay/.test(meta(q)+' '+text(q).toLowerCase());}
-function inspect(no,p){
- var issues=[],warnings=[],seen={},counts={},expected={I:6,II:4,III:3,IV:7,V:7,VI:3,VII:6,VIII:4,IX:1,X:3,XI:1,XII:1,XIII:1};
- if(!p||!Array.isArray(p.selected))return{paper:no,status:'FAIL',issues:['Mock paper did not build'],warnings:[],totalMarks:0,questions:[]};
- if(p.selected.length!==47)issues.push('main questions '+p.selected.length+'/47');
- if(p.totalMarks!==100)issues.push('marks '+p.totalMarks+'/100');
- p.selected.forEach(function(item){
-  counts[item.section]=(counts[item.section]||0)+1;
-  var choices=[{label:'Q'+item.number,q:item.q}];
-  if(item.or)choices.push({label:'Q'+item.number+' OR',q:item.or});
-  choices.forEach(function(c){
-   var q=c.q;if(!q){issues.push(c.label+': missing question record');return;}
-   if(!q.id)issues.push(c.label+': missing ID');
-   if(!text(q))issues.push(c.label+': missing question text');
-   if(Number(q.marks)!==item.marks)issues.push(c.label+': marks '+(q.marks==null?'missing':q.marks)+' vs '+item.marks);
-   if(!isMCQ(q)&&!answer(q))issues.push(c.label+': missing model answer');
-   if(q.id&&seen[q.id])issues.push(c.label+': duplicate ID '+q.id);if(q.id)seen[q.id]=true;
-   if(item.section==='I'&&!isMCQ(q))issues.push(c.label+': Q1-Q6 slot is not MCQ');
-   var mins={IV:1,V:2,VII:5,X:7};if(mins[item.section]&&sentences(q)<mins[item.section])issues.push(c.label+': model answer unusually short for Section '+item.section+' ('+sentences(q)+' sentences; target '+mins[item.section]+'+)');
-   if(item.section==='XI'&&String(q.passage||'').trim().length<600)issues.push(c.label+': passage below 600 characters');
-   if(item.section==='XI'&&!Array.isArray(q.questions||q.subquestions||q.items))warnings.push(c.label+': passage question array not detectable; manual review');
-   if(item.section==='XII'){if(!isEssay(q))issues.push(c.label+': not clearly an essay');if(sentences(q)<16)issues.push(c.label+': essay below about-18-to-20 standard ('+sentences(q)+' sentences, '+words(q)+' words)');}
-   if(item.section==='XIII'){if(letterKind(q)!=='formal')issues.push(c.label+': first choice is not formal');if(item.or&&letterKind(item.or)!=='informal')issues.push(c.label+' OR: second choice is not informal');if(letterScore(q)<6)issues.push(c.label+': formal letter format incomplete');if(item.or&&letterScore(item.or)<4)issues.push(c.label+' OR: informal letter format incomplete');}
-  });
- });
- Object.keys(expected).forEach(function(s){if(counts[s]!==expected[s])issues.push('Section '+s+': '+(counts[s]||0)+'/'+expected[s]);});
- return{paper:no,status:issues.length?'FAIL':'PASS',issues:issues,warnings:warnings,shortages:p.shortages||[],totalMarks:p.totalMarks,questions:p.selected.map(function(x){return{number:x.number,section:x.section,id:x.q&&x.q.id||null,or:x.or&&x.or.id||null};})};
-}
-function render(r){
- var failed=r.papers.filter(function(p){return p.status==='FAIL';}).length;
- var warningCount=r.papers.reduce(function(n,p){return n+p.warnings.length;},0);
- status.innerHTML='<b class="'+(r.overall==='PASS'?'pass':'fail')+'">Overall: '+r.overall+'</b> <span class="meta">— '+r.bank+' merged questions loaded • '+failed+' papers with defects • '+warningCount+' review warnings.</span>';
- results.innerHTML=r.papers.map(function(p){var issues=p.issues.length?'<ul>'+p.issues.map(function(i){return'<li class="fail">'+i+'</li>';}).join('')+'</ul>':'';var warnings=p.warnings.length?'<ul>'+p.warnings.map(function(i){return'<li class="warn">'+i+'</li>';}).join('')+'</ul>':'';var ids=p.questions.map(function(q){return q.number+'. ['+q.section+'] '+(q.id||'NO-ID')+(q.or?' OR '+q.or:'');}).join('\n');return'<div class="paper"><b>Mock Paper '+p.paper+': <span class="'+(p.status==='PASS'?'pass':'fail')+'">'+p.status+'</span></b><div>47Q target: '+p.questions.length+' • Marks: '+p.totalMarks+' • Defects: '+p.issues.length+' • Review warnings: '+p.warnings.length+'</div>'+issues+warnings+'<details><summary>Show selected IDs</summary><pre>'+ids+'</pre></details></div>';}).join('');
- json.hidden=false;json.textContent=JSON.stringify(r,null,2);download.disabled=false;
-}
-async function audit(){
- status.textContent='Loading complete question bank…';
- try{
-  if(!window.QuestionBankLoader)throw new Error('Question-bank loader did not load.');
-  if(typeof window.buildStrictMock!=='function')throw new Error('Blueprint engine did not load.');
-  var all=await window.QuestionBankLoader.loadAll(),papers=[];
-  for(var i=1;i<=10;i++)papers.push(inspect(i,window.buildStrictMock(i)));
-  var failed=papers.filter(function(p){return p.status==='FAIL';}).length;
-  report={audit:'Mock Papers 1-10 deterministic runtime audit v8.5',updated:new Date().toISOString(),bank:all.length,blueprint:'47 questions / 100 marks / Sections I-XIII',papers:papers,overall:failed?'FAIL':'PASS'};
-  render(report);
- }catch(e){status.innerHTML='<b class="fail">Audit error: '+String(e&&e.message||e)+'</b>';console.error(e);}
-}
-run.onclick=function(){window.location.reload();};
-download.onclick=function(){if(!report)return;var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(report,null,2)],{type:'application/json'}));a.download='mock-papers-audit-runtime-v8-5.json';a.click();};
-audit();
+function inspect(no,p){var issues=[],warnings=[],seen={},counts={},expected={I:6,II:4,III:3,IV:7,V:7,VI:3,VII:6,VIII:4,IX:1,X:3,XI:1,XII:1,XIII:1};if(!p||!Array.isArray(p.selected))return{paper:no,status:'FAIL',issues:['Mock paper did not build'],warnings:[],totalMarks:0,questions:[]};if(p.selected.length!==47)issues.push('main questions '+p.selected.length+'/47');if(p.totalMarks!==100)issues.push('marks '+p.totalMarks+'/100');p.selected.forEach(function(item){counts[item.section]=(counts[item.section]||0)+1;var choices=[{label:'Q'+item.number,q:item.q}];if(item.or)choices.push({label:'Q'+item.number+' OR',q:item.or});choices.forEach(function(c){var q=c.q;if(!q){issues.push(c.label+': missing question record');return;}if(!q.id)issues.push(c.label+': missing ID');if(!text(q))issues.push(c.label+': missing question text');if(Number(q.marks)!==item.marks)issues.push(c.label+': marks '+(q.marks==null?'missing':q.marks)+' vs '+item.marks);if(!isMCQ(q)&&!answer(q))issues.push(c.label+': missing model answer');if(q.id&&seen[q.id])issues.push(c.label+': duplicate ID '+q.id);if(q.id)seen[q.id]=true;if(item.section==='I'&&!isMCQ(q))issues.push(c.label+': Q1-Q6 slot is not MCQ');var mins={IV:1,V:2,VII:5,X:7};if(mins[item.section]&&sentences(q)<mins[item.section])issues.push(c.label+': model answer unusually short for Section '+item.section+' ('+sentences(q)+' sentences; target '+mins[item.section]+'+)');if(item.section==='XI'&&String(q.passage||'').trim().length<600)issues.push(c.label+': passage below 600 characters');if(item.section==='XI'&&!Array.isArray(q.questions||q.subquestions||q.items))warnings.push(c.label+': passage question array not detectable; manual review');if(item.section==='XII'){if(!isEssay(q))issues.push(c.label+': not clearly an essay');if(sentences(q)<16)issues.push(c.label+': essay below about-18-to-20 standard ('+sentences(q)+' sentences, '+words(q)+' words)');}if(item.section==='XIII'){if(letterKind(q)!=='formal')issues.push(c.label+': first choice is not formal');if(item.or&&letterKind(item.or)!=='informal')issues.push(c.label+' OR: second choice is not informal');if(letterScore(q)<6)issues.push(c.label+': formal letter format incomplete');if(item.or&&letterScore(item.or)<4)issues.push(c.label+' OR: informal letter format incomplete');}});});Object.keys(expected).forEach(function(s){if(counts[s]!==expected[s])issues.push('Section '+s+': '+(counts[s]||0)+'/'+expected[s]);});return{paper:no,status:issues.length?'FAIL':'PASS',issues:issues,warnings:warnings,shortages:p.shortages||[],totalMarks:p.totalMarks,questions:p.selected.map(function(x){return{number:x.number,section:x.section,id:x.q&&x.q.id||null,or:x.or&&x.or.id||null};})};}
+function render(r){var failed=r.papers.filter(function(p){return p.status==='FAIL';}).length,warningCount=r.papers.reduce(function(n,p){return n+p.warnings.length;},0);status.innerHTML='<b class="'+(r.overall==='PASS'?'pass':'fail')+'">Overall: '+r.overall+'</b> <span class="meta">— '+r.bank+' merged questions loaded • '+failed+' papers with defects • '+warningCount+' review warnings.</span>';results.innerHTML=r.papers.map(function(p){var issues=p.issues.length?'<ul>'+p.issues.map(function(i){return'<li class="fail">'+i+'</li>';}).join('')+'</ul>':'';var warnings=p.warnings.length?'<ul>'+p.warnings.map(function(i){return'<li class="warn">'+i+'</li>';}).join('')+'</ul>':'';var ids=p.questions.map(function(q){return q.number+'. ['+q.section+'] '+(q.id||'NO-ID')+(q.or?' OR '+q.or:'');}).join('\n');return'<div class="paper"><b>Mock Paper '+p.paper+': <span class="'+(p.status==='PASS'?'pass':'fail')+'">'+p.status+'</span></b><div>47Q target: '+p.questions.length+' • Marks: '+p.totalMarks+' • Defects: '+p.issues.length+' • Review warnings: '+p.warnings.length+'</div>'+issues+warnings+'<details><summary>Show selected IDs</summary><pre>'+ids+'</pre></details></div>';}).join('');json.hidden=false;json.textContent=JSON.stringify(r,null,2);download.disabled=false;}
+async function audit(){status.textContent='Loading complete question bank…';try{if(!window.QuestionBankLoader)throw new Error('Question-bank loader did not load.');if(typeof window.buildStrictMock!=='function')throw new Error('Blueprint engine did not load.');var all=await window.QuestionBankLoader.loadAll(),papers=[];for(var i=1;i<=10;i++)papers.push(inspect(i,window.buildStrictMock(i)));var failed=papers.filter(function(p){return p.status==='FAIL';}).length;report={audit:'Mock Papers 1-10 deterministic runtime audit v8.6',updated:new Date().toISOString(),bank:all.length,blueprint:'47 questions / 100 marks / Sections I-XIII',papers:papers,overall:failed?'FAIL':'PASS'};render(report);}catch(e){status.innerHTML='<b class="fail">Audit error: '+String(e&&e.message||e)+'</b>';console.error(e);}}
+run.onclick=function(){window.location.reload();};download.onclick=function(){if(!report)return;var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(report,null,2)],{type:'application/json'}));a.download='mock-papers-audit-runtime-v8-6.json';a.click();};audit();
 })();
 </script>
 </body>
