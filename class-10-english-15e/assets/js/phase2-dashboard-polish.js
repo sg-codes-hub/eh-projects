@@ -2,12 +2,28 @@
 (function(){
   'use strict';
 
+  const PREVIOUS_PAPER_DESCRIPTION='Practise previous-year 15-E question papers with solved answers, explanations and focused grammar support.';
+
+  function normalizePreviousPaperHeading(){
+    const headings=Array.from(document.querySelectorAll('#previous-papers-heading'));
+    if(!headings.length)return false;
+    const primary=headings[headings.length-1];
+    headings.slice(0,-1).forEach(el=>el.remove());
+    primary.querySelectorAll('p').forEach(el=>el.remove());
+    primary.querySelectorAll('h2').forEach((el,i)=>{if(i>0)el.remove()});
+    const p=document.createElement('p');
+    p.textContent=PREVIOUS_PAPER_DESCRIPTION;
+    primary.appendChild(p);
+    return true;
+  }
+
   function apply(){
     document.querySelectorAll('#courseGrid .module-count').forEach(el=>el.remove());
     document.querySelectorAll('.previous-paper-card em').forEach(el=>el.remove());
     document.querySelectorAll('.mock-paper-card em').forEach(el=>el.remove());
     document.querySelectorAll('.stats-grid').forEach(el=>el.remove());
     document.querySelectorAll('#heroDashboardBtn').forEach(el=>el.remove());
+    normalizePreviousPaperHeading();
   }
 
   function moveExamInfoIntoHero(){
@@ -36,19 +52,8 @@
 .hero .hero-exam-info-in-hero{display:block!important;margin:9px 0 0!important;padding:0!important;text-align:left!important;font-size:13px!important;font-weight:800!important;letter-spacing:.01em!important;color:#343434!important}
 .previous-paper-bottom-actions{display:flex;justify-content:flex-start;padding:16px 18px;background:#fff}
 .previous-paper-bottom-back{margin:0!important}
-@media(max-width:700px){
-  .hero-content-row{grid-template-columns:minmax(0,1fr) auto!important;column-gap:12px!important;align-items:start!important}
-  .hero-content-row .hero-badge{display:none!important}
-  .hero-content-row>div:first-child h1{font-size:30px!important;line-height:1.12!important}
-}
-@media(max-width:520px){
-  .hero{padding:17px 15px!important;border-radius:17px!important}
-  .hero-content-row{grid-template-columns:minmax(0,1fr) auto!important;column-gap:10px!important;align-items:start!important}
-  .hero-content-row>div:first-child h1{font-size:25px!important;line-height:1.12!important;margin:4px 0 7px!important}
-  .hero-content-row>div:first-child>p:not(.eyebrow):not(.hero-exam-info-in-hero){font-size:11px!important;line-height:1.4!important;margin:0!important}
-  .hero .hero-exam-info-in-hero{font-size:11px!important;line-height:1.35!important;margin-top:8px!important}
-  .hero .eyebrow{font-size:10px!important;line-height:1.25!important}
-}
+@media(max-width:700px){.hero-content-row{grid-template-columns:minmax(0,1fr) auto!important;column-gap:12px!important;align-items:start!important}.hero-content-row .hero-badge{display:none!important}.hero-content-row>div:first-child h1{font-size:30px!important;line-height:1.12!important}}
+@media(max-width:520px){.hero{padding:17px 15px!important;border-radius:17px!important}.hero-content-row{grid-template-columns:minmax(0,1fr) auto!important;column-gap:10px!important;align-items:start!important}.hero-content-row>div:first-child h1{font-size:25px!important;line-height:1.12!important;margin:4px 0 7px!important}.hero-content-row>div:first-child>p:not(.eyebrow):not(.hero-exam-info-in-hero){font-size:11px!important;line-height:1.4!important;margin:0!important}.hero .hero-exam-info-in-hero{font-size:11px!important;line-height:1.35!important;margin-top:8px!important}.hero .eyebrow{font-size:10px!important;line-height:1.25!important}}
 `;
     document.head.appendChild(style);
   }
@@ -59,33 +64,17 @@
       tries++;
       const view=document.getElementById('previous-paper-view');
       const paper=view?.querySelector('.previous-paper-view');
-      if(paper){
-        clearInterval(timer);
-        if(paper.querySelector('.previous-paper-bottom-back'))return;
-        const wrap=document.createElement('div');
-        wrap.className='previous-paper-bottom-actions';
-        const btn=document.createElement('button');
-        btn.type='button';
-        btn.className='secondary-btn previous-paper-bottom-back';
-        btn.textContent='← Back to Previous Papers';
-        btn.addEventListener('click',()=>paper.querySelector('.previous-paper-back')?.click());
-        wrap.appendChild(btn);
-        paper.appendChild(wrap);
-      }else if(tries>=60){
-        clearInterval(timer);
-      }
+      if(paper){clearInterval(timer);if(paper.querySelector('.previous-paper-bottom-back'))return;const wrap=document.createElement('div');wrap.className='previous-paper-bottom-actions';const btn=document.createElement('button');btn.type='button';btn.className='secondary-btn previous-paper-bottom-back';btn.textContent='← Back to Previous Papers';btn.addEventListener('click',()=>paper.querySelector('.previous-paper-back')?.click());wrap.appendChild(btn);paper.appendChild(wrap)}else if(tries>=60)clearInterval(timer);
     },100);
   }
 
-  document.addEventListener('click',event=>{
-    if(event.target.closest('.previous-paper-card'))setupPreviousPaperBack();
-  });
-
-  function start(){
-    apply();
-    moveExamInfoIntoHero();
-    styleGeneratedHeadings();
+  function watchPreviousHeading(){
+    let checks=0;
+    const timer=setInterval(()=>{checks++;if(normalizePreviousPaperHeading()||checks>=120)clearInterval(timer)},100);
   }
 
+  document.addEventListener('click',event=>{if(event.target.closest('.previous-paper-card'))setupPreviousPaperBack()});
+
+  function start(){apply();moveExamInfoIntoHero();styleGeneratedHeadings();watchPreviousHeading()}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
 })();
