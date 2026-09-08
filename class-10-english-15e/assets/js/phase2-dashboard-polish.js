@@ -6,12 +6,15 @@
     const previousHeading=document.querySelector('#previous-papers-heading');
     if(previousHeading){
       let intro=previousHeading.querySelector('p');
-      const text='Practise previous-year question papers with solved answers, explanations and focused grammar support.';
+      const text='Practise previous-year 15-E question papers with solved answers, explanations and focused grammar support.';
       if(!intro){
         intro=document.createElement('p');
         previousHeading.appendChild(intro);
       }
       intro.textContent=text;
+      previousHeading.childNodes.forEach(node=>{
+        if(node.nodeType===3 && node.textContent.trim())node.remove();
+      });
     }
 
     document.querySelectorAll('#courseGrid .module-count').forEach(el=>el.remove());
@@ -84,14 +87,14 @@
   min-width:150px!important;
   height:48px!important;
   box-sizing:border-box!important;
-  margin:0!important;
+  margin:0 -8px 0 0!important;
   padding:0 22px!important;
   border:2px solid #343434!important;
   border-radius:12px!important;
   background:#343434!important;
   color:#fff!important;
   font:inherit!important;
-  font-size:15px!important;
+  font-size:16px!important;
   font-weight:900!important;
   letter-spacing:.01em!important;
   line-height:1!important;
@@ -111,7 +114,6 @@
   letter-spacing:.01em!important;
   color:#343434!important;
 }
-.hero-exam-info-in-hero + *{margin-top:0}
 .previous-paper-bottom-actions{
   display:flex;
   justify-content:flex-start;
@@ -122,7 +124,7 @@
 @media(max-width:700px){
   .hero-content-row{grid-template-columns:minmax(0,1fr) auto!important;column-gap:12px!important}
   .hero-content-row .hero-badge{display:none!important}
-  .hero-content-row .hero-dashboard-btn{width:132px!important;min-width:132px!important;height:44px!important;font-size:14px!important;padding:0 16px!important}
+  .hero-content-row .hero-dashboard-btn{width:132px!important;min-width:132px!important;height:44px!important;font-size:14px!important;padding:0 16px!important;margin-right:0!important}
 }
 @media(max-width:520px){
   .hero{padding:16px!important}
@@ -182,6 +184,20 @@
     },100);
   }
 
+  function cleanGeneratedPreviousHeading(){
+    const heading=document.querySelector('#previous-papers-heading');
+    if(!heading)return;
+    let intro=heading.querySelector('p');
+    if(!intro){
+      intro=document.createElement('p');
+      heading.appendChild(intro);
+    }
+    intro.textContent='Practise previous-year 15-E question papers with solved answers, explanations and focused grammar support.';
+    heading.childNodes.forEach(node=>{
+      if(node.nodeType===3 && node.textContent.trim())node.remove();
+    });
+  }
+
   document.addEventListener('click',event=>{
     if(event.target.closest('.previous-paper-card'))setupPreviousPaperBack();
   });
@@ -191,6 +207,7 @@
     moveExamInfoIntoHero();
     styleGeneratedHeadings();
     setupHeroButton();
+    setTimeout(cleanGeneratedPreviousHeading,500);
   }
 
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
