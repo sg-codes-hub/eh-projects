@@ -1,5 +1,14 @@
 (()=>{
+  const injectRefresh=()=>{
+    if(document.getElementById('dashboard-refresh-css'))return;
+    const link=document.createElement('link');
+    link.id='dashboard-refresh-css';
+    link.rel='stylesheet';
+    link.href='assets/css/dashboard-refresh.css?v=20260908-01';
+    document.head.appendChild(link);
+  };
   const render=()=>{
+    injectRefresh();
     const grid=document.getElementById('courseGrid');
     if(!grid||grid.dataset.fastRendered==='1')return;
     const items=[
