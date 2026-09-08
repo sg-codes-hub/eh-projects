@@ -29,10 +29,10 @@
   const isQuote=q=>/quote.*memory|quote from memory/.test(qMeta(q)+' '+qText(q));
   const isComprehension=q=>norm(q?.bank_group)==='comprehension'||!!q?.passage||/comprehension|unseen passage|read the following passage/.test(qMeta(q)+' '+qText(q));
   const isEssay=q=>!isMCQ(q)&&/essay/.test(qMeta(q)+' '+qText(q));
-  const isLetter=q=>!isMCQ(q)&&/letter/.test(qMeta(q)+' '+qText(q));
-  const letterType=q=>{const s=norm(q?.letter_type||q?.skill||q?.category||'');if(/formal/.test(s))return 'formal';if(/informal/.test(s))return 'informal';return s;};
-  const isFormalLetter=q=>letterType(q)==='formal'||/formal letter/.test(qMeta(q)+' '+qText(q));
-  const isInformalLetter=q=>letterType(q)==='informal'||/informal letter/.test(qMeta(q)+' '+qText(q));
+  const isLetter=q=>!isMCQ(q)&&/letter|letter writing|write a letter/.test(qMeta(q)+' '+qText(q));
+  const letterType=q=>{const s=norm([q?.letter_type,q?.skill,q?.topic,q?.category,q?.question].filter(Boolean).join(' '));if(/informal\s*letter|informal_letter|informal/.test(s))return 'informal';if(/formal\s*letter|formal_letter|formal/.test(s))return 'formal';return '';};
+  const isFormalLetter=q=>letterType(q)==='formal';
+  const isInformalLetter=q=>letterType(q)==='informal';
   const isLiterature=q=>{if(isMCQ(q)||isAnalogy(q)||isRewrite(q)||isRTC(q)||isQuote(q)||isComprehension(q)||isEssay(q)||isLetter(q))return false;const bg=norm(q?.bank_group),mod=norm(q?.module);return ['firstflight','footprints','poetry'].includes(bg)||/first flight|footprints without feet/.test(mod)||/poetry/.test(mod);};
   function shuffle(a,rng){const x=[...a],random=rng||Math.random;for(let i=x.length-1;i>0;i--){const j=Math.floor(random()*(i+1));[x[i],x[j]]=[x[j],x[i]];}return x;}
   function seeded(seed){let x=(seed>>>0)||1;return()=>{x=(1664525*x+1013904223)>>>0;return x/4294967296;};}
@@ -51,7 +51,14 @@
     default:return [];
   }}
   function take(pool,used,n,rng){const available=shuffle(pool.filter(q=>!used.has(key(q))),rng);const out=available.slice(0,n);out.forEach(q=>used.add(key(q)));return out;}
-  function takeLetterPair(pool,used,rng){const formal=shuffle(pool.filter(q=>!used.has(key(q))&&isFormalLetter(q)),rng);const informal=shuffle(pool.filter(q=>!used.has(key(q))&&isInformalLetter(q)),rng);if(!formal.length||!informal.length)return [];const out=[formal[0],informal[0]];out.forEach(q=>used.add(key(q)));return out;}
+  function takeLetterPair(pool,used,rng){
+    let formal=shuffle(pool.filter(q=>!used.has(key(q))&&isFormalLetter(q)),rng);
+    let informal=shuffle(pool.filter(q=>!used.has(key(q))&&isInformalLetter(q)),rng);
+    if(!formal.length)formal=shuffle(pool.filter(q=>!used.has(key(q))&&/formal\s*letter|formal_letter|to the editor|to the headmaster|to the municipal|to the commissioner|requesting|complaining|application to/.test(qMeta(q)+' '+qText(q))),rng);
+    if(!informal.length)informal=shuffle(pool.filter(q=>!used.has(key(q))&&/informal\s*letter|informal_letter|to your friend|to your cousin|to your brother|to your sister|inviting him|inviting her|write a letter to your/.test(qMeta(q)+' '+qText(q))),rng);
+    if(!formal.length||!informal.length)return [];
+    const out=[formal[0],informal[0]];out.forEach(q=>used.add(key(q)));return out;
+  }
   function buildStrictMock(no){
     const rng=seeded(20260905+(no||1)*104729),used=new Set(),selected=[],shortages=[];let number=1;
     PATTERN.forEach(slot=>{const pool=domainPool(slot.domain,slot.marks);const orPositions=slot.orAt==='all'?Array.from({length:slot.count},(_,i)=>i+1):(slot.orAt||[]);
