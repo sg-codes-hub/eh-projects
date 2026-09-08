@@ -3,13 +3,31 @@
   'use strict';
 
   function apply(){
-    /* The previous-year heading should stand on its own; no fixed-year subtitle. */
-    document.querySelectorAll('#previous-papers-heading p').forEach(el=>el.remove());
+    const previousHeading=document.querySelector('#previous-papers-heading');
+    if(previousHeading){
+      let intro=previousHeading.querySelector('p');
+      const text='Practise previous-year question papers with solved answers, explanations and focused grammar support.';
+      if(!intro){
+        intro=document.createElement('p');
+        previousHeading.appendChild(intro);
+      }
+      intro.textContent=text;
+    }
 
     document.querySelectorAll('#courseGrid .module-count').forEach(el=>el.remove());
     document.querySelectorAll('.previous-paper-card em').forEach(el=>el.remove());
     document.querySelectorAll('.mock-paper-card em').forEach(el=>el.remove());
     document.querySelectorAll('.stats-grid').forEach(el=>el.remove());
+  }
+
+  function moveExamInfoIntoHero(){
+    const hero=document.querySelector('#dashboard .hero');
+    const info=document.querySelector('#dashboard .hero-exam-info');
+    const textBlock=hero?.querySelector('.hero-content-row>div:first-child');
+    if(!hero||!info||!textBlock)return;
+
+    info.classList.add('hero-exam-info-in-hero');
+    if(info.parentElement!==textBlock)textBlock.appendChild(info);
   }
 
   function styleGeneratedHeadings(){
@@ -38,7 +56,7 @@
   color:#202c42!important;
   white-space:normal!important;
 }
-#dashboard>#previous-papers-heading p{display:none!important}
+#dashboard>#previous-papers-heading p,
 #dashboard>#full-mock-tests-heading p{
   margin:4px 0 0!important;
   padding:0!important;
@@ -61,26 +79,39 @@
   display:inline-flex!important;
   align-items:center!important;
   justify-content:center!important;
-  width:128px!important;
-  min-width:128px!important;
-  height:42px!important;
+  justify-self:end!important;
+  width:150px!important;
+  min-width:150px!important;
+  height:48px!important;
   box-sizing:border-box!important;
   margin:0!important;
-  padding:0 18px!important;
-  border:1px solid rgba(52,52,52,.18)!important;
-  border-radius:10px!important;
+  padding:0 22px!important;
+  border:2px solid #343434!important;
+  border-radius:12px!important;
   background:#343434!important;
-  color:#ffd92a!important;
+  color:#fff!important;
   font:inherit!important;
-  font-size:14px!important;
-  font-weight:800!important;
+  font-size:15px!important;
+  font-weight:900!important;
+  letter-spacing:.01em!important;
   line-height:1!important;
   text-decoration:none!important;
   cursor:pointer!important;
-  box-shadow:0 5px 12px rgba(52,52,52,.14)!important;
+  box-shadow:0 7px 16px rgba(52,52,52,.22)!important;
+  transition:transform .18s ease,box-shadow .18s ease!important;
 }
-.hero-content-row .hero-dashboard-btn:hover{transform:translateY(-1px)}
-.hero-exam-info{margin:10px 0 22px!important}
+.hero-content-row .hero-dashboard-btn:hover{transform:translateY(-2px);box-shadow:0 10px 20px rgba(52,52,52,.26)!important}
+.hero .hero-exam-info-in-hero{
+  display:block!important;
+  margin:9px 0 0!important;
+  padding:0!important;
+  text-align:left!important;
+  font-size:13px!important;
+  font-weight:800!important;
+  letter-spacing:.01em!important;
+  color:#343434!important;
+}
+.hero-exam-info-in-hero + *{margin-top:0}
 .previous-paper-bottom-actions{
   display:flex;
   justify-content:flex-start;
@@ -91,10 +122,10 @@
 @media(max-width:700px){
   .hero-content-row{grid-template-columns:minmax(0,1fr) auto!important;column-gap:12px!important}
   .hero-content-row .hero-badge{display:none!important}
-  .hero-content-row .hero-dashboard-btn{width:112px!important;min-width:112px!important;height:40px!important;font-size:13px!important;padding:0 14px!important}
+  .hero-content-row .hero-dashboard-btn{width:132px!important;min-width:132px!important;height:44px!important;font-size:14px!important;padding:0 16px!important}
 }
 @media(max-width:520px){
-  .hero{padding:16px 16px!important}
+  .hero{padding:16px!important}
   .hero-content-row{grid-template-columns:1fr!important;row-gap:12px!important}
   .hero-content-row .hero-dashboard-btn{justify-self:start!important}
 }
@@ -157,6 +188,7 @@
 
   function start(){
     apply();
+    moveExamInfoIntoHero();
     styleGeneratedHeadings();
     setupHeroButton();
   }
