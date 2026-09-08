@@ -52,8 +52,8 @@
 #dashboard .continue-learning{text-align:center!important}
 #dashboard .continue-learning h3,#dashboard .continue-learning p{display:block!important;width:100%!important;text-align:center!important}
 #dashboard .continue-learning p{max-width:650px!important;margin:0 auto 9px!important}
-#dashboard .continue-learning a{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:7px!important;text-decoration:none!important;white-space:nowrap!important;line-height:1.2!important;box-sizing:border-box!important}
-#dashboard .continue-learning a span{text-decoration:none!important}
+#dashboard .continue-learning a{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:7px!important;padding:10px 17px!important;margin:0 auto!important;background:#000!important;color:#fff!important;border:1px solid #000!important;border-radius:8px!important;font-size:15px!important;font-weight:900!important;line-height:1.2!important;text-decoration:none!important;white-space:nowrap!important;box-sizing:border-box!important}
+#dashboard .continue-learning a span{color:#fff!important;text-decoration:none!important}
 .hero .eyebrow{font-size:13px!important;letter-spacing:.045em!important}
 .hero{padding:18px 22px!important;min-height:0!important}
 .hero-content-row{display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;align-items:center!important;column-gap:22px!important}
