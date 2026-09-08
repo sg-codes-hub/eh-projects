@@ -4,7 +4,7 @@
     const link=document.createElement('link');
     link.id='dashboard-refresh-css';
     link.rel='stylesheet';
-    link.href='assets/css/dashboard-refresh.css?v=20260908-01';
+    link.href='assets/css/dashboard-refresh.css?v=20260908-02';
     document.head.appendChild(link);
   };
   const render=()=>{
