@@ -14,17 +14,20 @@
     BASE+'model-answer-quality-overrides-lit-08.json',
     BASE+'model-answer-quality-overrides-letter-01.json'
   ];
-
   function asArray(v){
     if(Array.isArray(v)) return v;
-    if(v && Array.isArray(v.questions)) return v.questions;
-    if(v && Array.isArray(v.items)) return v.items;
+    if(v&&Array.isArray(v.questions)) return v.questions;
+    if(v&&Array.isArray(v.items)) return v.items;
     return [];
   }
   function normalizeBankUrl(u){
     if(!u) return null;
     if(typeof u==='string') return u;
-    return u.path || u.url || u.file || u.src || null;
+    return u.path||u.url||u.file||u.src||null;
+  }
+  function resolveUrl(url){
+    if(/^https?:\/\//i.test(url)||url.startsWith('/')) return url;
+    return url.startsWith('data/')?url:BASE+url;
   }
   async function getJson(url){
     const r=await fetch(url,{cache:'no-store'});
@@ -32,55 +35,41 @@
     return r.json();
   }
   async function loadAll(){
-    const loaded=[], failed=[], merged=[], seen=new Set(), overrides={};
+    const loaded=[],failed=[],merged=[],seen=new Set(),overrides={};
     try{
       const core=await getJson(BASE+'questions.json');
-      asArray(core).forEach(q=>{ if(q && q.id && !seen.has(q.id)){seen.add(q.id);merged.push(q);} });
+      asArray(core).forEach(q=>{if(q&&q.id&&!seen.has(q.id)){seen.add(q.id);merged.push(q);}});
       loaded.push('data/questions.json');
-    }catch(e){ failed.push({url:'data/questions.json',error:String(e)}); }
-
+    }catch(e){failed.push({url:'data/questions.json',error:String(e)});}
+    let manifest=null;
     try{
-      const manifest=await getJson(manifestUrl);
+      manifest=await getJson(manifestUrl);
       const banks=Array.isArray(manifest)?manifest:(manifest.banks||manifest.files||[]);
       for(const entry of banks){
-        const url=normalizeBankUrl(entry);
-        if(!url) continue;
+        const raw=normalizeBankUrl(entry); if(!raw) continue;
+        const url=resolveUrl(raw);
         try{
           const data=await getJson(url);
-          asArray(data).forEach(q=>{ if(q && q.id && !seen.has(q.id)){seen.add(q.id);merged.push(q);} });
+          asArray(data).forEach(q=>{if(q&&q.id&&!seen.has(q.id)){seen.add(q.id);merged.push(q);}});
           loaded.push(url);
-        }catch(e){ failed.push({url,error:String(e)}); }
+        }catch(e){failed.push({url,error:String(e)});}
       }
-    }catch(e){ failed.push({url:manifestUrl,error:String(e)}); }
-
-    for(const url of overrideUrls){
+    }catch(e){failed.push({url:manifestUrl,error:String(e)});}
+    for(const raw of overrideUrls){
       try{
-        const data=await getJson(url);
-        const obj=data && data.overrides ? data.overrides : {};
+        const data=await getJson(raw);
+        const obj=data&&data.overrides?data.overrides:{};
         Object.keys(obj).forEach(id=>{overrides[id]=Object.assign({},overrides[id]||{},obj[id]);});
-        loaded.push(url);
-      }catch(e){
-        /* Optional quality packs may not exist in older deployments. */
-      }
+        loaded.push(raw);
+      }catch(e){}
     }
-
-    for(const q of merged){
-      if(q && q.id && overrides[q.id]) Object.assign(q,overrides[q.id]);
-    }
-
+    for(const q of merged){if(q&&q.id&&overrides[q.id]) Object.assign(q,overrides[q.id]);}
     window.EnglishHubQuestions=merged;
     window.qs=merged;
     window.EnglishHubBankStatus={manifest:manifestUrl,loaded,failed,overrides:Object.keys(overrides).length};
     return merged;
   }
-
   window.QuestionBankLoader={loadAll};
   window.EnglishHubQuestions=[];
   window.qs=window.EnglishHubQuestions;
-
-  const originalFetch=window.fetch.bind(window);
-  window.fetch=function(input,init){
-    const url=typeof input==='string'?input:(input&&input.url)||'';
-    return originalFetch(input,init);
-  };
 })();
