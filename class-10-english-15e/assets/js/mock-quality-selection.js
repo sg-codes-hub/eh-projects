@@ -31,15 +31,19 @@
     p.selected.filter(x=>x.section==='VII').forEach(x=>replaceWeak(x,isLit,5,used));
     p.selected.filter(x=>x.section==='X').forEach(x=>replaceWeak(x,isLit,7,used));
     p.selected.filter(x=>x.section==='XII').forEach(x=>{
-      let cand=bestEssay(used);if(cand){const old=x.q;used.delete(key(old));x.q=cand;used.add(key(cand));}
-      cand=bestEssay(used);if(cand){const old=x.or;used.delete(key(old));x.or=cand;used.add(key(cand));}
+      const old=x.q;if(old)used.delete(key(old));
+      let cand=bestEssay(used);if(cand){x.q=cand;used.add(key(cand));}
+      const oldOr=x.or;if(oldOr)used.delete(key(oldOr));
+      cand=bestEssay(used);if(cand){x.or=cand;used.add(key(cand));}
     });
     p.selected.filter(x=>x.section==='XIII').forEach(x=>{
-      let cand=bestLetter('formal',used);if(cand){const old=x.q;used.delete(key(old));x.q=cand;used.add(key(cand));}
-      cand=bestLetter('informal',used);if(cand){const old=x.or;if(old)used.delete(key(old));x.or=cand;used.add(key(cand));}
+      const old=x.q;if(old)used.delete(key(old));
+      const oldOr=x.or;if(oldOr)used.delete(key(oldOr));
+      let cand=bestLetter('formal',used);if(cand){x.q=cand;used.add(key(cand));}
+      cand=bestLetter('informal',used);if(cand){x.or=cand;used.add(key(cand));}
     });
     p.totalMarks=p.selected.reduce((s,x)=>s+Number(x.marks||0),0);
     return p;
   };
-  window.__EH_MOCK_QUALITY_SELECTOR_VERSION='20260908-06';
+  window.__EH_MOCK_QUALITY_SELECTOR_VERSION='20260908-07';
 })();
