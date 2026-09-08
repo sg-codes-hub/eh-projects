@@ -11,6 +11,11 @@
     v2.rel='stylesheet';
     v2.href='assets/css/dashboard-refresh-v2.css?v=20260908-01';
     document.head.appendChild(v2);
+    const v3=document.createElement('link');
+    v3.id='dashboard-refresh-v3-css';
+    v3.rel='stylesheet';
+    v3.href='assets/css/dashboard-refresh-v3.css?v=20260908-01';
+    document.head.appendChild(v3);
   };
   const render=()=>{
     injectRefresh();
@@ -25,7 +30,7 @@
       ['comprehension','🔎','Comprehension','Passage practice'],
       ['composition','📝','Composition','Essay & letter writing']
     ];
-    grid.innerHTML=items.map(x=>`<button class="module-card" data-sec="${x[0]}" type="button"><div class="module-icon">${x[1]}</div><h3>${x[2]}</h3><p>${x[3]}</p><small class="module-count">Open →</small></button>`).join('');
+    grid.innerHTML=items.map(x=>`<button class="module-card" data-sec="${x[0]}" type="button"><div class="module-icon">${x[1]}</div><h3>${x[2]}</h3><p>${x[3]}</p></button>`).join('');
     grid.dataset.fastRendered='1';
     document.querySelectorAll('#courseGrid [data-sec]').forEach(b=>b.onclick=()=>window.openSection?.(b.dataset.sec));
   };
