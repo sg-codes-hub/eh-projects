@@ -1,0 +1,19 @@
+/* UI Refresh A v2 — visual overrides only. */
+#dashboard .hero{background:linear-gradient(135deg,#fffdf0,#fff8c9 58%,#eef8ff);color:#292929;border:1px solid #e4dcae;position:relative}
+#dashboard .hero-badge{left:405px!important;right:auto!important;top:29px!important;width:92px!important;height:68px!important;min-width:92px!important;border-radius:16px!important;background:#ffd92a!important;border:2px solid #343434!important;color:#343434!important}
+#dashboard .hero-badge b{font-size:28px!important;color:#343434!important}
+#dashboard .hero h1{color:#242424!important}
+#dashboard .hero>div:first-child>p:last-child{color:#555!important}
+#dashboard .stat:nth-child(1){background:#ffe5eb!important}.stat:nth-child(2){background:#e4f3ff!important}.stat:nth-child(3){background:#e4f8ec!important}.stat:nth-child(4){background:#eee7ff!important}
+#dashboard .stat b{font-size:26px!important}.stat span{font-size:12px!important}
+#dashboard #courseGrid .module-card:nth-child(1){background:#ffe0e7!important}.module-card:nth-child(2){background:#dcf6e6!important}.module-card:nth-child(3){background:#e9e0ff!important}.module-card:nth-child(4){background:#fff0c7!important}.module-card:nth-child(5){background:#ddf4fa!important}.module-card:nth-child(6){background:#ffe4d5!important}.module-card:nth-child(7){background:#f8dced!important}
+#dashboard #courseGrid .module-card h3{font-size:16px!important}.module-card p{font-size:11px!important}.module-count{font-size:10px!important}
+#dashboard .quick-grid:not(.mock-tests-grid) .quick-card:nth-child(1){background:#ffe1e8!important}.quick-card:nth-child(2){background:#dff3ff!important}.quick-card:nth-child(3){background:#e9e1ff!important}.quick-card:nth-child(4){background:#fff0c9!important}.quick-card:nth-child(5){background:#def6e7!important}
+#dashboard .quick-grid:not(.mock-tests-grid) .quick-card b{font-size:15px!important}.quick-card small{font-size:10px!important}
+#dashboard #full-mock-tests-section .mock-paper-card:nth-child(5n+1){background:#e2f1ff!important}.mock-paper-card:nth-child(5n+2){background:#e0f6e7!important}.mock-paper-card:nth-child(5n+3){background:#ffe2ea!important}.mock-paper-card:nth-child(5n+4){background:#ebe3ff!important}.mock-paper-card:nth-child(5n){background:#def4fa!important}
+#dashboard #full-mock-tests-section .mock-paper-card b{font-size:16px!important}.mock-paper-card small{font-size:10px!important}
+#dashboard .previous-paper-card:nth-child(1){background:#e2f1ff!important}.previous-paper-card:nth-child(2){background:#e0f6e7!important}.previous-paper-card:nth-child(3){background:#ffe2ea!important}
+#dashboard .previous-paper-card b{font-size:18px!important}.previous-paper-card small,.previous-paper-card em{font-size:11px!important}
+@media(max-width:980px){#dashboard .hero-badge{left:350px!important}}
+@media(max-width:760px){#dashboard .hero-badge{left:auto!important;right:18px!important;top:17px!important;width:65px!important;height:58px!important;min-width:65px!important}.hero-badge b{font-size:21px!important}#dashboard .hero h1{font-size:30px!important;max-width:78%}#dashboard #courseGrid .module-card h3{font-size:14px!important}#dashboard .quick-grid:not(.mock-tests-grid) .quick-card b{font-size:13px!important}#dashboard .previous-paper-card b{font-size:14px!important}}
+@media(max-width:390px){#dashboard .hero h1{font-size:27px!important;max-width:72%}}
