@@ -1,0 +1,11 @@
+/* Phase 2 — navigation/stat styling. */
+#dashboard .hero{position:relative!important}
+.hero-dashboard-btn{position:absolute;right:18px;bottom:18px;border:0;border-radius:999px;padding:9px 16px;background:#fff;color:#343434;font:inherit;font-weight:800;cursor:pointer;box-shadow:0 6px 16px rgba(0,0,0,.14)}
+.hero-dashboard-btn:hover{transform:translateY(-1px)}
+.previous-papers-stat b{font-size:22px;line-height:1}
+.previous-paper-end-nav{display:flex;justify-content:flex-start;padding:18px;border-top:1px solid #ececf0;background:#fafafa}
+.previous-paper-end-back{margin:0!important}
+@media(max-width:600px){
+ .hero-dashboard-btn{position:static;margin-top:14px;padding:8px 14px}
+ .previous-paper-end-nav{padding:14px}
+}
