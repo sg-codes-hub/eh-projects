@@ -1,0 +1,160 @@
+/* English Hub 15-E — Phase 1 UI Refresh C: Practice / Test / Result. */
+
+/* Practice header: compact, clear exam hierarchy. */
+#practice{padding-top:2px!important}
+#practice .practice-head{margin-bottom:10px!important;gap:12px!important}
+#practice .practice-head h2{font-size:24px!important;line-height:1.15!important}
+#practice .practice-head .eyebrow{margin-bottom:3px!important}
+#practice .ghost-btn{padding:8px 12px!important;border-radius:9px!important;font-size:12px!important}
+#practice .progress-text{font-size:12px!important;white-space:nowrap!important}
+#practice .progress-bar{height:7px!important;margin-bottom:11px!important}
+
+/* Question palette: denser exam-style navigation. */
+#practice .question-palette{
+  gap:5px!important;
+  margin-bottom:12px!important;
+  padding:9px!important;
+  border-radius:12px!important;
+  box-shadow:0 4px 14px rgba(38,42,100,.035)!important;
+}
+#practice .palette-btn{
+  width:31px!important;
+  height:31px!important;
+  border-radius:8px!important;
+  font-size:10px!important;
+}
+
+/* Question card: stronger reading hierarchy with less empty space. */
+#practice .question-card{
+  border-radius:17px!important;
+  padding:20px!important;
+  box-shadow:0 8px 24px rgba(38,42,100,.075)!important;
+}
+#practice .mock-strip{
+  margin:-3px 0 14px!important;
+  padding:9px 12px!important;
+  border-radius:10px!important;
+  font-size:11px!important;
+}
+#practice .mock-strip #timer{font-size:16px!important}
+#practice .question-meta{gap:6px!important;margin-bottom:11px!important}
+#practice .pill{padding:4px 8px!important;font-size:10px!important}
+#practice .question-text{
+  font-size:19px!important;
+  line-height:1.42!important;
+  margin-bottom:15px!important;
+}
+
+/* Options: larger click targets while keeping the list compact. */
+#practice .options{gap:8px!important}
+#practice .option{
+  padding:12px 13px!important;
+  border-radius:11px!important;
+  font-size:14px!important;
+  line-height:1.4!important;
+  transition:background .15s,border-color .15s,transform .15s!important;
+}
+#practice .option:hover:not(:disabled){transform:translateX(2px)!important}
+#practice .feedback{
+  margin-top:13px!important;
+  padding:12px 13px!important;
+  border-radius:11px!important;
+  font-size:13px!important;
+}
+#practice .question-actions{margin-top:15px!important}
+#practice .question-actions button{padding:9px 13px!important;font-size:12px!important}
+
+/* Reading passages and written-answer questions. */
+#practice .passage{
+  padding:14px 15px!important;
+  margin-bottom:14px!important;
+  border-radius:9px!important;
+  font-size:13px!important;
+  line-height:1.55!important;
+}
+#practice .passage p{margin:5px 0 0!important}
+#practice .self-answer{gap:8px!important}
+#practice .self-answer label{font-size:12px!important;font-weight:800!important}
+#practice .self-answer textarea{
+  min-height:135px!important;
+  padding:11px 12px!important;
+  border-radius:10px!important;
+  font-size:13px!important;
+}
+
+/* Result screen: focused score summary and clean review hierarchy. */
+#result{padding-top:2px!important}
+#result .result-card{
+  max-width:600px!important;
+  margin:12px auto 14px!important;
+  padding:25px!important;
+  border-radius:19px!important;
+  box-shadow:0 10px 28px rgba(38,42,100,.08)!important;
+}
+#result .result-card .eyebrow{margin-bottom:3px!important}
+#result .result-card h2{font-size:25px!important;margin:0!important}
+#result .score-ring{
+  width:126px!important;
+  height:126px!important;
+  border-width:10px!important;
+  margin:17px auto!important;
+}
+#result .score-ring strong{font-size:35px!important}
+#result .score-ring span{font-size:12px!important}
+#result .result-stats{gap:8px!important;margin:14px 0!important}
+#result .result-stats div{padding:10px!important;border-radius:10px!important}
+#result .result-stats b{font-size:18px!important}
+#result .result-stats span{font-size:10px!important}
+#result .result-message{font-size:12px!important;margin:12px 0!important}
+#result .result-actions button{padding:9px 13px!important;font-size:12px!important}
+
+#result .review-card{
+  max-width:760px!important;
+  margin:0 auto!important;
+  padding:20px!important;
+  border-radius:17px!important;
+  box-shadow:0 7px 20px rgba(38,42,100,.055)!important;
+}
+#result .review-card .section-title{margin:0 0 11px!important}
+#result .review-card .section-title h2{font-size:20px!important}
+#result .review-card .section-title p{font-size:11px!important}
+#result .review-list{gap:7px!important}
+#result .review-item{
+  grid-template-columns:35px 1fr auto!important;
+  gap:7px!important;
+  padding:9px 10px!important;
+  border-radius:10px!important;
+}
+#result .review-item b{font-size:12px!important}
+#result .review-item small{font-size:9px!important}
+#result .review-detail{margin-top:14px!important;padding-top:14px!important}
+#result .review-detail h3{font-size:16px!important}
+#result .review-detail p{font-size:12px!important}
+
+/* Mobile: preserve two-column result stats and make controls touch-friendly. */
+@media(max-width:700px){
+  #practice .practice-head{grid-template-columns:auto 1fr!important}
+  #practice .progress-text{grid-column:2!important;text-align:right!important}
+  #practice .question-card{padding:15px!important;border-radius:14px!important}
+  #practice .question-text{font-size:17px!important}
+  #practice .option{padding:11px 12px!important;font-size:13px!important}
+  #practice .question-actions{gap:7px!important}
+  #practice .question-actions button{flex:1!important}
+  #result .result-card{margin-top:8px!important;padding:20px 15px!important;border-radius:15px!important}
+  #result .result-card h2{font-size:22px!important}
+  #result .score-ring{width:112px!important;height:112px!important;margin:14px auto!important}
+  #result .result-stats{grid-template-columns:repeat(3,1fr)!important}
+  #result .review-card{padding:15px!important;border-radius:14px!important}
+}
+
+@media(max-width:430px){
+  #practice .practice-head h2{font-size:20px!important}
+  #practice .progress-text{font-size:10px!important}
+  #practice .question-palette{padding:7px!important}
+  #practice .palette-btn{width:29px!important;height:29px!important}
+  #practice .question-text{font-size:16px!important;line-height:1.4!important}
+  #practice .mock-strip{font-size:10px!important}
+  #practice .mock-strip #timer{font-size:14px!important}
+  #result .result-stats b{font-size:16px!important}
+  #result .result-stats span{font-size:9px!important}
+}
