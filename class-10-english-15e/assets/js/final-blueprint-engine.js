@@ -28,9 +28,9 @@
   const isRTC=q=>norm(q?.bank_group)==='rtc'||/reference.*context|reference to context|rtc/.test(qMeta(q)+' '+qText(q));
   const isQuote=q=>/quote.*memory|quote from memory/.test(qMeta(q)+' '+qText(q));
   const isComprehension=q=>norm(q?.bank_group)==='comprehension'||!!q?.passage||/comprehension|unseen passage|read the following passage/.test(qMeta(q)+' '+qText(q));
-  const isEssay=q=>/essay/.test(qMeta(q)+' '+qText(q));
-  const isLetter=q=>/letter/.test(qMeta(q)+' '+qText(q));
-  const letterType=q=>norm(q?.letter_type||q?.skill||'');
+  const isEssay=q=>!isMCQ(q)&&/essay/.test(qMeta(q)+' '+qText(q));
+  const isLetter=q=>!isMCQ(q)&&/letter/.test(qMeta(q)+' '+qText(q));
+  const letterType=q=>{const s=norm(q?.letter_type||q?.skill||q?.category||'');if(/formal/.test(s))return 'formal';if(/informal/.test(s))return 'informal';return s;};
   const isFormalLetter=q=>letterType(q)==='formal'||/formal letter/.test(qMeta(q)+' '+qText(q));
   const isInformalLetter=q=>letterType(q)==='informal'||/informal letter/.test(qMeta(q)+' '+qText(q));
   const isLiterature=q=>{if(isMCQ(q)||isAnalogy(q)||isRewrite(q)||isRTC(q)||isQuote(q)||isComprehension(q)||isEssay(q)||isLetter(q))return false;const bg=norm(q?.bank_group),mod=norm(q?.module);return ['firstflight','footprints','poetry'].includes(bg)||/first flight|footprints without feet/.test(mod)||/poetry/.test(mod);};
