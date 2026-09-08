@@ -4,8 +4,6 @@
     const link=document.createElement('link');link.id='dashboard-refresh-css';link.rel='stylesheet';link.href='assets/css/dashboard-refresh.css?v=20260908-02';document.head.appendChild(link);
     const v2=document.createElement('link');v2.id='dashboard-refresh-v2-css';v2.rel='stylesheet';v2.href='assets/css/dashboard-refresh-v2.css?v=20260908-02';document.head.appendChild(v2);
     const v3=document.createElement('link');v3.id='dashboard-refresh-v3-css';v3.rel='stylesheet';v3.href='assets/css/dashboard-refresh-v3.css?v=20260908-02';document.head.appendChild(v3);
-    const polish=document.createElement('link');polish.id='phase2-dashboard-polish-css';polish.rel='stylesheet';polish.href='assets/css/phase2-dashboard-polish.css?v=20260908-01';document.head.appendChild(polish);
-    const script=document.createElement('script');script.src='assets/js/phase2-dashboard-polish.js?v=20260908-01';script.defer=true;document.head.appendChild(script);
   };
   const render=()=>{
     injectRefresh();
