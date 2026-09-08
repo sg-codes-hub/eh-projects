@@ -113,3 +113,37 @@
     }
   });
 })();
+
+/* Guard normal student clicks against the asynchronous question-bank load race. */
+(function(){
+  'use strict';
+  const originalStart=window.start;
+  if(typeof originalStart!=='function')return;
+  let readyPromise=null;
+  function ensureBankReady(){
+    if(Array.isArray(window.EnglishHubQuestions)&&window.EnglishHubQuestions.length)return Promise.resolve(window.EnglishHubQuestions);
+    if(readyPromise)return readyPromise;
+    readyPromise=Promise.resolve().then(function(){
+      if(!window.QuestionBankLoader||typeof window.QuestionBankLoader.loadAll!=='function')throw new Error('Question-bank loader unavailable');
+      return window.QuestionBankLoader.loadAll();
+    }).then(function(all){
+      if(!Array.isArray(all)||!all.length)throw new Error('Question bank is empty');
+      return all;
+    }).catch(function(err){readyPromise=null;throw err;});
+    return readyPromise;
+  }
+  window.start=function(mode,o){
+    if(mode!=='mock')return originalStart(mode,o);
+    ensureBankReady().then(function(){
+      if(typeof window.buildStrictMock!=='function'){
+        setTimeout(function(){window.start('mock',o);},0);
+        return;
+      }
+      originalStart(mode,o);
+    }).catch(function(err){
+      console.error('Mock start blocked until question bank is ready:',err);
+      alert('The question bank is still loading. Please wait a moment and try again.');
+    });
+  };
+  window.EnglishHubMockReadinessGuard=true;
+})();
