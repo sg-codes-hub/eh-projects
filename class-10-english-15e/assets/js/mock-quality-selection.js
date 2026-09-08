@@ -24,6 +24,45 @@
     if(!pred(old)||sentences(old)<min){const cand=candidates(q=>Number(q?.marks)===Number(x.marks)&&pred(q)&&sentences(q)>=min,used)[0]||null;if(cand){used.delete(key(old));x.q=cand;used.add(key(cand));}}
     if(x.or){const oldOr=x.or;if(!pred(oldOr)||sentences(oldOr)<min){const cand=candidates(q=>Number(q?.marks)===Number(x.marks)&&pred(q)&&sentences(q)>=min,used)[0]||null;if(cand){used.delete(key(oldOr));x.or=cand;used.add(key(cand));}}}
   }
+  const DIVERSITY_SECTIONS=new Set(['IV','V','VII','VIII','IX','X']);
+  const chapter=q=>String(q?.chapter||q?.topic||'Unknown').trim();
+  const diversityPredicate=section=>{
+    if(section==='VIII')return q=>!isMCQ(q)&&/rtc|reference.*context|reference to context/.test(meta(q)+' '+text(q));
+    if(section==='IX')return q=>!isMCQ(q)&&/quote.*memory|quote from memory/.test(meta(q)+' '+text(q));
+    return isLit;
+  };
+  const diversityMinimum=section=>section==='V'?2:section==='VII'?5:section==='X'?7:0;
+  function rebalanceLiterature(p,used){
+    const counts={};
+    const add=q=>{if(q){const c=chapter(q);counts[c]=(counts[c]||0)+1;}};
+    p.selected.filter(x=>DIVERSITY_SECTIONS.has(x.section)).forEach(x=>{add(x.q);add(x.or);});
+    for(const x of p.selected.filter(x=>DIVERSITY_SECTIONS.has(x.section))){
+      const pred=diversityPredicate(x.section),min=diversityMinimum(x.section);
+      const oldMain=x.q,oldOr=x.or;
+      const oldMainKey=oldMain&&key(oldMain),oldOrKey=oldOr&&key(oldOr);
+      if(oldMain)used.delete(oldMainKey);if(oldOr)used.delete(oldOrKey);
+      if(oldMain){const c=chapter(oldMain);counts[c]=Math.max(0,(counts[c]||1)-1);}
+      if(oldOr){const c=chapter(oldOr);counts[c]=Math.max(0,(counts[c]||1)-1);}
+      const pool=bank().filter(q=>Number(q?.marks)===Number(x.marks)&&!used.has(key(q))&&pred(q)&&sentences(q)>=min);
+      const choose=blocked=>pool.filter(q=>!blocked.has(chapter(q))).sort((a,b)=>{
+        const ca=counts[chapter(a)]||0,cb=counts[chapter(b)]||0;
+        if(ca!==cb)return ca-cb;
+        const sa=sentences(a),sb=sentences(b);
+        return sb-sa;
+      })[0]||null;
+      let main=choose(new Set());
+      if(!main&&oldMain)main=oldMain;
+      if(main){x.q=main;used.add(key(main));const c=chapter(main);counts[c]=(counts[c]||0)+1;}
+      let or=null;
+      if(oldOr){or=choose(new Set([chapter(x.q)]));if(!or&&oldOr&&chapter(oldOr)!==chapter(x.q))or=oldOr;if(or){x.or=or;used.add(key(or));const c=chapter(or);counts[c]=(counts[c]||0)+1;}}
+      else x.or=null;
+      if(x.or&&chapter(x.q)===chapter(x.or)){
+        used.delete(key(x.or));const c=chapter(x.or);counts[c]=Math.max(0,(counts[c]||1)-1);
+        const alt=choose(new Set([chapter(x.q)]));
+        if(alt){x.or=alt;used.add(key(alt));const ac=chapter(alt);counts[ac]=(counts[ac]||0)+1;}
+      }
+    }
+  }
   window.buildStrictMock=function(no){
     const p=original(no),used=new Set();
     p.selected.forEach(x=>{if(x.q)used.add(key(x.q));if(x.or)used.add(key(x.or));});
@@ -37,8 +76,9 @@
     p.selected.filter(x=>x.section==='XIII').forEach(x=>{
       const old=x.q;if(old)used.delete(key(old));const oldOr=x.or;if(oldOr)used.delete(key(oldOr));let cand=bestLetter('formal',used);if(cand){x.q=cand;used.add(key(cand));}cand=bestLetter('informal',used);if(cand){x.or=cand;used.add(key(cand));}
     });
+    rebalanceLiterature(p,used);
     p.totalMarks=p.selected.reduce((s,x)=>s+Number(x.marks||0),0);
     return p;
   };
-  window.__EH_MOCK_QUALITY_SELECTOR_VERSION='20260908-08';
+  window.__EH_MOCK_QUALITY_SELECTOR_VERSION='20260908-09';
 })();
