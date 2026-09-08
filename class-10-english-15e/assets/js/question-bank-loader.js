@@ -1,75 +1,93 @@
-/* Question-bank loader — loads core + active bank manifest, then applies quality overrides. */
-(function(){
-  const BASE='data/';
-  const manifestUrl=BASE+'banks/manifest.json';
-  const overrideUrls=[
-    BASE+'model-answer-quality-overrides.json',
-    BASE+'model-answer-quality-overrides-lit-01.json',
-    BASE+'model-answer-quality-overrides-lit-02.json',
-    BASE+'model-answer-quality-overrides-lit-03.json',
-    BASE+'model-answer-quality-overrides-lit-04.json',
-    BASE+'model-answer-quality-overrides-lit-05.json',
-    BASE+'model-answer-quality-overrides-lit-06.json',
-    BASE+'model-answer-quality-overrides-lit-07.json',
-    BASE+'model-answer-quality-overrides-lit-08.json',
-    BASE+'model-answer-quality-overrides-letter-01.json'
+/* English Hub 15-E question-bank loader. Loads the core bank plus every bank listed in data/banks/manifest.json. */
+(function () {
+  const originalFetch = window.fetch.bind(window);
+  const manifestPath = 'data/banks/manifest.json';
+  const qualityOverridePaths = [
+    'data/model-answer-quality-overrides.json',
+    'data/model-answer-quality-overrides-lit-01.json',
+    'data/model-answer-quality-overrides-lit-02.json',
+    'data/model-answer-quality-overrides-lit-03.json',
+    'data/model-answer-quality-overrides-lit-04.json',
+    'data/model-answer-quality-overrides-lit-05.json',
+    'data/model-answer-quality-overrides-lit-06.json',
+    'data/model-answer-quality-overrides-lit-07.json',
+    'data/model-answer-quality-overrides-lit-08.json',
+    'data/model-answer-quality-overrides-letter-01.json'
   ];
-  function asArray(v){
-    if(Array.isArray(v)) return v;
-    if(v&&Array.isArray(v.questions)) return v.questions;
-    if(v&&Array.isArray(v.items)) return v.items;
-    return [];
+  function normalize(q, source) {
+    const copy = { ...q };
+    copy.type = String(copy.type || copy.question_type || 'MCQ').trim();
+    copy.question_type = String(copy.question_type || copy.type).trim();
+    copy.module = String(copy.module || (
+      copy.book === 'First Flight' && copy.chapter && ['Dust of Snow','Fire and Ice','A Tiger in the Zoo','How to Tell Wild Animals','The Ball Poem','Amanda','The Trees','Fog','The Tale of Custard the Dragon','For Anne Gregory'].includes(copy.chapter)
+        ? 'First Flight Poetry'
+        : copy.book === 'First Flight' ? 'First Flight Prose'
+        : copy.book === 'Footprints Without Feet' ? 'Footprints Without Feet'
+        : copy.category === 'Grammar' ? 'Grammar'
+        : copy.category || 'Other'
+    )).trim();
+    copy.chapter = copy.chapter == null ? '' : String(copy.chapter).trim();
+    copy.marks = Number(copy.marks);
+    copy.source = copy.source || source;
+    return copy;
   }
-  function normalizeBankUrl(u){
-    if(!u) return null;
-    if(typeof u==='string') return u;
-    return u.path||u.url||u.file||u.src||null;
-  }
-  function resolveUrl(url){
-    if(/^https?:\/\//i.test(url)||url.startsWith('/')) return url;
-    return url.startsWith('data/')?url:BASE+url;
-  }
-  async function getJson(url){
-    const r=await fetch(url,{cache:'no-store'});
-    if(!r.ok) throw new Error(r.status+' '+r.statusText+' — '+url);
-    return r.json();
-  }
-  async function loadAll(){
-    const loaded=[],failed=[],merged=[],seen=new Set(),overrides={};
-    try{
-      const core=await getJson(BASE+'questions.json');
-      asArray(core).forEach(q=>{if(q&&q.id&&!seen.has(q.id)){seen.add(q.id);merged.push(q);}});
-      loaded.push('data/questions.json');
-    }catch(e){failed.push({url:'data/questions.json',error:String(e)});}
-    let manifest=null;
-    try{
-      manifest=await getJson(manifestUrl);
-      const banks=Array.isArray(manifest)?manifest:(manifest.banks||manifest.files||[]);
-      for(const entry of banks){
-        const raw=normalizeBankUrl(entry); if(!raw) continue;
-        const url=resolveUrl(raw);
-        try{
-          const data=await getJson(url);
-          asArray(data).forEach(q=>{if(q&&q.id&&!seen.has(q.id)){seen.add(q.id);merged.push(q);}});
-          loaded.push(url);
-        }catch(e){failed.push({url,error:String(e)});}
-      }
-    }catch(e){failed.push({url:manifestUrl,error:String(e)});}
-    for(const raw of overrideUrls){
-      try{
-        const data=await getJson(raw);
-        const obj=data&&data.overrides?data.overrides:{};
-        Object.keys(obj).forEach(id=>{overrides[id]=Object.assign({},overrides[id]||{},obj[id]);});
-        loaded.push(raw);
-      }catch(e){}
+  async function loadAll() {
+    if (Array.isArray(window.EnglishHubQuestions) && window.EnglishHubQuestions.length) return window.EnglishHubQuestions;
+    const baseResponse = await originalFetch('data/questions.json', { cache: 'no-store' });
+    if (!baseResponse.ok) throw new Error(`Core question bank failed: ${baseResponse.status}`);
+    const base = await baseResponse.json();
+    const baseQuestions = Array.isArray(base.questions) ? base.questions.map(q => normalize(q, 'questions.json')) : [];
+    const manifestResponse = await originalFetch(manifestPath, { cache: 'no-store' });
+    if (!manifestResponse.ok) throw new Error(`Question-bank manifest failed: ${manifestResponse.status}`);
+    const manifest = await manifestResponse.json();
+    const bankNames = Array.isArray(manifest.banks) ? manifest.banks : [];
+    const extras = [], failed = [];
+    for (const name of bankNames) {
+      try {
+        const response = await originalFetch(`data/banks/${name}`, { cache: 'no-store' });
+        if (!response.ok) { failed.push(`${name} (${response.status})`); continue; }
+        const bank = await response.json();
+        const items = Array.isArray(bank) ? bank : bank.questions;
+        if (Array.isArray(items)) extras.push(...items.map(q => normalize(q, name)));
+      } catch (_) { failed.push(name); }
     }
-    for(const q of merged){if(q&&q.id&&overrides[q.id]) Object.assign(q,overrides[q.id]);}
-    window.EnglishHubQuestions=merged;
-    window.qs=merged;
-    window.EnglishHubBankStatus={manifest:manifestUrl,loaded,failed,overrides:Object.keys(overrides).length};
+    const seen = new Set(), merged = [];
+    for (const q of [...baseQuestions, ...extras]) {
+      const key = q.id ? `id:${q.id}` : `text:${String(q.question || q.prompt || '').trim().toLowerCase()}|marks:${q.marks}|chapter:${q.chapter || ''}`;
+      if (seen.has(key)) continue;
+      seen.add(key); merged.push(q);
+    }
+    for (const path of qualityOverridePaths) {
+      try {
+        const overrideResponse = await originalFetch(path, { cache: 'no-store' });
+        if (!overrideResponse.ok) continue;
+        const overrideData = await overrideResponse.json();
+        const overrides = overrideData && overrideData.overrides && typeof overrideData.overrides === 'object' ? overrideData.overrides : {};
+        for (const q of merged) {
+          const o = overrides[q.id];
+          if (!o) continue;
+          if (typeof o.model_answer === 'string' && o.model_answer.trim()) q.model_answer = o.model_answer.trim();
+          if (typeof o.answer === 'string' && o.answer.trim()) q.answer = o.answer.trim();
+          if (Array.isArray(o.answer_points)) q.answer_points = o.answer_points.slice();
+          if (typeof o.letter_type === 'string' && o.letter_type.trim()) q.letter_type = o.letter_type.trim();
+          if (typeof o.skill === 'string' && o.skill.trim()) q.skill = o.skill.trim();
+          if (typeof o.topic === 'string' && o.topic.trim()) q.topic = o.topic.trim();
+          if (typeof o.question_type === 'string' && o.question_type.trim()) q.question_type = o.question_type.trim();
+        }
+      } catch (_) {}
+    }
+    window.EnglishHubQuestions = merged;
+    window.qs = merged;
+    window.EnglishHubBankStatus = { manifest: bankNames.length, loaded: merged.length, failed };
     return merged;
   }
-  window.QuestionBankLoader={loadAll};
-  window.EnglishHubQuestions=[];
-  window.qs=window.EnglishHubQuestions;
+  window.QuestionBankLoader = { loadAll };
+  window.fetch = async function (input, init) {
+    const url = typeof input === 'string' ? input : input.url;
+    if (!url.endsWith('data/questions.json')) return originalFetch(input, init);
+    try {
+      const merged = await loadAll();
+      return new Response(JSON.stringify({ course: 'Class 10 First Language English (15-E)', academic_year: '2026-27', bank_version: 'Core + all manifest banks + quality overrides', questions: merged }), { status: 200, headers: { 'Content-Type': 'application/json' } });
+    } catch (_) { return originalFetch(input, init); }
+  };
 })();
