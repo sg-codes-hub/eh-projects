@@ -1,0 +1,66 @@
+{
+  "audit": "Mock Papers 1-10 audit v2",
+  "last_updated": "2026-09-08",
+  "status": "source_audit_complete_runtime_harness_added",
+  "important_correction": "The previous v1 report's 45-question public-pattern finding is invalid for this project and is removed. The project pattern is fixed at 47 main questions, 100 marks, 3 hours 15 minutes, Sections I-XIII, as defined by the project engine and source-paper set.",
+  "verified_from_source": {
+    "engine": "final-blueprint-engine.js",
+    "loader": "question-bank-loader.js",
+    "manifest": "data/banks/manifest.json",
+    "target": "47 main questions / 100 marks",
+    "sections": {
+      "I": {"count":6,"marks":1,"domain":"grammar_mcq"},
+      "II": {"count":4,"marks":1,"domain":"analogy"},
+      "III": {"count":3,"marks":1,"domain":"rewrite1"},
+      "IV": {"count":7,"marks":1,"domain":"literature"},
+      "V": {"count":7,"marks":2,"domain":"literature","choice":"Q7 OR"},
+      "VI": {"count":3,"marks":2,"domain":"grammar2"},
+      "VII": {"count":6,"marks":3,"domain":"literature","choice":"Q1 OR"},
+      "VIII": {"count":4,"marks":3,"domain":"rtc"},
+      "IX": {"count":1,"marks":4,"domain":"quote","choice":"OR"},
+      "X": {"count":3,"marks":4,"domain":"literature","choice":"each question OR"},
+      "XI": {"count":1,"marks":4,"domain":"comprehension"},
+      "XII": {"count":1,"marks":5,"domain":"essay","choice":"OR"},
+      "XIII": {"count":1,"marks":5,"domain":"letter","choice":"formal OR informal"}
+    }
+  },
+  "engine_checks": [
+    "Deterministic seed is used for each Mock Paper number.",
+    "Questions are selected from the merged QuestionBankLoader pool.",
+    "Duplicate main questions are blocked within a generated paper by key().",
+    "MCQs are restricted to Section I.",
+    "Q1-Q6 are required to be MCQs.",
+    "Q47 requires a formal-letter choice and an informal-letter choice.",
+    "Section XI prefers comprehension passages of at least 600 characters when at least two such candidates exist.",
+    "The engine validates 47 main questions and 100 marks."
+  ],
+  "content_findings_confirmed": [
+    {
+      "id":"MPA-002",
+      "severity":"high",
+      "area":"Essay model answers",
+      "finding":"composition-batch-01 contains multiple 5-mark essay model answers of only about 5-6 sentences. Other inspected composition banks also contain answers shorter than the Section XII instruction of about 18-20 sentences.",
+      "action":"Expand selected/eligible 5-mark essay model answers to approximately 18-20 well-formed sentences while preserving the original topic and answer points."
+    },
+    {
+      "id":"MPA-003",
+      "severity":"high",
+      "area":"Formal letter formatting",
+      "finding":"Some formal-letter banks omit a complete sender/address/date block, while other banks use a fuller school-exam format.",
+      "action":"Standardise eligible formal-letter model answers to sender/address/date, receiver designation/address, subject, salutation, body, complimentary close and name/class where appropriate."
+    },
+    {
+      "id":"MPA-004",
+      "severity":"medium",
+      "area":"Pre-build content quality",
+      "finding":"The loader merges all manifest banks into one pool and the engine relies on metadata/domain classifiers. Therefore malformed or weak bank items can become mock candidates if they satisfy the classifier.",
+      "action":"Use the runtime audit harness to identify exact selected items, then correct source-bank records or add targeted overrides."
+    }
+  ],
+  "runtime_audit": {
+    "tool_added":"class-10-english-15e/audit-mock-papers.html",
+    "purpose":"Loads the same manifest, question-bank loader and deterministic blueprint engine used by the app, generates Mock Papers 1-10, and reports exact selected question IDs, OR choices, section counts, marks, duplicates, essay-answer length, letter-format checks and comprehension length.",
+    "current_status":"Harness committed; exact browser-generated selections have not been falsely declared audited because this tool session has no JavaScript browser runtime capable of executing the deployed page.",
+    "next_step":"Open the audit page from the same GitHub Pages site and run the audit once; the page can download the generated JSON report."
+  }
+}
