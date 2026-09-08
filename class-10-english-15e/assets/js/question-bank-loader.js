@@ -2,6 +2,7 @@
 (function () {
   const originalFetch = window.fetch.bind(window);
   const manifestPath = 'data/banks/manifest.json';
+  const qualityOverridePath = 'data/model-answer-quality-overrides.json';
   function normalize(q, source) {
     const copy = { ...q };
     copy.type = String(copy.type || copy.question_type || 'MCQ').trim();
@@ -45,6 +46,20 @@
       if (seen.has(key)) continue;
       seen.add(key); merged.push(q);
     }
+    try {
+      const overrideResponse = await originalFetch(qualityOverridePath, { cache: 'no-store' });
+      if (overrideResponse.ok) {
+        const overrideData = await overrideResponse.json();
+        const overrides = overrideData && overrideData.overrides && typeof overrideData.overrides === 'object' ? overrideData.overrides : {};
+        for (const q of merged) {
+          const o = overrides[q.id];
+          if (!o) continue;
+          if (typeof o.model_answer === 'string' && o.model_answer.trim()) q.model_answer = o.model_answer.trim();
+          if (typeof o.answer === 'string' && o.answer.trim()) q.answer = o.answer.trim();
+          if (Array.isArray(o.answer_points)) q.answer_points = o.answer_points.slice();
+        }
+      }
+    } catch (_) {}
     window.EnglishHubQuestions = merged;
     window.qs = merged;
     window.EnglishHubBankStatus = { manifest: bankNames.length, loaded: merged.length, failed };
@@ -56,7 +71,7 @@
     if (!url.endsWith('data/questions.json')) return originalFetch(input, init);
     try {
       const merged = await loadAll();
-      return new Response(JSON.stringify({ course: 'Class 10 First Language English (15-E)', academic_year: '2026-27', bank_version: 'Core + all manifest banks', questions: merged }), { status: 200, headers: { 'Content-Type': 'application/json' } });
+      return new Response(JSON.stringify({ course: 'Class 10 First Language English (15-E)', academic_year: '2026-27', bank_version: 'Core + all manifest banks + quality overrides', questions: merged }), { status: 200, headers: { 'Content-Type': 'application/json' } });
     } catch (_) { return originalFetch(input, init); }
   };
 })();
