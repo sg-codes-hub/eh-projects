@@ -2,7 +2,17 @@
 (function () {
   const originalFetch = window.fetch.bind(window);
   const manifestPath = 'data/banks/manifest.json';
-  const qualityOverridePath = 'data/model-answer-quality-overrides.json';
+  const qualityOverridePaths = [
+    'data/model-answer-quality-overrides.json',
+    'data/model-answer-quality-overrides-lit-01.json',
+    'data/model-answer-quality-overrides-lit-02.json',
+    'data/model-answer-quality-overrides-lit-03.json',
+    'data/model-answer-quality-overrides-lit-04.json',
+    'data/model-answer-quality-overrides-lit-05.json',
+    'data/model-answer-quality-overrides-lit-06.json',
+    'data/model-answer-quality-overrides-lit-07.json',
+    'data/model-answer-quality-overrides-lit-08.json'
+  ];
   function normalize(q, source) {
     const copy = { ...q };
     copy.type = String(copy.type || copy.question_type || 'MCQ').trim();
@@ -46,9 +56,10 @@
       if (seen.has(key)) continue;
       seen.add(key); merged.push(q);
     }
-    try {
-      const overrideResponse = await originalFetch(qualityOverridePath, { cache: 'no-store' });
-      if (overrideResponse.ok) {
+    for (const path of qualityOverridePaths) {
+      try {
+        const overrideResponse = await originalFetch(path, { cache: 'no-store' });
+        if (!overrideResponse.ok) continue;
         const overrideData = await overrideResponse.json();
         const overrides = overrideData && overrideData.overrides && typeof overrideData.overrides === 'object' ? overrideData.overrides : {};
         for (const q of merged) {
@@ -58,8 +69,8 @@
           if (typeof o.answer === 'string' && o.answer.trim()) q.answer = o.answer.trim();
           if (Array.isArray(o.answer_points)) q.answer_points = o.answer_points.slice();
         }
-      }
-    } catch (_) {}
+      } catch (_) {}
+    }
     window.EnglishHubQuestions = merged;
     window.qs = merged;
     window.EnglishHubBankStatus = { manifest: bankNames.length, loaded: merged.length, failed };
