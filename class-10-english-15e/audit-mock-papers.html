@@ -25,7 +25,7 @@ li{margin:4px 0}pre{white-space:pre-wrap;background:#fff;border:1px solid #ddd;b
 </main>
 <script src="assets/js/question-bank-loader.js?v=20260908-09"></script>
 <script src="assets/js/final-blueprint-engine.js?v=20260908-09"></script>
-<script src="assets/js/mock-quality-selection.js?v=20260908-05"></script>
+<script src="assets/js/mock-quality-selection.js?v=20260908-06"></script>
 <script>
 (function(){
 'use strict';
@@ -87,12 +87,12 @@ async function audit(){
   var all=await window.QuestionBankLoader.loadAll(),papers=[];
   for(var i=1;i<=10;i++)papers.push(inspect(i,window.buildStrictMock(i)));
   var failed=papers.filter(function(p){return p.status==='FAIL';}).length;
-  report={audit:'Mock Papers 1-10 deterministic runtime audit v8.4',updated:new Date().toISOString(),bank:all.length,blueprint:'47 questions / 100 marks / Sections I-XIII',papers:papers,overall:failed?'FAIL':'PASS'};
+  report={audit:'Mock Papers 1-10 deterministic runtime audit v8.5',updated:new Date().toISOString(),bank:all.length,blueprint:'47 questions / 100 marks / Sections I-XIII',papers:papers,overall:failed?'FAIL':'PASS'};
   render(report);
  }catch(e){status.innerHTML='<b class="fail">Audit error: '+String(e&&e.message||e)+'</b>';console.error(e);}
 }
 run.onclick=function(){window.location.reload();};
-download.onclick=function(){if(!report)return;var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(report,null,2)],{type:'application/json'}));a.download='mock-papers-audit-runtime-v8-4.json';a.click();};
+download.onclick=function(){if(!report)return;var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(report,null,2)],{type:'application/json'}));a.download='mock-papers-audit-runtime-v8-5.json';a.click();};
 audit();
 })();
 </script>
