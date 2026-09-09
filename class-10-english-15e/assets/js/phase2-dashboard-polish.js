@@ -25,7 +25,7 @@
     document.querySelectorAll('#courseGrid .module-count').forEach(el=>el.remove());
     document.querySelectorAll('.previous-paper-card em').forEach(el=>el.remove());
     document.querySelectorAll('.mock-paper-card em').forEach(el=>el.remove());
-    document.querySelectorAll('.stats-grid').forEach(el=>el.remove());
+    /* Keep the dashboard statistics container: it now contains only App Visits. */
     document.querySelectorAll('#heroDashboardBtn').forEach(el=>el.remove());
     normalizePreviousPaperHeading();
   }
