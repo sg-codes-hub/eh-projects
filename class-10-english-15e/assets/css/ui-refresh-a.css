@@ -8,7 +8,7 @@
 }
 #dashboard>.hero .hero-content-row{column-gap:18px!important}
 #dashboard>.hero h1{font-size:clamp(29px,4.2vw,42px)!important;margin-bottom:9px!important}
-#dashboard>.hero p:not(.eyebrow){font-size:13px!important;line-height:1.4!important}
+#dashboard>.hero p:not(.eyebrow){font-size:13px!important;line-height:1.4!important;color:#111!important}
 #dashboard>.hero .eyebrow{font-size:11px!important;margin-bottom:5px!important}
 #dashboard>.hero .hero-badge{min-width:105px!important;padding:15px 18px!important;border-radius:16px!important}
 #dashboard>.hero .hero-badge b{font-size:25px!important}
@@ -116,7 +116,7 @@
 @media(max-width:700px){
   #dashboard>.hero{padding:16px 16px 14px!important;border-radius:18px!important}
   #dashboard>.hero h1{font-size:clamp(22px,7vw,30px)!important}
-  #dashboard>.hero p:not(.eyebrow){font-size:10px!important}
+  #dashboard>.hero p:not(.eyebrow){font-size:10px!important;color:#111!important}
   #dashboard>.stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important;margin:10px 0 20px!important}
   #dashboard>.stats-grid .stat{padding:10px 11px!important;border-radius:12px!important}
   #dashboard>.stats-grid .stat b{font-size:19px!important}
