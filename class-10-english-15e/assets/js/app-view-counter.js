@@ -1,25 +1,28 @@
-/* English Hub 15-E — anonymous unique-browser visit counter. */
+/* English Hub 15-E — anonymous returning-visit counter. */
 (function(){
   const API='https://countapi.mileshilliard.com/api/v1';
   const KEY='englishhub_class10_15e_app_views_2026';
-  const STORAGE_KEY='englishhub_class10_15e_visit_counted_v1';
+  const STORAGE_KEY='englishhub_class10_15e_last_visit_v1';
+  const VISIT_GAP=60*60*1000; // Count at most once per hour per browser.
   const el=document.getElementById('appViewCount');
   if(!el) return;
 
-  // Only count the first visit from this browser. Refreshes/reloads do not increment it.
-  let counted=false;
-  try { counted=localStorage.getItem(STORAGE_KEY)==='1'; } catch(e) {}
+  let lastVisit=0;
+  try { lastVisit=Number(localStorage.getItem(STORAGE_KEY))||0; } catch(e) {}
+
+  const now=Date.now();
+  const shouldCount=!lastVisit || (now-lastVisit)>=VISIT_GAP;
+  const endpoint=shouldCount ? `${API}/hit/${KEY}` : `${API}/get/${KEY}`;
 
   el.textContent='0';
 
-  const endpoint=counted ? `${API}/get/${KEY}` : `${API}/hit/${KEY}`;
   fetch(endpoint,{cache:'no-store',mode:'cors'})
     .then(r=>r.ok?r.json():Promise.reject(new Error('Counter request failed')))
     .then(d=>{
       if(d && d.value!=null){
         el.textContent=Number(d.value).toLocaleString();
-        if(!counted){
-          try { localStorage.setItem(STORAGE_KEY,'1'); } catch(e) {}
+        if(shouldCount){
+          try { localStorage.setItem(STORAGE_KEY,String(now)); } catch(e) {}
         }
       }
     })
