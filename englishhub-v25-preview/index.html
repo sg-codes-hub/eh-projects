@@ -3,48 +3,147 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="English Hub — practical English learning, teaching resources, SSLC, 2nd PUC, question papers and classroom materials.">
+<meta name="description" content="English Hub — practical English learning, teaching resources, grammar, vocabulary, SSLC, 2nd PUC, question papers and classroom materials.">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="./">
 <title>English Hub | English Learning, Teaching & Exam Resources</title>
 <style>
-:root{--yellow:#ffd21f;--gold:#f2a900;--navy:#162033;--blue:#2864c7;--ink:#172033;--muted:#667085;--bg:#f3f5f8;--line:#dce3ec;--white:#fff;--max:1240px}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);background:var(--bg);font:15px/1.55 Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif}a{text-decoration:none;color:inherit}.wrap{width:min(var(--max),calc(100% - 40px));margin:auto}
-.top{background:var(--navy);color:#dce5f0;font-size:12px}.top .wrap{min-height:34px;display:flex;align-items:center;justify-content:space-between}.top a{color:#fff;font-weight:700}
-.header{background:var(--yellow);border-bottom:1px solid #d0b000;position:sticky;top:0;z-index:20}.head{min-height:72px;display:flex;align-items:center;gap:22px}.brand{display:flex;align-items:center;gap:10px;font-size:22px;font-weight:950;white-space:nowrap}.logo{width:43px;height:43px;border:2px solid var(--navy);display:grid;place-items:center;font-size:14px;font-weight:900}.nav{margin-left:auto;display:flex;gap:2px}.nav a{padding:10px 11px;border-radius:8px;font-size:13px;font-weight:850}.nav a:hover{background:#fff6b6}.searchBtn{background:var(--navy);color:#fff;padding:11px 16px;border-radius:10px;font-weight:900}.mobileNav{display:none}
-.ad{min-height:76px;margin:15px 0;border:1px dashed #c8d1dd;background:#fff;border-radius:12px;display:grid;place-items:center;color:#98a2b3;font-size:11px;letter-spacing:.02em}.ad.tall{min-height:190px}
-.hero{background:linear-gradient(135deg,#edf4ff 0%,#fff 58%,#fff7d5 100%);border-block:1px solid var(--line);padding:42px 0}.heroGrid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(300px,.75fr);gap:30px}.eyebrow,.kicker{color:var(--blue);font-size:11px;font-weight:950;letter-spacing:.14em;text-transform:uppercase}h1{font-size:clamp(43px,5.6vw,70px);line-height:.98;letter-spacing:-.06em;margin:9px 0 17px}h1 span{color:var(--blue)}.copy{font-size:17px;color:#536176;max-width:700px;margin:0}.heroSearch{display:flex;max-width:700px;background:#fff;border:1px solid #c9d4e2;border-radius:12px;padding:5px;margin-top:20px}.heroSearch input{flex:1;min-width:0;border:0;outline:0;padding:12px;font:inherit;color:var(--ink)}.heroSearch button{background:var(--blue);color:#fff;border:0;border-radius:8px;padding:0 20px;font-weight:900}.chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}.chips a{background:#fff;border:1px solid #d5dee9;border-radius:999px;padding:5px 10px;font-size:12px;font-weight:800}.feature{background:var(--navy);color:#fff;border-radius:0 0 18px 18px;border-top:5px solid var(--gold);padding:25px 27px;box-shadow:0 15px 35px rgba(22,32,51,.12)}.feature .kicker{color:var(--yellow)}.feature h2{font-size:25px;line-height:1.15;margin:7px 0 12px}.item{padding:12px 0;border-top:1px solid #344056}.item b{font-size:14px}.item span{display:block;color:#b8c5d6;font-size:12px;margin-top:2px}
-.section{padding:43px 0}.white{background:#fff;border-block:1px solid var(--line)}.sectionHead{display:flex;justify-content:space-between;align-items:end;gap:18px;margin-bottom:18px}.sectionHead h2{font-size:30px;letter-spacing:-.04em;margin:2px 0 0}.sub{color:var(--muted);font-size:13px;margin:5px 0 0}.cta{display:inline-block;background:var(--gold);color:var(--navy);padding:10px 14px;border-radius:9px;font-size:12px;font-weight:900;white-space:nowrap}
-.portalGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.portal{background:#fff;border:1px solid var(--line);border-radius:13px;padding:17px;min-height:124px;position:relative;transition:.18s}.portal:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(23,32,51,.06)}.portal:before{content:"";display:block;width:38px;height:4px;border-radius:4px;background:var(--yellow);margin-bottom:13px}.portal:nth-child(4n+2):before{background:var(--gold)}.portal:nth-child(4n+3):before{background:var(--blue)}.portal:nth-child(4n+4):before{background:var(--navy)}.portal h3{font-size:16px;margin:0 0 5px}.portal p{font-size:12px;color:var(--muted);margin:0;max-width:220px}.arrow{position:absolute;right:15px;bottom:12px;color:var(--blue);font-weight:900}
-.latestGrid{display:grid;grid-template-columns:minmax(0,1.65fr) 310px;gap:24px}.postList{display:grid;grid-template-columns:1fr 1fr;gap:12px}.post{background:#fff;border:1px solid var(--line);border-radius:13px;padding:17px;min-height:150px}.post .tag{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--blue);font-weight:950}.post h3{font-size:17px;line-height:1.3;margin:7px 0}.post p{color:var(--muted);font-size:12px;margin:0}.postMeta{margin-top:13px;font-size:11px;color:#8a96a7}.sidebar{display:grid;gap:12px}.side{background:#fff;border:1px solid var(--line);border-radius:13px;padding:17px}.side h3{margin:0 0 9px;font-size:15px}.side a{display:block;color:var(--blue);font-size:13px;padding:8px 0;border-top:1px solid var(--line)}
-.aud{display:grid;grid-template-columns:1fr 1fr;gap:14px}.audcard{border:1px solid var(--line);border-radius:15px;padding:23px;background:#fff;border-top:5px solid var(--gold)}.audcard.dark{background:var(--navy);color:#fff;border-color:var(--navy)}.audcard.dark .label{color:var(--yellow)}.audcard h3{font-size:22px;margin:7px 0}.audcard p{color:var(--muted);font-size:13px}.audcard.dark p{color:#c8d3e0}.label{font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:var(--blue);font-weight:950}
-.exam{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.exam a{background:#fff;border:1px solid var(--line);border-top:4px solid var(--gold);border-radius:13px;padding:18px;min-height:100px;font-weight:900}.exam span{display:block;color:var(--muted);font-size:12px;font-weight:400;margin-top:5px}
-.footer{background:var(--navy);color:#d7e0ea;border-top:5px solid var(--gold);padding:38px 0 17px}.footerGrid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:25px}.footer h3{font-size:11px;text-transform:uppercase;letter-spacing:.13em;color:#fff;margin:0 0 10px}.footer a{display:block;color:#aebdcd;font-size:13px;margin:6px 0}.footerBrand{font-size:21px;color:#fff;font-weight:950}.footer p{font-size:12px;color:#aebdcd;max-width:330px}.bottom{border-top:1px solid #334056;margin-top:24px;padding-top:12px;display:flex;justify-content:space-between;color:#91a2b5;font-size:11px}
-@media(max-width:1050px){.nav a{padding:9px 7px}.portalGrid{grid-template-columns:repeat(2,1fr)}.latestGrid{grid-template-columns:1fr}.sidebar{grid-template-columns:1fr 1fr}}
-@media(max-width:720px){.wrap{width:calc(100% - 28px)}.top .wrap span:last-child{display:none}.head{min-height:68px}.nav{display:none}.searchBtn{margin-left:auto}.mobileNav{display:block;background:var(--navy);overflow-x:auto;border-bottom:2px solid var(--gold)}.mobileNav .inner{width:max-content;min-width:100%;display:flex;gap:2px;padding:7px 14px}.mobileNav a{color:#fff;padding:8px 10px;border-radius:7px;font-size:12px;font-weight:800;white-space:nowrap}.hero{padding:36px 0}.heroGrid{grid-template-columns:1fr;gap:22px}.heroSearch{display:block}.heroSearch button{width:100%;height:40px;margin-top:4px}.feature{border-radius:0 0 18px 18px}.section{padding:37px 0}.sectionHead{display:block}.sectionHead .cta{margin-top:11px}.portalGrid,.postList,.aud,.exam,.sidebar{grid-template-columns:1fr}.portal{min-height:112px}.post{min-height:0}.ad{min-height:68px}.footerGrid{grid-template-columns:1fr 1fr}.bottom{display:block}.bottom span{display:block;margin-top:5px}}
+:root{--yellow:#ffd21f;--gold:#f2a900;--navy:#162033;--blue:#2864c7;--ink:#172033;--muted:#687487;--bg:#f4f6f9;--line:#dbe2eb;--white:#fff;--soft:#eef3f9;--max:1240px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif}a{text-decoration:none;color:inherit}.wrap{width:min(var(--max),calc(100% - 40px));margin:auto}
+.topbar{background:var(--navy);color:#cbd5e1;font-size:12px}.topbar .wrap{min-height:34px;display:flex;align-items:center;justify-content:space-between}.topbar strong{color:#fff}.toplinks a{color:#fff;margin-left:16px;font-weight:700}
+.header{background:var(--yellow);border-bottom:1px solid #d6b300;position:sticky;top:0;z-index:50}.head{min-height:72px;display:flex;align-items:center;gap:22px}.brand{display:flex;align-items:center;gap:10px;font-size:22px;font-weight:950;white-space:nowrap}.logo{width:44px;height:44px;border:2px solid var(--navy);display:grid;place-items:center;font-size:14px;font-weight:950}.nav{margin-left:auto;display:flex;align-items:center;gap:2px}.nav a{padding:10px 11px;border-radius:8px;font-size:13px;font-weight:850}.nav a:hover{background:#fff6bd}.searchBtn{background:var(--navy);color:#fff;padding:11px 16px;border-radius:10px;font-weight:900}.mobileNav{display:none}
+.ad-slot{min-height:74px;margin:14px 0;border:1px dashed #c7d1dd;border-radius:12px;background:#fff;color:#99a3b1;display:flex;align-items:center;justify-content:center;font-size:11px;text-transform:uppercase;letter-spacing:.05em}.ad-slot.small{min-height:64px}.ad-slot.large{min-height:130px}
+.hero{background:linear-gradient(135deg,#edf4ff 0%,#fff 57%,#fff8d9 100%);border-block:1px solid var(--line);padding:48px 0 44px}.heroGrid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(330px,.75fr);gap:34px;align-items:stretch}.eyebrow,.kicker{font-size:11px;font-weight:950;letter-spacing:.15em;text-transform:uppercase;color:var(--blue)}h1{font-size:clamp(45px,5.4vw,72px);line-height:.97;letter-spacing:-.065em;margin:8px 0 18px}h1 span{color:var(--blue)}.heroText{font-size:17px;line-height:1.65;color:#526075;max-width:720px;margin:0}.heroSearch{display:flex;max-width:720px;background:#fff;border:1px solid #c7d3e2;border-radius:12px;padding:5px;margin-top:22px;box-shadow:0 5px 18px rgba(22,32,51,.05)}.heroSearch input{flex:1;min-width:0;border:0;outline:0;padding:12px 13px;font:inherit}.heroSearch button{border:0;background:var(--blue);color:#fff;border-radius:8px;padding:0 21px;font-weight:900}.chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}.chips a{background:#fff;border:1px solid #d5dfe9;border-radius:999px;padding:5px 10px;font-size:12px;font-weight:800}.heroPanel{background:var(--navy);color:#fff;border-radius:0 0 20px 20px;border-top:5px solid var(--gold);padding:26px 28px;box-shadow:0 16px 38px rgba(22,32,51,.13)}.heroPanel .kicker{color:var(--yellow)}.heroPanel h2{font-size:25px;line-height:1.18;margin:7px 0 14px}.heroItem{padding:12px 0;border-top:1px solid #354157}.heroItem b{font-size:14px}.heroItem span{display:block;color:#b9c5d5;font-size:12px;margin-top:2px}
+.section{padding:44px 0}.white{background:#fff;border-block:1px solid var(--line)}.sectionHead{display:flex;align-items:end;justify-content:space-between;gap:18px;margin-bottom:20px}.sectionHead h2{font-size:30px;letter-spacing:-.045em;margin:2px 0 0}.sub{color:var(--muted);font-size:13px;margin:5px 0 0}.cta{display:inline-block;background:var(--gold);color:var(--navy);padding:10px 15px;border-radius:9px;font-size:12px;font-weight:950;white-space:nowrap}
+.resourceGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.resource{background:#fff;border:1px solid var(--line);border-radius:13px;padding:17px 17px 20px;min-height:132px;position:relative;transition:transform .18s,box-shadow .18s}.resource:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(23,32,51,.07)}.resource:before{content:"";display:block;width:40px;height:4px;border-radius:4px;background:var(--yellow);margin-bottom:13px}.resource:nth-child(4n+2):before{background:var(--gold)}.resource:nth-child(4n+3):before{background:var(--blue)}.resource:nth-child(4n):before{background:var(--navy)}.resource h3{font-size:16px;margin:0 0 5px}.resource p{font-size:12px;color:var(--muted);margin:0;max-width:235px}.arrow{position:absolute;right:16px;bottom:13px;color:var(--blue);font-weight:950}
+.portalBand{background:#eef3f8;border-block:1px solid var(--line)}.audience{display:grid;grid-template-columns:1fr 1fr;gap:14px}.audCard{border:1px solid var(--line);border-top:5px solid var(--gold);border-radius:15px;background:#fff;padding:23px}.audCard.dark{background:var(--navy);color:#fff;border-color:var(--navy)}.audCard .label{font-size:10px;letter-spacing:.15em;text-transform:uppercase;font-weight:950;color:var(--blue)}.audCard.dark .label{color:var(--yellow)}.audCard h3{font-size:22px;margin:7px 0}.audCard p{font-size:13px;color:var(--muted);margin:0 0 15px}.audCard.dark p{color:#c6d1df}.audBtn{display:inline-block;background:var(--gold);color:var(--navy);padding:10px 14px;border-radius:9px;font-size:12px;font-weight:950}
+.examGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.examCard{background:#fff;border:1px solid var(--line);border-top:4px solid var(--gold);border-radius:13px;padding:18px;min-height:110px}.examCard .smallLabel{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);font-weight:950}.examCard h3{font-size:16px;margin:5px 0}.examCard p{font-size:12px;color:var(--muted);margin:0}
+.contentGrid{display:grid;grid-template-columns:minmax(0,1.65fr) 310px;gap:24px}.posts{display:grid;grid-template-columns:1fr 1fr;gap:12px}.post{background:#fff;border:1px solid var(--line);border-radius:13px;padding:18px;min-height:164px}.post .tag{font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--blue);font-weight:950}.post h3{font-size:17px;line-height:1.3;margin:7px 0}.post p{font-size:12px;color:var(--muted);margin:0}.postMeta{font-size:11px;color:#8b97a8;margin-top:14px}.sideCol{display:grid;gap:12px}.sideBox{background:#fff;border:1px solid var(--line);border-radius:13px;padding:18px}.sideBox h3{font-size:15px;margin:0 0 8px}.sideBox p{font-size:12px;color:var(--muted);margin:0 0 8px}.sideBox a{display:block;padding:8px 0;border-top:1px solid var(--line);font-size:13px;color:var(--blue);font-weight:750}
+.quickGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.quick{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px}.quick b{font-size:14px}.quick span{display:block;color:var(--muted);font-size:12px;margin-top:4px}
+.footer{background:var(--navy);color:#d6e0eb;border-top:5px solid var(--gold);padding:40px 0 18px}.footerGrid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:26px}.footerBrand{font-size:21px;font-weight:950;color:#fff}.footer p{font-size:12px;color:#aebdcd;max-width:330px}.footer h3{font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:#fff;margin:0 0 10px}.footer a{display:block;color:#aebdcd;font-size:13px;margin:6px 0}.signature{color:var(--yellow);font-size:11px;font-weight:800;margin-top:12px}.bottom{border-top:1px solid #334056;margin-top:25px;padding-top:13px;display:flex;justify-content:space-between;color:#91a2b5;font-size:11px}
+@media(max-width:1050px){.nav a{padding:9px 7px}.resourceGrid{grid-template-columns:repeat(2,1fr)}.contentGrid{grid-template-columns:1fr}.sideCol{grid-template-columns:1fr 1fr}.quickGrid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:720px){.wrap{width:calc(100% - 28px)}.toplinks{display:none}.head{min-height:68px}.nav{display:none}.searchBtn{margin-left:auto}.mobileNav{display:block;background:var(--navy);border-bottom:2px solid var(--gold);overflow-x:auto}.mobileNav .inner{width:max-content;min-width:100%;display:flex;gap:2px;padding:7px 14px}.mobileNav a{color:#fff;padding:8px 10px;border-radius:7px;font-size:12px;font-weight:850;white-space:nowrap}.ad-slot{min-height:66px;margin:10px 0}.hero{padding:36px 0}.heroGrid{grid-template-columns:1fr;gap:22px}.heroSearch{display:block}.heroSearch input{width:100%}.heroSearch button{width:100%;height:40px;margin-top:4px}.heroPanel{border-radius:0 0 18px 18px}.section{padding:36px 0}.sectionHead{display:block}.sectionHead .cta{margin-top:11px}.resourceGrid,.audience,.examGrid,.posts,.sideCol,.quickGrid{grid-template-columns:1fr}.resource{min-height:118px}.post{min-height:0}.footerGrid{grid-template-columns:1fr 1fr}.bottom{display:block}.bottom span{display:block;margin-top:5px}}
 @media(max-width:430px){h1{font-size:40px}.footerGrid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<div class="top"><div class="wrap"><span>English learning • Teaching resources • Exam preparation</span><span><a href="#latest">Latest resources</a> &nbsp;•&nbsp; Important links</span></div></div>
+<div class="topbar"><div class="wrap"><span><strong>English Hub</strong> • English learning • Teaching resources • Exam preparation</span><span class="toplinks"><a href="#latest">Latest</a><a href="#exams">Exams</a><a href="#footer">Important links</a></span></div></div>
 <header class="header">
- <div class="wrap head"><a class="brand" href="#"><span class="logo">EH</span>ENGLISH HUB</a><nav class="nav"><a href="#learn">Learn English</a><a href="#resources">Grammar</a><a href="#teachers">Teachers</a><a href="#exams">SSLC</a><a href="#exams">2nd PUC</a><a href="#latest">Question Papers</a></nav><a class="searchBtn" href="#search">Search</a></div>
- <nav class="mobileNav"><div class="inner"><a href="#">Home</a><a href="#resources">Grammar</a><a href="#resources">Vocabulary</a><a href="#teachers">Teachers</a><a href="#exams">SSLC</a><a href="#exams">2nd PUC</a><a href="#latest">Question Papers</a></div></nav>
+  <div class="wrap head">
+    <a class="brand" href="#"><span class="logo">EH</span>ENGLISH HUB</a>
+    <nav class="nav" aria-label="Primary"><a href="#learn">Learn English</a><a href="#resources">Grammar</a><a href="#teachers">Teachers</a><a href="#exams">SSLC</a><a href="#exams">2nd PUC</a><a href="#latest">Question Papers</a></nav>
+    <a class="searchBtn" href="#search">Search</a>
+  </div>
+  <nav class="mobileNav" aria-label="Mobile navigation"><div class="inner"><a href="#">Home</a><a href="#resources">Grammar</a><a href="#resources">Vocabulary</a><a href="#learn">Learn English</a><a href="#teachers">Teachers</a><a href="#exams">SSLC</a><a href="#exams">2nd PUC</a><a href="#latest">Question Papers</a></div></nav>
 </header>
-<div class="wrap"><div class="ad">EDITABLE BLOGGER LAYOUT • HEADER ADSENSE SLOT</div></div>
-<section class="hero" id="search"><div class="wrap heroGrid"><div><div class="eyebrow">English learning &amp; teaching resources</div><h1>Learn English.<br>Teach English.<br><span>Prepare Better.</span></h1><p class="copy">Practical English lessons, classroom resources and examination materials for students and teachers.</p><form class="heroSearch"><input aria-label="Search English Hub" placeholder="Search grammar, tenses, SSLC, vocabulary..."><button type="button">Search</button></form><div class="chips"><a href="#resources">Grammar</a><a href="#resources">Tenses</a><a href="#resources">Vocabulary</a><a href="#resources">Spoken English</a><a href="#exams">SSLC</a><a href="#exams">2nd PUC</a></div></div><aside class="feature"><div class="kicker">English Hub</div><h2>Your practical English resource centre.</h2><div class="item"><b>Learn &amp; practise</b><span>Grammar, vocabulary, speaking, reading and writing.</span></div><div class="item"><b>Teach with confidence</b><span>Lesson plans, TLMs, worksheets and classroom resources.</span></div><div class="item"><b>Prepare for exams</b><span>SSLC, 2nd PUC, question papers and study materials.</span></div></aside></div></section>
-<section class="section" id="resources"><div class="wrap"><div class="sectionHead"><div><div class="kicker">Browse resources</div><h2>Explore English Hub</h2><p class="sub">Go straight to the resource area you need.</p></div><a class="cta" href="#latest">View latest →</a></div><div class="portalGrid">
-<a class="portal"><h3>Grammar &amp; Tenses</h3><p>Rules, explanations, examples and practice.</p><span class="arrow">→</span></a><a class="portal"><h3>Vocabulary</h3><p>Words, meanings, usage and useful expressions.</p><span class="arrow">→</span></a><a class="portal"><h3>Spoken English</h3><p>Practical communication and everyday English.</p><span class="arrow">→</span></a><a class="portal"><h3>Reading &amp; Writing</h3><p>Comprehension, writing formats and practice.</p><span class="arrow">→</span></a><a class="portal"><h3>Quizzes &amp; Practice</h3><p>Exercises and question-based practice.</p><span class="arrow">→</span></a><a class="portal"><h3>Lesson Plans</h3><p>Ready-to-use English teaching resources.</p><span class="arrow">→</span></a><a class="portal"><h3>TLM &amp; Worksheets</h3><p>Classroom materials, activities and worksheets.</p><span class="arrow">→</span></a><a class="portal"><h3>Videos &amp; Activities</h3><p>Visual learning and classroom activities.</p><span class="arrow">→</span></a>
-</div></div></section>
-<div class="wrap"><div class="ad">EDITABLE BLOGGER LAYOUT • BETWEEN-SECTIONS ADSENSE SLOT</div></div>
-<section class="section white" id="latest"><div class="wrap"><div class="sectionHead"><div><div class="kicker">Fresh content</div><h2>Latest from English Hub</h2><p class="sub">Recent lessons, examination resources and teaching materials.</p></div><a class="cta" href="#">View all posts →</a></div><div class="latestGrid"><main class="postList">
-<article class="post"><div class="tag">Grammar</div><h3>Simple, Compound and Complex Sentences</h3><p>Easy identification rules, examples and transformation practice for learners.</p><div class="postMeta">Grammar • Classroom notes</div></article>
-<article class="post"><div class="tag">Daily English Tips</div><h3>Present Simple for Habits and Daily Routines</h3><p>A short practical English lesson with examples and common errors.</p><div class="postMeta">English learning • Practice</div></article>
-<article class="post"><div class="tag">SSLC</div><h3>SSLC English Study Resources</h3><p>Question papers, model papers, notes and examination preparation.</p><div class="postMeta">Exam preparation</div></article>
-<article class="post"><div class="tag">Teachers</div><h3>Classroom English and Teaching Resources</h3><p>Lesson plans, TLMs, worksheets and practical classroom resources.</p><div class="postMeta">Teaching resources</div></article>
-</main><aside class="sidebar"><div class="side"><h3>Popular resources</h3><a>Grammar Notes</a><a>SSLC Question Papers</a><a>2nd PUC English</a><a>Teacher Recruitment</a><a>Model Question Papers</a></div><div class="side"><h3>EDITABLE SIDEBAR ADSENSE</h3><div class="ad tall" style="margin:0">ADVERTISEMENT</div></div></aside></div></div></section>
-<section class="section" id="teachers"><div class="wrap"><div class="sectionHead"><div><div class="kicker">For everyone</div><h2>Learning and teaching</h2><p class="sub">Two clear paths for students and teachers.</p></div></div><div class="aud"><article class="audcard dark"><div class="label">For students</div><h3>Learn &amp; Practise</h3><p>Build grammar, vocabulary, reading, writing and speaking skills with practical resources.</p><a class="cta" href="#resources">Explore student resources →</a></article><article class="audcard"><div class="label">For teachers</div><h3>Teach &amp; Prepare</h3><p>Find classroom activities, lesson plans, worksheets, TLMs and examination resources.</p><a class="cta" href="#resources">Explore teacher resources →</a></article></div></div></section>
-<section class="section white" id="exams"><div class="wrap"><div class="sectionHead"><div><div class="kicker">Examination centre</div><h2>Exam preparation</h2><p class="sub">Quick access to major examination resources.</p></div></div><div class="exam"><a>SSLC English Study Package →<span>Lessons, grammar, writing and practice.</span></a><a>SSLC Model Question Papers →<span>Previous papers and examination practice.</span></a><a>2nd PUC English Resources →<span>Notes, writing, solved questions and materials.</span></a></div></div></section>
-<div class="wrap"><div class="ad">EDITABLE BLOGGER LAYOUT • BOTTOM ADSENSE SLOT</div></div>
-<footer class="footer"><div class="wrap footerGrid"><div><div class="footerBrand">ENGLISH HUB</div><p>English learning, teaching and examination resources for students and teachers.</p></div><div><h3>Learning</h3><a>Grammar</a><a>Vocabulary</a><a>Spoken English</a><a>Writing</a></div><div><h3>Teaching</h3><a>Lesson Plans</a><a>Worksheets</a><a>TLM</a><a>Activities</a></div><div><h3>Exams</h3><a>SSLC</a><a>2nd PUC</a><a>Question Papers</a><a>Model Papers</a></div></div><div class="wrap bottom"><span>© English Hub</span><span>EDITABLE BLOGGER LAYOUT • Footer Link Lists / HTML widgets</span></div></footer>
-</body></html>
+
+<!-- BLOGGER LAYOUT: HEADER AD / HTML GADGET -->
+<div class="wrap"><div class="ad-slot">Editable Blogger Layout • Header AdSense Slot</div></div>
+
+<section class="hero" id="learn">
+ <div class="wrap heroGrid">
+  <div>
+   <div class="eyebrow">English learning &amp; teaching resources</div>
+   <h1>Learn English.<br>Teach English.<br><span>Prepare Better.</span></h1>
+   <p class="heroText">Practical English lessons, classroom resources and examination materials for students and teachers — organised so useful resources are easy to find.</p>
+   <form class="heroSearch" action="#latest"><input aria-label="Search English Hub" placeholder="Search grammar, tenses, SSLC, vocabulary..." type="search"><button type="submit">Search</button></form>
+   <div class="chips"><a href="#resources">Grammar</a><a href="#resources">Tenses</a><a href="#resources">Vocabulary</a><a href="#resources">Spoken English</a><a href="#exams">SSLC</a><a href="#exams">2nd PUC</a></div>
+  </div>
+  <aside class="heroPanel">
+   <div class="kicker">English Hub</div><h2>Your practical English resource centre.</h2>
+   <div class="heroItem"><b>Learn &amp; practise</b><span>Grammar, vocabulary, speaking, reading and writing.</span></div>
+   <div class="heroItem"><b>Teach with confidence</b><span>Lesson plans, TLMs, worksheets and classroom resources.</span></div>
+   <div class="heroItem"><b>Prepare for exams</b><span>SSLC, 2nd PUC, question papers and study materials.</span></div>
+  </aside>
+ </div>
+</section>
+
+<section class="section" id="resources">
+ <div class="wrap">
+  <div class="sectionHead"><div><div class="kicker">Browse resources</div><h2>Explore English Hub</h2><p class="sub">Go straight to the resource area you need.</p></div><a class="cta" href="#latest">View latest →</a></div>
+  <div class="resourceGrid">
+   <a class="resource" href="#latest"><h3>Grammar &amp; Tenses</h3><p>Rules, explanations, examples and practice.</p><span class="arrow">→</span></a>
+   <a class="resource" href="#latest"><h3>Vocabulary</h3><p>Words, meanings, usage and useful expressions.</p><span class="arrow">→</span></a>
+   <a class="resource" href="#latest"><h3>Spoken English</h3><p>Practical communication and everyday English.</p><span class="arrow">→</span></a>
+   <a class="resource" href="#latest"><h3>Reading &amp; Writing</h3><p>Comprehension, writing formats and practice.</p><span class="arrow">→</span></a>
+   <a class="resource" href="#latest"><h3>Quizzes &amp; Practice</h3><p>Exercises and question-based practice.</p><span class="arrow">→</span></a>
+   <a class="resource" href="#teachers"><h3>Lesson Plans</h3><p>Ready-to-use English teaching resources.</p><span class="arrow">→</span></a>
+   <a class="resource" href="#teachers"><h3>TLM &amp; Worksheets</h3><p>Classroom materials, activities and worksheets.</p><span class="arrow">→</span></a>
+   <a class="resource" href="#latest"><h3>Videos &amp; Activities</h3><p>Visual learning and classroom activities.</p><span class="arrow">→</span></a>
+  </div>
+ </div>
+</section>
+
+<!-- BLOGGER LAYOUT: BETWEEN CONTENT AD -->
+<div class="wrap"><div class="ad-slot">Editable Blogger Layout • Between-Sections AdSense Slot</div></div>
+
+<section class="section portalBand" id="teachers">
+ <div class="wrap">
+  <div class="sectionHead"><div><div class="kicker">For everyone</div><h2>Learning and teaching</h2><p class="sub">Two clear paths for students and teachers.</p></div></div>
+  <div class="audience">
+   <article class="audCard dark"><div class="label">For students</div><h3>Learn &amp; Practise</h3><p>Build grammar, vocabulary, reading, writing and speaking skills with practical resources.</p><a class="audBtn" href="#resources">Explore student resources →</a></article>
+   <article class="audCard"><div class="label">For teachers</div><h3>Teach &amp; Prepare</h3><p>Find classroom activities, lesson plans, worksheets, TLMs and examination resources.</p><a class="audBtn" href="#latest">Explore teacher resources →</a></article>
+  </div>
+ </div>
+</section>
+
+<section class="section white" id="exams">
+ <div class="wrap">
+  <div class="sectionHead"><div><div class="kicker">Examination centre</div><h2>Exam preparation</h2><p class="sub">Fast routes to important examination resources.</p></div><a class="cta" href="#latest">Browse resources →</a></div>
+  <div class="examGrid">
+   <a class="examCard" href="#latest"><div class="smallLabel">SSLC</div><h3>SSLC English</h3><p>Lessons, grammar, writing, model papers and preparation resources.</p></a>
+   <a class="examCard" href="#latest"><div class="smallLabel">Practice</div><h3>Question Papers</h3><p>Previous papers, model papers and examination practice.</p></a>
+   <a class="examCard" href="#latest"><div class="smallLabel">2nd PUC</div><h3>2nd PUC English</h3><p>Lessons, writing, solved questions and exam preparation.</p></a>
+  </div>
+ </div>
+</section>
+
+<!-- BLOGGER LAYOUT: MIDDLE ADSENSE -->
+<div class="wrap"><div class="ad-slot large">Editable Blogger Layout • Middle AdSense Slot</div></div>
+
+<section class="section" id="latest">
+ <div class="wrap">
+  <div class="sectionHead"><div><div class="kicker">Fresh content</div><h2>Latest from English Hub</h2><p class="sub">Recent lessons, explanations, activities and examination resources.</p></div><a class="cta" href="#">View all posts →</a></div>
+  <div class="contentGrid">
+   <main class="posts">
+    <article class="post"><div class="tag">Grammar</div><h3>Simple, Compound and Complex Sentences</h3><p>Easy identification rules, examples and transformation practice for learners.</p><div class="postMeta">Grammar • Classroom notes</div></article>
+    <article class="post"><div class="tag">Daily English Tips</div><h3>Present Simple for Habits and Daily Routines</h3><p>A short practical English lesson with examples and common errors.</p><div class="postMeta">English learning • Practice</div></article>
+    <article class="post"><div class="tag">SSLC</div><h3>SSLC English Study Resources</h3><p>Question papers, model papers, notes and examination preparation.</p><div class="postMeta">Exam preparation</div></article>
+    <article class="post"><div class="tag">Teachers</div><h3>Classroom English and Teaching Resources</h3><p>Lesson plans, TLMs, worksheets and practical classroom resources.</p><div class="postMeta">Teaching resources</div></article>
+   </main>
+   <aside class="sideCol">
+    <div class="sideBox"><h3>Popular resources</h3><p>Useful starting points for regular visitors.</p><a href="#resources">Grammar &amp; Tenses →</a><a href="#resources">Vocabulary →</a><a href="#exams">SSLC resources →</a><a href="#exams">Question papers →</a></div>
+    <div class="sideBox"><h3>For teachers</h3><a href="#teachers">Lesson Plans</a><a href="#teachers">TLM &amp; Worksheets</a><a href="#teachers">Classroom Activities</a></div>
+   </aside>
+  </div>
+ </div>
+</section>
+
+<section class="section white">
+ <div class="wrap">
+  <div class="sectionHead"><div><div class="kicker">Quick access</div><h2>Useful English Hub sections</h2><p class="sub">Simple navigation for the resources you use most.</p></div></div>
+  <div class="quickGrid">
+   <a class="quick" href="#resources"><b>English Grammar</b><span>Rules, examples and practice.</span></a>
+   <a class="quick" href="#resources"><b>Vocabulary</b><span>Words, meanings and usage.</span></a>
+   <a class="quick" href="#teachers"><b>Teaching Resources</b><span>Plans, TLMs and worksheets.</span></a>
+   <a class="quick" href="#exams"><b>Exam Resources</b><span>SSLC, 2nd PUC and papers.</span></a>
+  </div>
+ </div>
+</section>
+
+<!-- BLOGGER LAYOUT: BOTTOM ADSENSE -->
+<div class="wrap"><div class="ad-slot">Editable Blogger Layout • Bottom AdSense Slot</div></div>
+
+<footer class="footer" id="footer">
+ <div class="wrap">
+  <div class="footerGrid">
+   <div><div class="footerBrand">ENGLISH HUB</div><p>English learning, teaching and examination resources for students, teachers and learners.</p><div class="signature">Signature yellow accent preserved.</div></div>
+   <div><h3>Quick links</h3><a href="#resources">Grammar</a><a href="#resources">Vocabulary</a><a href="#teachers">Teachers</a><a href="#exams">SSLC</a></div>
+   <div><h3>Resources</h3><a href="#teachers">Lesson Plans</a><a href="#teachers">Worksheets</a><a href="#latest">Quizzes</a><a href="#latest">Question Papers</a></div>
+   <div><h3>Site</h3><a href="#">About</a><a href="#">Contact</a><a href="#">Privacy</a><a href="#">Disclaimer</a></div>
+  </div>
+  <div class="bottom"><span>© English Hub</span><span>Editable Blogger Layout • Footer LinkLists / HTML gadgets</span></div>
+ </div>
+</footer>
+</body>
+</html>
